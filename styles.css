@@ -848,12 +848,14 @@ footer {
         top: 60px;
         right: -100%;
         width: 250px;
-        height: calc(100vh - 60px);
+        height: auto;
+        max-height: calc(100vh - 60px);
         background: #1a1a1a;
         flex-direction: column;
         padding: 20px;
         transition: right 0.3s;
         z-index: 999;
+        overflow-y: auto;
     }
     .nav-links.active { right: 0; }
     .zigzag, .content-row, .about-row { 
