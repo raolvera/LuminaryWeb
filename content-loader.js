@@ -18,7 +18,10 @@
       // Hero section
       document.querySelector('.hero h1').textContent = home.hero_title;
       document.querySelector('.hero p').textContent = home.hero_description;
-      document.querySelector('.hero').style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${home.hero_image})`;
+      if (home.hero_image) {
+        const heroSection = document.querySelector('.hero');
+        heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${home.hero_image})`;
+      }
       
       // Our Story section
       document.querySelector('.content-text h3').textContent = home.story_title;
@@ -76,6 +79,7 @@
     }
     
   } catch (error) {
-    console.log('Content loading skipped or failed:', error.message);
+    console.log('Content loading skipped:', error.message);
+    // Fallback: content stays as hardcoded in HTML
   }
 })();
