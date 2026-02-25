@@ -38,15 +38,6 @@ button:active, .btn-outline:active {
   transform: scale(0.98);
 }
 
-/* Image hover zoom */
-.image-placeholder img {
-  transition: transform 0.3s ease;
-}
-
-.image-placeholder:hover img {
-  transform: scale(1.05);
-}
-
 /* Menu item hover */
 .menu-text-item {
   transition: transform 0.2s ease;
