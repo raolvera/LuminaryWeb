@@ -1,5 +1,8 @@
 // Content Loader - Loads CMS content from JSON files
 (async function() {
+  // Prevent flash of content change
+  document.body.style.opacity = '0';
+  
   try {
     // Load theme settings
     const theme = await fetch('/content/theme.json').then(r => r.json());
@@ -82,4 +85,8 @@
     console.log('Content loading skipped:', error.message);
     // Fallback: content stays as hardcoded in HTML
   }
+  
+  // Fade in page after content loads
+  document.body.style.transition = 'opacity 0.3s';
+  document.body.style.opacity = '1';
 })();
