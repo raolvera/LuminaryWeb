@@ -1,4 +1,4 @@
-# Luminary Restaurant Website 🥋
+# ✨Luminary Restaurant Website
 
 A modern, elegant restaurant website featuring a celestial-inspired design with **enterprise-grade** features including full accessibility, performance optimization, comprehensive testing, and SEO best practices.
 
