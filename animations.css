@@ -1,0 +1,74 @@
+/* Smooth Animations & Transitions */
+
+/* Fade in on page load */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero animation */
+.hero-content {
+  animation: fadeIn 1s ease-out;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, .nav-arrow, .btn-outline, .carousel-slide {
+  transition: all 0.3s ease;
+}
+
+/* Hover effects */
+.nav-links a:hover,
+.btn-outline:hover,
+.footer-col a:hover {
+  transform: translateY(-2px);
+}
+
+/* Carousel slide transitions */
+.carousel-slide {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+/* Button press effect */
+button:active, .btn-outline:active {
+  transform: scale(0.98);
+}
+
+/* Image hover zoom */
+.image-placeholder img {
+  transition: transform 0.3s ease;
+}
+
+.image-placeholder:hover img {
+  transform: scale(1.05);
+}
+
+/* Menu item hover */
+.menu-text-item {
+  transition: transform 0.2s ease;
+}
+
+.menu-text-item:hover {
+  transform: translateX(5px);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading animation for images */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.image-placeholder:empty {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+  background-size: 1000px 100%;
+}

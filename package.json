@@ -1,0 +1,16 @@
+{
+  "name": "luminary-restaurant",
+  "version": "1.0.0",
+  "description": "Luminary Restaurant Website with Testing",
+  "scripts": {
+    "test": "node tests.js",
+    "test:e2e": "playwright test",
+    "serve": "python -m http.server 8000"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "keywords": ["restaurant", "website", "testing"],
+  "author": "Luminary Team",
+  "license": "MIT"
+}

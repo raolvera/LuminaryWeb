@@ -1,0 +1,8 @@
+{
+  "category": "Beverages",
+  "name": "Solar Citrus Elixir",
+  "price": 11,
+  "description": "Fresh-squeezed blood orange, yuzu, and sparkling mineral water with a lemon twist.",
+  "image": "/images/solarCitrus.jpg",
+  "order": 1
+}

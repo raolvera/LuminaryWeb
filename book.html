@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Luminary | Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="styles.css" />
     <script src="menu.js" defer></script>
     <script src="booking.js"></script>
@@ -37,7 +38,8 @@
 
     <section class="reservation-section">
         <div class="form-container">
-            <form id="reservationForm" name="reservations" method="POST" data-netlify="true">
+            <form id="reservationForm" name="reservations" method="POST" data-netlify="true" action="/confirmation.html">
+                <input type="hidden" name="form-name" value="reservations" />
                 <p id="stepIndicator" class="step-text">Step 1 of 2</p>
                 <h2 id="stepTitle">Booking Information</h2>
 
@@ -159,8 +161,14 @@
 
         <div class="footer-col follow-us">
           <h4>Follow Us</h4>
-          <p>Instagram</p>
-          <p>Facebook</p>
+          <div class="social-links">
+            <a href="https://instagram.com/luminaryrestaurant" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+              <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://facebook.com/luminaryrestaurant" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook">
+              <i class="fab fa-facebook"></i> Facebook
+            </a>
+          </div>
           <div class="copyright">&copy; <a href="index.html">Luminary</a> 2026</div>
         </div>
       </div>

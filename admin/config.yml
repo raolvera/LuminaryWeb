@@ -1,0 +1,88 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "theme"
+        label: "Theme & Fonts"
+        file: "content/theme.json"
+        fields:
+          - {label: "Primary Color (Background)", name: "bg_color", widget: "color", default: "#000000"}
+          - {label: "Text Color", name: "text_color", widget: "color", default: "#ffffff"}
+          - {label: "Accent Color (Gold)", name: "accent_color", widget: "color", default: "#FFD700"}
+          - {label: "Border Color", name: "border_color", widget: "color", default: "#333333"}
+          - label: "Font Family"
+            name: "font_family"
+            widget: "select"
+            options:
+              - {label: "Arial (Current)", value: "Arial, sans-serif"}
+              - {label: "Georgia", value: "Georgia, serif"}
+              - {label: "Times New Roman", value: "'Times New Roman', serif"}
+              - {label: "Helvetica", value: "Helvetica, sans-serif"}
+              - {label: "Verdana", value: "Verdana, sans-serif"}
+              - {label: "Courier New", value: "'Courier New', monospace"}
+              - {label: "Playfair Display", value: "'Playfair Display', serif"}
+              - {label: "Roboto", value: "'Roboto', sans-serif"}
+              - {label: "Open Sans", value: "'Open Sans', sans-serif"}
+              - {label: "Lato", value: "'Lato', sans-serif"}
+            default: "Arial, sans-serif"
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "home"
+        label: "Home Page"
+        file: "content/home.json"
+        fields:
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "Hero Image", name: "hero_image", widget: "image"}
+          - {label: "Story Title", name: "story_title", widget: "string"}
+          - {label: "Story Text", name: "story_text", widget: "text"}
+          - {label: "Story Video", name: "story_video", widget: "file", required: false}
+          - {label: "Chef Philosophy Title", name: "chef_title", widget: "string"}
+          - {label: "Chef Philosophy Text", name: "chef_text", widget: "text"}
+          - {label: "Chef Image", name: "chef_image", widget: "image"}
+
+      - name: "about"
+        label: "About Page"
+        file: "content/about.json"
+        fields:
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Story Title", name: "story_title", widget: "string"}
+          - {label: "Story Text", name: "story_text", widget: "text"}
+          - {label: "Story Video", name: "story_video", widget: "file", required: false}
+          - {label: "Chef Philosophy Title", name: "chef_title", widget: "string"}
+          - {label: "Chef Philosophy Text", name: "chef_text", widget: "text"}
+          - {label: "Chef Image", name: "chef_image", widget: "image"}
+
+      - name: "events"
+        label: "Events Page"
+        file: "content/events.json"
+        fields:
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Main Title", name: "main_title", widget: "string"}
+          - {label: "Main Description", name: "main_description", widget: "text"}
+          - {label: "Main Image", name: "main_image", widget: "image"}
+          - {label: "Secondary Title", name: "secondary_title", widget: "string"}
+          - {label: "Secondary Description", name: "secondary_description", widget: "text"}
+          - {label: "Secondary Image", name: "secondary_image", widget: "image"}
+
+  - name: "menu"
+    label: "Menu Items"
+    folder: "content/menu"
+    create: true
+    slug: "{{category}}-{{slug}}"
+    fields:
+      - {label: "Category", name: "category", widget: "select", options: ["Appetizers", "Desserts", "Entrees", "Beverages", "Cocktails"]}
+      - {label: "Item Name", name: "name", widget: "string"}
+      - {label: "Price", name: "price", widget: "number"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Order", name: "order", widget: "number", default: 0}
