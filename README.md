@@ -214,10 +214,6 @@ LuminaryWeb/
 ## 📚 Documentation
 
 - **README.md** - Project overview (this file)
-- **QUICK_START.md** - Get started quickly with new features
-- **BLACK_BELT_FEATURES.md** - Complete feature documentation
-- **TESTING.md** - Comprehensive testing guide
-- **SETUP_GUIDE.md** - Netlify & Decap CMS deployment
 
 ## 🤝 Contributing
 
