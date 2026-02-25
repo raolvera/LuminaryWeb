@@ -227,6 +227,7 @@ nav > a:hover {
   text-decoration: none;
   display: inline-block;
   margin-top: 20px;
+  padding: 0 10px;
 }
 .arrow-link:hover {
   color: var(--accent);
