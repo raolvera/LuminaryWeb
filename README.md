@@ -109,7 +109,7 @@ npm run test:e2e
 
 - Background: `#000000`
 - Text: `#ffffff`
-- Accent: `#FFD700` (Gold)
+- Accent: `#FFD700` 
 - Borders: `#333333`
 - Light Grey: `#f4f4f4`
 - Dark Grey: `#e0e0e0`
