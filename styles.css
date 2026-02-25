@@ -1094,6 +1094,7 @@ footer {
         border-top: 1px solid white;
         margin-bottom: 0;
         background: transparent;
+        box-sizing: border-box;
     }
     .nav-links li:last-child {
         background: white;
