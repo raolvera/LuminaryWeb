@@ -4,6 +4,7 @@ A modern, elegant restaurant website featuring a celestial-inspired design with 
 
 ## 🌟 Features
 
+### ✨ Core Features
 ### ✨Core Features
 
 - **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices
