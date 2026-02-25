@@ -55,6 +55,7 @@ table {
   --text-white: #ffffff;
   --dim-text: #cccccc;
   --border-color: #333333;
+  --accent: #FFD700;
 }
 
 body {
@@ -139,10 +140,10 @@ nav > a {
   text-decoration: none;
 }
 nav > a:hover {
-  color: #FFD700;
+  color: var(--accent);
 }
 .logo:hover {
-  color: #FFD700;
+  color: var(--accent);
 }
 .logo {
   color: white;
@@ -161,7 +162,7 @@ nav > a:hover {
   font-size: 14px;
 }
 .nav-links a:hover {
-  color: #FFD700;
+  color: var(--accent);
 }
 .btn-outline {
   border: 1px solid white;
@@ -170,8 +171,8 @@ nav > a:hover {
   text-decoration: none;
 }
 .btn-outline:hover {
-  color: #FFD700;
-  border-color: #FFD700;
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* Zig Zag Layout / Content Rows */
@@ -212,7 +213,7 @@ nav > a:hover {
   margin-top: 20px;
 }
 .arrow-link:hover {
-  color: #FFD700;
+  color: var(--accent);
 }
 
 /* Center all content in the section */
@@ -277,7 +278,7 @@ nav > a:hover {
 }
 
 .nav-arrow:hover {
-  color: #FFD700;
+  color: var(--accent);
 }
 
 /* 2x2 Grid for Menu Text */
@@ -340,7 +341,7 @@ footer {
   text-decoration: none;
 }
 .footer-col a:hover {
-  color: #FFD700;
+  color: var(--accent);
 }
 
 /* Column Alignments */
@@ -369,7 +370,7 @@ footer {
   text-decoration: none;
 }
 .copyright a:hover {
-  color: #FFD700;
+  color: var(--accent);
 }
 
 /* Social Media Icons */
