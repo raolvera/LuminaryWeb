@@ -1199,6 +1199,11 @@ footer {
         gap: 15px;
         flex-wrap: nowrap;
     }
+    .social-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
     .footer-grid { 
         grid-template-columns: 1fr 1fr; 
         gap: 40px;
@@ -1208,9 +1213,13 @@ footer {
         text-align: left;
     }
     .footer-bottom {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         margin-top: 60px;
         padding-bottom: 40px;
+        font-size: 11px;
+    }
+    .footer-legal {
+        white-space: nowrap;
     }
     .form-grid { 
         grid-template-columns: 1fr; 
