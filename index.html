@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="animations.css" />
     <link rel="stylesheet" href="skip-link.css" />
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="menu.js" defer></script>
     <script src="carousel.js" defer></script>
     <script src="accessibility.js" defer></script>
@@ -342,5 +343,16 @@
         <div class="copyright">&copy; <a href="index.html">Luminary</a> 2026</div>
       </div>
     </footer>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>

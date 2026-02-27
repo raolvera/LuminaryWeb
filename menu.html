@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="menu-styles.css" />
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="menu.js" defer></script>
     <script src="carousel.js"></script>
   </head>
@@ -262,5 +263,16 @@
         <div class="copyright">&copy; <a href="index.html">Luminary</a> 2026</div>
       </div>
     </footer>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
 </body>
 </html>
