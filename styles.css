@@ -173,7 +173,7 @@ nav > a:hover {
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
 }
 .nav-links a:hover {
   color: var(--accent);
@@ -219,7 +219,7 @@ nav > a:hover {
   padding-top: 0;
   margin-top: -20px;
   margin-bottom: 40px;
-  font-size: 2.5rem;
+  font-size: 3.2rem;
   font-weight: bold;
 }
 .arrow-link {
@@ -233,15 +233,42 @@ nav > a:hover {
   color: var(--accent);
 }
 
+.bg-dark-grey .arrow-link {
+  color: #000000;
+}
+.bg-dark-grey .arrow-link:hover {
+  color: var(--accent);
+}
+
+.bg-light-grey .arrow-link {
+  color: #000000;
+}
+.bg-light-grey .arrow-link:hover {
+  color: var(--accent);
+}
+
+.bg-light-grey {
+  background-color: #FFFAEC;
+  color: #000000; 
+}
+
+.bg-dark-grey {
+  background-color: #000000;
+  color: #ffffff;
+}
+
 /* Center all content in the section */
 .menu-carousel {
   text-align: center;
   padding: 80px 0;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .carousel-header h2 {
   font-size: 2.5rem;
   margin-bottom: 10px;
+  color: #ffffff;
 }
 .carousel-header h3 {
   font-size: 1.2rem;
@@ -332,6 +359,8 @@ footer {
   padding: 60px 0 80px 0;
   margin-top: 80px;
   overflow: hidden;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .footer-content {
@@ -616,17 +645,17 @@ footer {
 
 .content-text h3,
 .about-text h3,
-.content-text h2,
-.about-text h2 {
+.content-text h2:not(.section-title),
+.about-text h2:not(.section-title) {
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   margin-bottom: 10px;
   padding: 0 10px;
 }
 
 .about-text p,
 .content-text p {
-  line-height: 1.6;
+  line-height: 1.7;
   font-size: 1rem;
   padding: 0 10px;
 }
@@ -1220,10 +1249,13 @@ footer {
         flex-wrap: nowrap;
         margin-top: 60px;
         padding-bottom: 40px;
-        font-size: 11px;
+        font-size: 10px;
     }
     .footer-legal {
         white-space: nowrap;
+    }
+    .section-title {
+        font-size: 2rem;
     }
     .form-grid { 
         grid-template-columns: 1fr; 
@@ -1342,6 +1374,17 @@ footer {
         margin-top: 60px;
         padding-bottom: 40px;
     }
+    .content-text h2:not(.section-title),
+    .about-text h2:not(.section-title),
+    .content-text h3,
+    .about-text h3 {
+        font-size: 1.8rem;
+    }
+    .content-text p,
+    .about-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
 }
 
 /* XL devices (large desktops, 1441px and up) */
@@ -1362,6 +1405,17 @@ footer {
     .footer-bottom {
         margin-top: 60px;
         padding-bottom: 40px;
+    }
+    .content-text h2:not(.section-title),
+    .about-text h2:not(.section-title),
+    .content-text h3,
+    .about-text h3 {
+        font-size: 2rem;
+    }
+    .content-text p,
+    .about-text p {
+        font-size: 1.15rem;
+        line-height: 1.9;
     }
 }
 
