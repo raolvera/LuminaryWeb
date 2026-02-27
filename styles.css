@@ -1246,12 +1246,10 @@ footer {
         text-align: left;
     }
     .footer-bottom {
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         margin-top: 60px;
         padding-bottom: 40px;
-        font-size: 10px;
-        flex-direction: column;
-        gap: 0.5rem;
+        font-size: 9px;
     }
     .footer-legal {
         white-space: nowrap;
