@@ -56,6 +56,10 @@ table {
   --dim-text: #cccccc;
   --border-color: #333333;
   --accent: #FFD700;
+  --banner-bg: #333333;
+  --section-bg: #e0e0e0;
+  --card-bg: #f4f4f4;
+  --footer-bg: #000000;
 }
 
 body {
@@ -261,7 +265,7 @@ nav > a:hover {
 .menu-carousel {
   text-align: center;
   padding: 80px 0;
-  background-color: #000000;
+  background-color: var(--bg-black);
   color: #ffffff;
 }
 
@@ -359,7 +363,7 @@ footer {
   padding: 60px 0 80px 0;
   margin-top: 80px;
   overflow: hidden;
-  background-color: #000000;
+  background-color: var(--footer-bg);
   color: #ffffff;
 }
 
@@ -583,7 +587,7 @@ footer {
 
 /* About Header Banner */
 .about-banner {
-  background-color: #333333;
+  background-color: var(--banner-bg);
   padding: 80px 0;
   text-align: center;
   border-bottom: 1px solid var(--border-color);
@@ -722,13 +726,13 @@ footer {
   background-color: #cccccc;
 }
 .reservation-section {
-    background-color: #e0e0e0; 
+    background-color: var(--section-bg);
     padding: 80px 0;
     min-height: 60vh;
 }
 
 .form-container {
-    background: #f4f4f4;
+    background: var(--card-bg);
     max-width: 600px;
     margin: 0 auto;
     padding: 40px;
@@ -822,13 +826,14 @@ footer {
 
 .picker-content {
     background: #fff;
-    padding: 30px;
+    padding: 20px;
     border-radius: 8px;
     max-width: 500px;
     width: 90%;
     color: #000;
     max-height: 80vh;
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .picker-header {
@@ -875,16 +880,18 @@ footer {
 .day-header {
     text-align: center;
     font-weight: bold;
-    padding: 10px;
+    padding: 8px 2px;
     color: #000;
+    font-size: 13px;
 }
 
 .day {
     text-align: center;
-    padding: 15px;
+    padding: 10px 4px;
     cursor: pointer;
     border: 1px solid #ddd;
     color: #000;
+    font-size: 14px;
 }
 
 .day.empty {
@@ -965,14 +972,15 @@ footer {
 .reservation-section .card {
     width: 90%;
     max-width: 550px;
-    background: #f0f0f0;
+    background: var(--card-bg);
     padding: 40px;
     margin: 50px auto;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
 .card-inner {
-    background: #f0f0f0;
+    background: var(--card-bg);
     text-align: left;
 }
 
@@ -1262,14 +1270,74 @@ footer {
     .section-title {
         font-size: 2rem;
     }
-    .form-grid { 
-        grid-template-columns: 1fr; 
+    .form-grid {
+        grid-template-columns: 1fr;
     }
-    .full-width { 
-        grid-column: span 1; 
+    .full-width {
+        grid-column: span 1;
     }
-    .time-grid { 
-        grid-template-columns: 1fr; 
+    .time-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    /* Calendar mobile fixes */
+    .picker-content {
+        width: 92%;
+        padding: 15px;
+        max-height: 85vh;
+    }
+    .calendar-grid {
+        gap: 3px;
+    }
+    .day-header {
+        padding: 6px 1px;
+        font-size: 11px;
+    }
+    .day {
+        padding: 8px 2px;
+        font-size: 13px;
+    }
+    .month-nav button {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+    .month-nav {
+        margin-bottom: 15px;
+    }
+    .select-btn {
+        margin-top: 15px;
+        padding: 10px;
+    }
+    /* Form container mobile */
+    .form-container {
+        padding: 20px;
+        margin: 0 15px;
+    }
+    .reservation-section {
+        padding: 40px 0;
+    }
+    /* Confirmation card mobile */
+    .reservation-section .card {
+        width: auto;
+        margin: 30px 15px;
+        padding: 20px;
+    }
+    .details-box {
+        padding: 15px;
+    }
+    .detail-row {
+        font-size: 13px;
+    }
+    .btn-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .btn-container .btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .email-note {
+        font-size: 11px;
+        word-break: break-word;
     }
     .about-banner h1 { 
         font-size: 1.8rem; 

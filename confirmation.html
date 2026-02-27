@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation Confirmation | Luminary</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="content-loader.js" defer></script>
     <script src="menu.js" defer></script>
 </head>
 <body>
     <header>
         <nav class="container">
             <a href="index.html">
-                <div class="logo">Luminary</div>
+                <img src="images/logo.svg" alt="Luminary" class="logo" />
             </a>
             <div class="hamburger">
                 <span></span>
@@ -36,7 +41,7 @@
         </section>
 
         <section class="reservation-section">
-            <div class="card">
+            <div class="card confirmation-card">
                 <div class="card-inner">
                     <h2>Thank you for booking at Luminary.</h2>
                     <div class="sub-header">Here are your reservation details:</div>
@@ -48,19 +53,19 @@
                         </div>
                         <div class="detail-row">
                             <div class="sq-icon"></div>
-                            <span><strong>Date & Time:</strong><br><span id="confirmDate">Saturday, March 15</span> - <span id="confirmTime">6:30 PM</span></span>
+                            <span><strong>Date & Time:</strong><br><span id="confirmDate">—</span> - <span id="confirmTime">—</span></span>
                         </div>
                         <div class="detail-row">
                             <div class="sq-icon"></div>
-                            <span><strong>Party Size:</strong> <span id="confirmParty">2</span></span>
+                            <span><strong>Party Size:</strong> <span id="confirmParty">—</span></span>
                         </div>
-                        <div class="detail-row">
+                        <div class="detail-row" id="occasionRow" style="display:none;">
                             <div class="sq-icon"></div>
-                            <span><strong>Occasion:</strong> <span id="confirmOccasion">Anniversary</span></span>
+                            <span><strong>Occasion:</strong> <span id="confirmOccasion"></span></span>
                         </div>
                     </div>
 
-                    <p class="email-note">A confirmation email has been sent to: <strong id="confirmEmail">jasminea@gmail.com</strong></p>
+                    <p class="email-note">A confirmation email has been sent to: <strong id="confirmEmail">—</strong></p>
 
                     <div class="btn-container">
                         <a href="index.html" class="btn btn-home">Home</a>
@@ -72,40 +77,85 @@
     </main>
 
     <footer class="container">
-        <div class="footer-grid">
-            <div class="footer-col contact-info">
-                <h4>Contact Us</h4>
-                <p>0420 Solstice Way<br>Tempe, AZ 85281</p>
-                <p>(480) 888-5862</p>
-                <p>hello@luminary.com</p>
-                <p>events@luminary.com</p>
-                <p class="hours">Saturday-Sunday<br>10:00 AM 10:00 PM</p>
+      <div class="footer-content">
+        <div class="footer-logo-center">
+          <a href="index.html"><img src="images/logo.svg" alt="Luminary" class="footer-logo" /></a>
+          <div class="footer-col follow-us">
+            <h4>Follow Us</h4>
+            <div class="social-links">
+              <a href="https://instagram.com/luminaryrestaurant" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+                Instagram <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://facebook.com/luminaryrestaurant" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook">
+                Facebook <i class="fab fa-facebook"></i>
+              </a>
             </div>
-
-            <div class="footer-col helpful-links">
-                <h4>Helpful Links</h4>
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li>FAQs</li>
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li>Careers</li>
-                </ul>
-            </div>
-
-            <div class="footer-col follow-us">
-                <h4>Follow Us</h4>
-                <div class="social-links">
-                    <a href="https://instagram.com/luminaryrestaurant" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
-                        <i class="fab fa-instagram"></i> Instagram
-                    </a>
-                    <a href="https://facebook.com/luminaryrestaurant" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook">
-                        <i class="fab fa-facebook"></i> Facebook
-                    </a>
-                </div>
-                <div class="copyright">&copy; <a href="index.html">Luminary</a> 2026</div>
-            </div>
+          </div>
         </div>
+        <div class="footer-grid">
+          <div class="footer-col contact-info">
+            <h4>Contact Us</h4>
+            <p>0420 Solstice Way<br />Tempe, AZ 85281</p>
+            <p>(480) 888-5862</p>
+            <p><a href="mailto:hello@luminary.com">hello@luminary.com</a></p>
+            <p><a href="mailto:events@luminary.com">events@luminary.com</a></p>
+            <p class="hours">Saturday-Sunday<br />10:00 AM 10:00 PM</p>
+          </div>
+
+          <div class="footer-col helpful-links">
+            <h4>Helpful Links</h4>
+            <ul>
+              <li><a href="about.html">About</a></li>
+              <li>FAQs</li>
+              <li><a href="menu.html">Menu</a></li>
+              <li><a href="events.html">Events</a></li>
+              <li>Careers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <span class="separator">|</span>
+          <a href="#">Terms of Service</a>
+          <span class="separator">|</span>
+        </div>
+        <div class="copyright">&copy; <a href="index.html">Luminary</a> 2026</div>
+      </div>
     </footer>
+
+    <script>
+      // Populate confirmation details from URL parameters
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+
+        var date = params.get('date');
+        var time = params.get('time');
+        var partySize = params.get('party_size');
+        var occasion = params.get('occasion');
+        var email = params.get('email');
+
+        if (date) document.getElementById('confirmDate').textContent = date;
+        if (time) document.getElementById('confirmTime').textContent = time;
+        if (partySize) document.getElementById('confirmParty').textContent = partySize;
+        if (occasion) {
+          document.getElementById('confirmOccasion').textContent = occasion;
+          document.getElementById('occasionRow').style.display = 'flex';
+        }
+        if (email) document.getElementById('confirmEmail').textContent = email;
+      })();
+    </script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
 </body>
 </html>

@@ -8,6 +8,10 @@
     document.documentElement.style.setProperty('--text-white', theme.text_color);
     document.documentElement.style.setProperty('--accent', theme.accent_color);
     document.documentElement.style.setProperty('--border-color', theme.border_color);
+    if (theme.banner_bg_color) document.documentElement.style.setProperty('--banner-bg', theme.banner_bg_color);
+    if (theme.section_bg_color) document.documentElement.style.setProperty('--section-bg', theme.section_bg_color);
+    if (theme.card_bg_color) document.documentElement.style.setProperty('--card-bg', theme.card_bg_color);
+    if (theme.footer_bg_color) document.documentElement.style.setProperty('--footer-bg', theme.footer_bg_color);
     document.body.style.fontFamily = theme.font_family;
 
     const page = window.location.pathname.split('/').pop().replace('.html', '') || 'index';

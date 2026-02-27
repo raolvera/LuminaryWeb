@@ -25,6 +25,39 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('dateInput').addEventListener('click', openDatePicker);
   document.getElementById('timeInput').addEventListener('click', openTimePicker);
   renderCalendar();
+
+  // Handle form submission via fetch so we can redirect with data
+  var form = document.getElementById('reservationForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var formData = new FormData(form);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    }).then(function() {
+      // Build URL params for confirmation page
+      var params = new URLSearchParams();
+      params.set('date', formData.get('date'));
+      params.set('time', formData.get('time'));
+      params.set('party_size', formData.get('party_size'));
+      params.set('occasion', formData.get('occasion') || '');
+      params.set('name', formData.get('name'));
+      params.set('email', formData.get('email'));
+      window.location.href = '/confirmation.html?' + params.toString();
+    }).catch(function() {
+      // Even if fetch fails (e.g. local dev), still redirect with data
+      var params = new URLSearchParams();
+      params.set('date', formData.get('date'));
+      params.set('time', formData.get('time'));
+      params.set('party_size', formData.get('party_size'));
+      params.set('occasion', formData.get('occasion') || '');
+      params.set('name', formData.get('name'));
+      params.set('email', formData.get('email'));
+      window.location.href = '/confirmation.html?' + params.toString();
+    });
+  });
 });
 
 function openDatePicker() {
@@ -62,36 +95,36 @@ function changeMonth(direction) {
 }
 
 function renderCalendar() {
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
                       'July', 'August', 'September', 'October', 'November', 'December'];
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
   const today = new Date();
-  
+
   document.getElementById('monthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-  
+
   let calendarHTML = '<div class="calendar-grid">';
-  calendarHTML += '<div class="day-header">Sun</div><div class="day-header">Mon</div><div class="day-header">Tue</div>';
-  calendarHTML += '<div class="day-header">Wed</div><div class="day-header">Thu</div><div class="day-header">Fri</div><div class="day-header">Sat</div>';
-  
+  calendarHTML += '<div class="day-header">Su</div><div class="day-header">Mo</div><div class="day-header">Tu</div>';
+  calendarHTML += '<div class="day-header">We</div><div class="day-header">Th</div><div class="day-header">Fr</div><div class="day-header">Sa</div>';
+
   for (let i = 0; i < firstDay; i++) {
     calendarHTML += '<div class="day empty"></div>';
   }
-  
+
   for (let day = 1; day <= daysInMonth; day++) {
     const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const isToday = today.getDate() === day && today.getMonth() === currentMonth && today.getFullYear() === currentYear;
     const isBooked = bookedDates.includes(dateStr);
     const isPast = new Date(dateStr) < today.setHours(0,0,0,0);
-    
+
     let className = 'day';
     if (isToday) className += ' today';
     if (isBooked || isPast) className += ' booked';
     if (selectedDate === dateStr && !isBooked && !isPast) className += ' selected';
-    
+
     calendarHTML += `<div class="${className}" onclick="selectDate('${dateStr}', ${isBooked || isPast})">${day}</div>`;
   }
-  
+
   calendarHTML += '</div>';
   document.getElementById('calendar').innerHTML = calendarHTML;
 }
@@ -108,8 +141,8 @@ function confirmDate() {
     return;
   }
   const date = new Date(selectedDate);
-  document.getElementById('dateInput').value = date.toLocaleDateString('en-US', { 
-    month: 'long', day: 'numeric', year: 'numeric' 
+  document.getElementById('dateInput').value = date.toLocaleDateString('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric'
   });
   closeDatePicker();
 }
@@ -117,7 +150,7 @@ function confirmDate() {
 function renderTimeSlots() {
   const bookedTimesForDate = bookedTimes[selectedDate] || [];
   let timeSlotsHTML = '<div class="time-grid">';
-  
+
   availableTimes.forEach(time => {
     const isBooked = bookedTimesForDate.includes(time);
     const className = isBooked ? 'time-slot booked' : 'time-slot';
@@ -125,7 +158,7 @@ function renderTimeSlots() {
     const displayTime = convertTo12Hour(time);
     timeSlotsHTML += `<div class="${className}" ${onclick}>${displayTime}</div>`;
   });
-  
+
   timeSlotsHTML += '</div>';
   document.getElementById('timeSlots').innerHTML = timeSlotsHTML;
 }
@@ -137,6 +170,24 @@ function selectTime(time) {
 }
 
 function nextStep() {
+  // Validate step 1 fields
+  var partySize = document.getElementById('partySize').value;
+  var date = document.getElementById('dateInput').value;
+  var time = document.getElementById('timeInput').value;
+
+  if (!partySize) {
+    alert('Please select a party size');
+    return;
+  }
+  if (!date) {
+    alert('Please select a date');
+    return;
+  }
+  if (!time) {
+    alert('Please select a time');
+    return;
+  }
+
   document.getElementById('step1').classList.add('hidden');
   document.getElementById('step2').classList.remove('hidden');
   document.getElementById('stepIndicator').textContent = 'Step 2 of 2';
