@@ -2,23 +2,37 @@ let currentSlide = 1;
 const totalSlides = 5;
 const slideTitles = ['Appetizers', 'Desserts', 'Signature Plates', 'Beverages', 'Cocktails'];
 
+function updateCategoryDescriptions(categoryName) {
+  const descContainer = document.getElementById('category-descriptions');
+  if (!descContainer || !window.categoryDescriptions) return;
+  const descs = window.categoryDescriptions[categoryName] || [];
+  const paragraphs = descContainer.querySelectorAll('.cat-desc');
+  paragraphs.forEach((p, idx) => {
+    p.textContent = descs[idx] || '';
+  });
+}
+
 function showSlide(n) {
   const slides = document.querySelectorAll('.carousel-slide');
   const dots = document.querySelectorAll('.carousel-dots span');
   const titleElement = document.querySelector('.carousel-header h3');
-  
+
   if (n > totalSlides) currentSlide = 1;
   if (n < 1) currentSlide = totalSlides;
-  
+
   slides.forEach(slide => slide.classList.remove('active'));
   dots.forEach(dot => dot.textContent = '○');
-  
+
   slides[currentSlide - 1].classList.add('active');
   dots[currentSlide - 1].textContent = '●';
-  
+
   if (titleElement) {
     titleElement.textContent = slideTitles[currentSlide - 1];
   }
+
+  // Update category descriptions for the current slide
+  const categoryMap = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
+  updateCategoryDescriptions(categoryMap[currentSlide - 1]);
 }
 
 function nextSlide() {
