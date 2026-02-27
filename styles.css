@@ -1250,8 +1250,13 @@ footer {
         margin-top: 60px;
         padding-bottom: 40px;
         font-size: 10px;
+        flex-direction: column;
+        gap: 0.5rem;
     }
     .footer-legal {
+        white-space: nowrap;
+    }
+    .copyright {
         white-space: nowrap;
     }
     .section-title {
