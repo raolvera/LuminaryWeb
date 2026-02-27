@@ -7,6 +7,18 @@
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("login", function (user) {
+        if (user && user.token) {
+          user.token.access_token &&
+            fetch("/.netlify/functions/set-admin-role", {
+              headers: { Authorization: "Bearer " + user.token.access_token },
+            }).catch(function () {});
+        }
+      });
+    }
+  </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
