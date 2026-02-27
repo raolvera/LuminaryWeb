@@ -1273,6 +1273,7 @@ footer {
     }
     .footer-legal {
         white-space: nowrap;
+        font-size: 8px;
     }
     .copyright {
         white-space: nowrap;
@@ -1317,6 +1318,12 @@ footer {
     .select-btn {
         margin-top: 15px;
         padding: 10px;
+    }
+    /* Next button mobile - move up into form */
+    .btn-next {
+        margin-top: 10px;
+        float: none;
+        width: 100%;
     }
     /* Form container mobile */
     .form-container {
