@@ -3,5 +3,9 @@
   "text_color": "#ffffff",
   "accent_color": "#FFD700",
   "border_color": "#333333",
+  "banner_bg_color": "#333333",
+  "section_bg_color": "#e0e0e0",
+  "card_bg_color": "#f4f4f4",
+  "footer_bg_color": "#000000",
   "font_family": "Arial, sans-serif"
 }

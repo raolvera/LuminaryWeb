@@ -17,6 +17,10 @@ collections:
           - {label: "Text Color", name: "text_color", widget: "color", default: "#ffffff"}
           - {label: "Accent Color (Gold)", name: "accent_color", widget: "color", default: "#FFD700"}
           - {label: "Border Color", name: "border_color", widget: "color", default: "#333333"}
+          - {label: "Banner Background Color", name: "banner_bg_color", widget: "color", default: "#333333"}
+          - {label: "Section Background Color", name: "section_bg_color", widget: "color", default: "#e0e0e0"}
+          - {label: "Card / Form Background Color", name: "card_bg_color", widget: "color", default: "#f4f4f4"}
+          - {label: "Footer Background Color", name: "footer_bg_color", widget: "color", default: "#000000"}
           - label: "Font Family"
             name: "font_family"
             widget: "select"
