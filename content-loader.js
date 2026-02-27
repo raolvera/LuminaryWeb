@@ -89,6 +89,39 @@
       if (chefImg && about.chef_image) chefImg.src = about.chef_image;
     }
     
+    if (page === 'menu') {
+      const menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
+      const categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
+      const grouped = {};
+      menuItems.forEach(item => {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
+      Object.values(grouped).forEach(arr => arr.sort((a, b) => (a.order || 0) - (b.order || 0)));
+
+      const slides = document.querySelectorAll('.carousel-slide');
+      categoryOrder.forEach((cat, i) => {
+        const slide = slides[i];
+        if (!slide || !grouped[cat]) return;
+        const items = grouped[cat];
+
+        const img = slide.querySelector('.image-display img');
+        if (img && items[0] && items[0].image) {
+          img.src = items[0].image;
+          img.alt = items[0].name;
+        }
+
+        const textItems = slide.querySelectorAll('.menu-text-item');
+        items.forEach((item, j) => {
+          if (!textItems[j]) return;
+          const h4 = textItems[j].querySelector('h4');
+          const p = textItems[j].querySelector('p');
+          if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
+          if (p) p.textContent = item.description;
+        });
+      });
+    }
+
     if (page === 'events') {
       const events = await fetch('/content/events.json').then(r => r.json());
       
