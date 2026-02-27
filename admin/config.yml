@@ -94,14 +94,18 @@ collections:
     label: "Menu Items"
     folder: "content/menu"
     create: true
+    format: "json"
+    extension: "json"
+    identifier_field: "name"
+    summary: "{{category}} - {{name}} (${{price}})"
     slug: "{{category}}-{{slug}}"
     fields:
       - {label: "Category", name: "category", widget: "select", options: ["Appetizers", "Desserts", "Entrees", "Beverages", "Cocktails"]}
       - {label: "Item Name", name: "name", widget: "string"}
-      - {label: "Price", name: "price", widget: "number"}
+      - {label: "Price", name: "price", widget: "number", value_type: "int", min: 1}
       - {label: "Menu Description", name: "description", widget: "text"}
       - {label: "Menu Item Image", name: "image", widget: "image"}
-      - {label: "Order", name: "order", widget: "number", default: 0}
+      - {label: "Order", name: "order", widget: "number", default: 0, value_type: "int"}
 
   - name: "hero"
     label: "Hero Images"
