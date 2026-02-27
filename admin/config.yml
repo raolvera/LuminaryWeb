@@ -44,35 +44,51 @@ collections:
           - {label: "Hero Description", name: "hero_description", widget: "text"}
           - {label: "Hero Image", name: "hero_image", widget: "image"}
           - {label: "Story Title", name: "story_title", widget: "string"}
-          - {label: "Story Text", name: "story_text", widget: "text"}
+          - {label: "Story Paragraph", name: "story_text", widget: "text"}
           - {label: "Story Video", name: "story_video", widget: "file", required: false}
+          - {label: "Story Image", name: "story_image", widget: "image", required: false}
           - {label: "Chef Philosophy Title", name: "chef_title", widget: "string"}
-          - {label: "Chef Philosophy Text", name: "chef_text", widget: "text"}
+          - {label: "Chef Philosophy Paragraph", name: "chef_text", widget: "text"}
+          - {label: "Chef Video", name: "chef_video", widget: "file", required: false}
           - {label: "Chef Image", name: "chef_image", widget: "image"}
 
       - name: "about"
         label: "About Page"
         file: "content/about.json"
         fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image"}
           - {label: "Page Title", name: "page_title", widget: "string"}
           - {label: "Story Title", name: "story_title", widget: "string"}
-          - {label: "Story Text", name: "story_text", widget: "text"}
+          - {label: "Story Paragraph 1", name: "story_text_1", widget: "text"}
+          - {label: "Story Paragraph 2", name: "story_text_2", widget: "text"}
           - {label: "Story Video", name: "story_video", widget: "file", required: false}
+          - {label: "Story Image", name: "story_image", widget: "image"}
+          - {label: "Story Paragraph 3", name: "story_text_3", widget: "text"}
+          - {label: "Story Paragraph 4", name: "story_text_4", widget: "text"}
           - {label: "Chef Philosophy Title", name: "chef_title", widget: "string"}
-          - {label: "Chef Philosophy Text", name: "chef_text", widget: "text"}
+          - {label: "Chef Philosophy Paragraph 1", name: "chef_text_1", widget: "text"}
+          - {label: "Chef Philosophy Paragraph 2", name: "chef_text_2", widget: "text"}
+          - {label: "Chef Video", name: "chef_video", widget: "file", required: false}
           - {label: "Chef Image", name: "chef_image", widget: "image"}
+          - {label: "Chef Philosophy Paragraph 3", name: "chef_text_3", widget: "text"}
+          - {label: "Chef Philosophy Paragraph 4", name: "chef_text_4", widget: "text"}
 
       - name: "events"
         label: "Events Page"
         file: "content/events.json"
         fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image"}
           - {label: "Page Title", name: "page_title", widget: "string"}
-          - {label: "Main Title", name: "main_title", widget: "string"}
-          - {label: "Main Description", name: "main_description", widget: "text"}
-          - {label: "Main Image", name: "main_image", widget: "image"}
-          - {label: "Secondary Title", name: "secondary_title", widget: "string"}
-          - {label: "Secondary Description", name: "secondary_description", widget: "text"}
-          - {label: "Secondary Image", name: "secondary_image", widget: "image"}
+          - {label: "Private Dining Title", name: "private_title", widget: "string"}
+          - {label: "Private Dining Paragraph 1", name: "private_text_1", widget: "text"}
+          - {label: "Private Dining Paragraph 2", name: "private_text_2", widget: "text"}
+          - {label: "Private Dining Image", name: "private_image", widget: "image"}
+          - {label: "Private Dining Video", name: "private_video", widget: "file", required: false}
+          - {label: "Event Hosting Title", name: "hosting_title", widget: "string"}
+          - {label: "Event Hosting Paragraph 1", name: "hosting_text_1", widget: "text"}
+          - {label: "Event Hosting Paragraph 2", name: "hosting_text_2", widget: "text"}
+          - {label: "Event Hosting Video", name: "hosting_video", widget: "file", required: false}
+          - {label: "Event Hosting Image", name: "hosting_image", widget: "image", required: false}
 
   - name: "menu"
     label: "Menu Items"
@@ -83,6 +99,19 @@ collections:
       - {label: "Category", name: "category", widget: "select", options: ["Appetizers", "Desserts", "Entrees", "Beverages", "Cocktails"]}
       - {label: "Item Name", name: "name", widget: "string"}
       - {label: "Price", name: "price", widget: "number"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Menu Description", name: "description", widget: "text"}
+      - {label: "Menu Item Image", name: "image", widget: "image"}
       - {label: "Order", name: "order", widget: "number", default: 0}
+
+  - name: "hero"
+    label: "Hero Images"
+    files:
+      - name: "heroes"
+        label: "Page Hero Images"
+        file: "content/heroes.json"
+        fields:
+          - {label: "Home Hero Image", name: "home_hero", widget: "image"}
+          - {label: "About Hero Image", name: "about_hero", widget: "image"}
+          - {label: "Menu Hero Image", name: "menu_hero", widget: "image"}
+          - {label: "Events Hero Image", name: "events_hero", widget: "image"}
+          - {label: "Book Hero Image", name: "book_hero", widget: "image"}

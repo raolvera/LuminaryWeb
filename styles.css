@@ -1379,17 +1379,6 @@ footer {
         margin-top: 60px;
         padding-bottom: 40px;
     }
-    .content-text h2:not(.section-title),
-    .about-text h2:not(.section-title),
-    .content-text h3,
-    .about-text h3 {
-        font-size: 1.8rem;
-    }
-    .content-text p,
-    .about-text p {
-        font-size: 1.1rem;
-        line-height: 1.8;
-    }
 }
 
 /* XL devices (large desktops, 1441px and up) */
@@ -1410,17 +1399,6 @@ footer {
     .footer-bottom {
         margin-top: 60px;
         padding-bottom: 40px;
-    }
-    .content-text h2:not(.section-title),
-    .about-text h2:not(.section-title),
-    .content-text h3,
-    .about-text h3 {
-        font-size: 2rem;
-    }
-    .content-text p,
-    .about-text p {
-        font-size: 1.15rem;
-        line-height: 1.9;
     }
 }
 

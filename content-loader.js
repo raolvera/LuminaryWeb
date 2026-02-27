@@ -1,10 +1,8 @@
 // Content Loader - Loads CMS content from JSON files
 (async function() {
-  // Prevent flash of content change
   document.body.style.opacity = '0';
   
   try {
-    // Load theme settings
     const theme = await fetch('/content/theme.json').then(r => r.json());
     document.documentElement.style.setProperty('--bg-black', theme.bg_color);
     document.documentElement.style.setProperty('--text-white', theme.text_color);
@@ -12,13 +10,11 @@
     document.documentElement.style.setProperty('--border-color', theme.border_color);
     document.body.style.fontFamily = theme.font_family;
 
-    // Load page-specific content
     const page = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
     
     if (page === 'index' || page === '') {
       const home = await fetch('/content/home.json').then(r => r.json());
       
-      // Hero section
       document.querySelector('.hero h1').textContent = home.hero_title;
       document.querySelector('.hero p').textContent = home.hero_description;
       if (home.hero_image) {
@@ -26,19 +22,20 @@
         heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${home.hero_image})`;
       }
       
-      // Our Story section
-      document.querySelector('.content-text h3').textContent = home.story_title;
-      document.querySelector('.content-text p').textContent = home.story_text;
+      const storySection = document.querySelectorAll('.content-text')[0];
+      storySection.querySelector('h2').textContent = home.story_title;
+      storySection.querySelector('p').textContent = home.story_text;
       if (home.story_video) {
         document.querySelector('.video-placeholder source').src = home.story_video;
         document.querySelector('.video-placeholder video').load();
       }
       
-      // Chef Philosophy section
       const chefSection = document.querySelectorAll('.content-text')[1];
-      chefSection.querySelector('h3').textContent = home.chef_title;
+      chefSection.querySelector('h2').textContent = home.chef_title;
       chefSection.querySelector('p').textContent = home.chef_text;
-      document.querySelector('.image-placeholder img').src = home.chef_image;
+      if (home.chef_image) {
+        document.querySelector('.image-placeholder img').src = home.chef_image;
+      }
     }
     
     if (page === 'about') {
@@ -47,20 +44,49 @@
       document.querySelector('.about-banner h1').textContent = about.page_title;
       
       const sections = document.querySelectorAll('.content-text');
-      sections[0].querySelector('h2').textContent = about.story_title;
-      sections[0].querySelector('p').textContent = about.story_text;
+      const storyTitle = sections[0].querySelector('.section-title');
+      if (storyTitle) storyTitle.textContent = about.story_title;
+      
+      const storyParas = sections[0].querySelectorAll('p');
+      if (storyParas[0]) storyParas[0].textContent = about.story_text_1;
+      if (storyParas[1]) storyParas[1].textContent = about.story_text_2;
       
       if (about.story_video) {
-        document.querySelector('.video-placeholder source').src = about.story_video;
-        document.querySelector('.video-placeholder video').load();
+        const storyVideo = document.querySelector('.video-placeholder source');
+        if (storyVideo) {
+          storyVideo.src = about.story_video;
+          storyVideo.parentElement.load();
+        }
       }
       
-      sections[1].querySelector('h2').textContent = about.chef_title;
-      sections[1].querySelector('p').textContent = about.chef_text;
+      const storyParas2 = sections[1].querySelectorAll('p');
+      if (storyParas2[0]) storyParas2[0].textContent = about.story_text_3;
+      if (storyParas2[1]) storyParas2[1].textContent = about.story_text_4;
       
-      if (about.chef_image) {
-        document.querySelector('.image-placeholder img').src = about.chef_image;
+      const storyImg = document.querySelector('.image-placeholder img');
+      if (storyImg && about.story_image) storyImg.src = about.story_image;
+      
+      const chefTitle = sections[2].querySelector('.section-title');
+      if (chefTitle) chefTitle.textContent = about.chef_title;
+      
+      const chefParas = sections[2].querySelectorAll('p');
+      if (chefParas[0]) chefParas[0].textContent = about.chef_text_1;
+      if (chefParas[1]) chefParas[1].textContent = about.chef_text_2;
+      
+      if (about.chef_video) {
+        const chefVideos = document.querySelectorAll('.video-placeholder source');
+        if (chefVideos[1]) {
+          chefVideos[1].src = about.chef_video;
+          chefVideos[1].parentElement.load();
+        }
       }
+      
+      const chefParas2 = sections[3].querySelectorAll('p');
+      if (chefParas2[0]) chefParas2[0].textContent = about.chef_text_3;
+      if (chefParas2[1]) chefParas2[1].textContent = about.chef_text_4;
+      
+      const chefImg = document.querySelectorAll('.image-placeholder img')[1];
+      if (chefImg && about.chef_image) chefImg.src = about.chef_image;
     }
     
     if (page === 'events') {
@@ -69,24 +95,34 @@
       document.querySelector('.about-banner h1').textContent = events.page_title;
       
       const sections = document.querySelectorAll('.content-text');
-      sections[0].querySelector('h2').textContent = events.main_title;
-      sections[0].querySelector('p').textContent = events.main_description;
+      sections[0].querySelector('h2').textContent = events.private_title;
       
-      const images = document.querySelectorAll('.image-placeholder img');
-      if (events.main_image) images[0].src = events.main_image;
+      const privateParas = sections[0].querySelectorAll('p');
+      if (privateParas[0]) privateParas[0].textContent = events.private_text_1;
+      if (privateParas[1]) privateParas[1].textContent = events.private_text_2;
       
-      sections[1].querySelector('h2').textContent = events.secondary_title;
-      sections[1].querySelector('p').textContent = events.secondary_description;
+      const privateImg = document.querySelector('.image-placeholder img');
+      if (privateImg && events.private_image) privateImg.src = events.private_image;
       
-      if (events.secondary_image) images[1].src = events.secondary_image;
+      sections[1].querySelector('h2').textContent = events.hosting_title;
+      
+      const hostingParas = sections[1].querySelectorAll('p');
+      if (hostingParas[0]) hostingParas[0].textContent = events.hosting_text_1;
+      if (hostingParas[1]) hostingParas[1].textContent = events.hosting_text_2;
+      
+      if (events.hosting_video) {
+        const hostingVideo = document.querySelector('.video-placeholder source');
+        if (hostingVideo) {
+          hostingVideo.src = events.hosting_video;
+          hostingVideo.parentElement.load();
+        }
+      }
     }
     
   } catch (error) {
     console.log('Content loading skipped:', error.message);
-    // Fallback: content stays as hardcoded in HTML
   }
   
-  // Fade in page after content loads
   document.body.style.transition = 'opacity 0.3s';
   document.body.style.opacity = '1';
 })();
