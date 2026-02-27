@@ -90,6 +90,31 @@ collections:
           - {label: "Event Hosting Video", name: "hosting_video", widget: "file", required: false}
           - {label: "Event Hosting Image", name: "hosting_image", widget: "image", required: false}
 
+      - name: "menu-categories"
+        label: "Menu Category Descriptions"
+        file: "content/menu-categories.json"
+        fields:
+          - {label: "Appetizers Description 1", name: "appetizers_desc_1", widget: "text"}
+          - {label: "Appetizers Description 2", name: "appetizers_desc_2", widget: "text"}
+          - {label: "Appetizers Description 3", name: "appetizers_desc_3", widget: "text"}
+          - {label: "Appetizers Description 4", name: "appetizers_desc_4", widget: "text"}
+          - {label: "Desserts Description 1", name: "desserts_desc_1", widget: "text"}
+          - {label: "Desserts Description 2", name: "desserts_desc_2", widget: "text"}
+          - {label: "Desserts Description 3", name: "desserts_desc_3", widget: "text"}
+          - {label: "Desserts Description 4", name: "desserts_desc_4", widget: "text"}
+          - {label: "Entrees Description 1", name: "entrees_desc_1", widget: "text"}
+          - {label: "Entrees Description 2", name: "entrees_desc_2", widget: "text"}
+          - {label: "Entrees Description 3", name: "entrees_desc_3", widget: "text"}
+          - {label: "Entrees Description 4", name: "entrees_desc_4", widget: "text"}
+          - {label: "Beverages Description 1", name: "beverages_desc_1", widget: "text"}
+          - {label: "Beverages Description 2", name: "beverages_desc_2", widget: "text"}
+          - {label: "Beverages Description 3", name: "beverages_desc_3", widget: "text"}
+          - {label: "Beverages Description 4", name: "beverages_desc_4", widget: "text"}
+          - {label: "Cocktails Description 1", name: "cocktails_desc_1", widget: "text"}
+          - {label: "Cocktails Description 2", name: "cocktails_desc_2", widget: "text"}
+          - {label: "Cocktails Description 3", name: "cocktails_desc_3", widget: "text"}
+          - {label: "Cocktails Description 4", name: "cocktails_desc_4", widget: "text"}
+
   - name: "menu"
     label: "Menu Items"
     folder: "content/menu"

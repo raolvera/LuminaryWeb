@@ -91,7 +91,9 @@
     
     if (page === 'menu') {
       const menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
+      const menuCats = await fetch('/content/menu-categories.json').then(r => r.json());
       const categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
+      const categoryKeys = ['appetizers', 'desserts', 'entrees', 'beverages', 'cocktails'];
       const grouped = {};
       menuItems.forEach(item => {
         if (!grouped[item.category]) grouped[item.category] = [];
@@ -120,6 +122,31 @@
           if (p) p.textContent = item.description;
         });
       });
+
+      // Build category descriptions lookup and set initial descriptions
+      const catDescriptions = {};
+      categoryOrder.forEach((cat, i) => {
+        const key = categoryKeys[i];
+        catDescriptions[cat] = [
+          menuCats[key + '_desc_1'] || '',
+          menuCats[key + '_desc_2'] || '',
+          menuCats[key + '_desc_3'] || '',
+          menuCats[key + '_desc_4'] || ''
+        ];
+      });
+
+      // Store on window for carousel.js to access
+      window.categoryDescriptions = catDescriptions;
+
+      // Set initial descriptions for first category
+      const descContainer = document.getElementById('category-descriptions');
+      if (descContainer) {
+        const descParagraphs = descContainer.querySelectorAll('.cat-desc');
+        const initialDescs = catDescriptions[categoryOrder[0]] || [];
+        descParagraphs.forEach((p, idx) => {
+          p.textContent = initialDescs[idx] || '';
+        });
+      }
     }
 
     if (page === 'events') {
