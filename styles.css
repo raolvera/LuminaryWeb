@@ -748,8 +748,9 @@ footer {
 }
 .field input, .field select, .field textarea {
     padding: 10px;
-    border: 1px solid #ccc;
-    background: #fff;
+    border: 1px solid var(--book-input-border, #ccc);
+    background: var(--book-input-bg, #fff);
+    color: var(--book-input-text, #000);
 }
 
 .field textarea {
@@ -808,12 +809,12 @@ footer {
 }
 
 .picker-content {
-    background: #fff;
+    background: var(--book-picker-bg, #fff);
     padding: 20px;
     border-radius: 8px;
     max-width: 500px;
     width: 90%;
-    color: #000;
+    color: var(--book-picker-text, #000);
     max-height: 80vh;
     overflow-y: auto;
     box-sizing: border-box;
@@ -828,7 +829,7 @@ footer {
 
 .picker-header h3 {
     margin: 0;
-    color: #000;
+    color: var(--book-picker-text, #000);
 }
 
 .close-picker {
@@ -836,7 +837,7 @@ footer {
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #000;
+    color: var(--book-picker-text, #000);
 }
 
 .month-nav {
@@ -864,7 +865,7 @@ footer {
     text-align: center;
     font-weight: bold;
     padding: 8px 2px;
-    color: #000;
+    color: var(--book-picker-text, #000);
     font-size: 13px;
 }
 
@@ -873,7 +874,7 @@ footer {
     padding: 10px 4px;
     cursor: pointer;
     border: 1px solid #ddd;
-    color: #000;
+    color: var(--book-picker-text, #000);
     font-size: 14px;
 }
 
@@ -883,8 +884,8 @@ footer {
 }
 
 .day.today {
-    background: #999;
-    color: #fff;
+    background: var(--book-today-bg, #999);
+    color: var(--book-today-text, #fff);
 }
 
 .day.booked {
@@ -925,7 +926,7 @@ footer {
     text-align: center;
     border: 1px solid #ddd;
     cursor: pointer;
-    color: #000;
+    color: var(--book-picker-text, #000);
     font-size: 13px;
 }
 
@@ -942,7 +943,7 @@ footer {
 
 .field input[readonly] {
     cursor: pointer;
-    background: #fff;
+    background: var(--book-input-bg, #fff);
 }
 
 .email-note {

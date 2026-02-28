@@ -276,6 +276,31 @@
       if (bc.button_text) {
         document.documentElement.style.setProperty('--book-btn-text', bc.button_text);
       }
+
+      // Apply input / dropdown colors
+      if (bc.input_bg) {
+        document.documentElement.style.setProperty('--book-input-bg', bc.input_bg);
+      }
+      if (bc.input_text) {
+        document.documentElement.style.setProperty('--book-input-text', bc.input_text);
+      }
+      if (bc.input_border) {
+        document.documentElement.style.setProperty('--book-input-border', bc.input_border);
+      }
+
+      // Apply calendar / picker modal colors
+      if (bc.picker_bg) {
+        document.documentElement.style.setProperty('--book-picker-bg', bc.picker_bg);
+      }
+      if (bc.picker_text) {
+        document.documentElement.style.setProperty('--book-picker-text', bc.picker_text);
+      }
+      if (bc.calendar_today_bg) {
+        document.documentElement.style.setProperty('--book-today-bg', bc.calendar_today_bg);
+      }
+      if (bc.calendar_today_text) {
+        document.documentElement.style.setProperty('--book-today-text', bc.calendar_today_text);
+      }
     }
 
     if (page === 'confirmation') {

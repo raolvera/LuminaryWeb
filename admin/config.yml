@@ -96,6 +96,13 @@ collections:
               - {label: "Form Text Color", name: "form_text", widget: "color", default: "#000000"}
               - {label: "Button Background Color", name: "button_bg", widget: "color", default: "#000000"}
               - {label: "Button Text Color", name: "button_text", widget: "color", default: "#ffffff"}
+              - {label: "Input / Dropdown Background Color", name: "input_bg", widget: "color", default: "#ffffff"}
+              - {label: "Input / Dropdown Text Color", name: "input_text", widget: "color", default: "#000000"}
+              - {label: "Input / Dropdown Border Color", name: "input_border", widget: "color", default: "#cccccc"}
+              - {label: "Calendar / Time Picker Background", name: "picker_bg", widget: "color", default: "#ffffff"}
+              - {label: "Calendar / Time Picker Text Color", name: "picker_text", widget: "color", default: "#000000"}
+              - {label: "Calendar Today Highlight Background", name: "calendar_today_bg", widget: "color", default: "#999999"}
+              - {label: "Calendar Today Highlight Text", name: "calendar_today_text", widget: "color", default: "#ffffff"}
 
           - label: "Confirmation Page Colors"
             name: "confirmation"

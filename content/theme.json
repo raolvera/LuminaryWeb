@@ -42,7 +42,14 @@
     "form_bg": "#fffaec",
     "form_text": "#000000",
     "button_bg": "#000000",
-    "button_text": "#ffffff"
+    "button_text": "#ffffff",
+    "input_bg": "#ffffff",
+    "input_text": "#000000",
+    "input_border": "#cccccc",
+    "picker_bg": "#ffffff",
+    "picker_text": "#000000",
+    "calendar_today_bg": "#999999",
+    "calendar_today_text": "#ffffff"
   },
   "confirmation": {
     "banner_bg": "#333333",
