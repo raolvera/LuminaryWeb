@@ -165,7 +165,10 @@ nav > a:hover {
   width: auto;
   display: block;
 }
-.logo:hover {
+.logo-mobile {
+  display: none;
+}
+.logo:hover, .logo-mobile:hover {
   opacity: 0.8;
 }
 .nav-links {
@@ -1096,7 +1099,12 @@ footer {
         align-items: center;
     }
     .logo {
-        content: url('images/logo2.png');
+        display: none;
+    }
+    .logo-mobile {
+        display: block;
+        height: 50px;
+        width: auto;
     }
     .nav-links {
         position: fixed;
@@ -1359,8 +1367,16 @@ footer {
 
 /* Medium devices (tablets, 769px to 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .container { 
-        padding: 0 30px; 
+    .logo {
+        display: none;
+    }
+    .logo-mobile {
+        display: block;
+        height: 50px;
+        width: auto;
+    }
+    .container {
+        padding: 0 30px;
     }
     .content-text, .about-text { 
         padding: 0 20px; 
