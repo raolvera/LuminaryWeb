@@ -1,11 +1,45 @@
 {
-  "section_bg_color": "#e0e0e0",
-  "bg_color": "#000000",
-  "footer_bg_color": "#4c444e",
-  "accent_color": "#FFD700",
-  "border_color": "#333333",
-  "text_color": "#ffffff",
   "font_family": "Arial, sans-serif",
-  "card_bg_color": "#fffaec",
-  "banner_bg_color": "#333333"
+  "global": {
+    "header_bg": "#000000",
+    "accent_color": "#FFD700",
+    "border_color": "#333333",
+    "footer_bg": "#4c444e",
+    "footer_text": "#ffffff"
+  },
+  "home": {
+    "story_bg": "#FFFAEC",
+    "story_text": "#000000",
+    "chef_bg": "#e0e0e0",
+    "chef_text": "#000000",
+    "menu_bg": "#000000",
+    "menu_text": "#ffffff"
+  },
+  "about": {
+    "banner_bg": "#333333",
+    "banner_text": "#ffffff",
+    "story_bg": "#f4f4f4",
+    "story_text": "#000000",
+    "chef_bg": "#e0e0e0",
+    "chef_text": "#000000"
+  },
+  "menu": {
+    "bg": "#000000",
+    "text": "#ffffff"
+  },
+  "events": {
+    "banner_bg": "#333333",
+    "banner_text": "#ffffff",
+    "private_bg": "#f4f4f4",
+    "private_text": "#000000",
+    "hosting_bg": "#e0e0e0",
+    "hosting_text": "#000000"
+  },
+  "book": {
+    "banner_bg": "#333333",
+    "banner_text": "#ffffff",
+    "section_bg": "#e0e0e0",
+    "form_bg": "#fffaec",
+    "form_text": "#000000"
+  }
 }

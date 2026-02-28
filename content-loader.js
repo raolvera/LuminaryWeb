@@ -1,136 +1,189 @@
 // Content Loader - Loads CMS content from JSON files
 (async function() {
   document.body.style.opacity = '0';
-  
+
   try {
     const theme = await fetch('/content/theme.json').then(r => r.json());
-    document.documentElement.style.setProperty('--bg-black', theme.bg_color);
-    document.documentElement.style.setProperty('--text-white', theme.text_color);
-    document.documentElement.style.setProperty('--accent', theme.accent_color);
-    document.documentElement.style.setProperty('--border-color', theme.border_color);
-    if (theme.banner_bg_color) document.documentElement.style.setProperty('--banner-bg', theme.banner_bg_color);
-    if (theme.section_bg_color) document.documentElement.style.setProperty('--section-bg', theme.section_bg_color);
-    if (theme.card_bg_color) document.documentElement.style.setProperty('--card-bg', theme.card_bg_color);
-    if (theme.footer_bg_color) document.documentElement.style.setProperty('--footer-bg', theme.footer_bg_color);
-    document.body.style.fontFamily = theme.font_family;
+
+    // Apply global colors
+    var g = theme.global || {};
+    document.documentElement.style.setProperty('--bg-black', g.header_bg || '#000000');
+    document.documentElement.style.setProperty('--accent', g.accent_color || '#FFD700');
+    document.documentElement.style.setProperty('--border-color', g.border_color || '#333333');
+    document.documentElement.style.setProperty('--footer-bg', g.footer_bg || '#000000');
+    document.documentElement.style.setProperty('--text-white', g.footer_text || '#ffffff');
+
+    // Apply header background
+    var header = document.querySelector('header');
+    if (header) header.style.backgroundColor = g.header_bg || '#000000';
+
+    // Apply footer colors
+    var footer = document.querySelector('footer');
+    if (footer) {
+      footer.style.backgroundColor = g.footer_bg || '#000000';
+      footer.style.color = g.footer_text || '#ffffff';
+    }
+
+    // Apply font
+    if (theme.font_family) document.body.style.fontFamily = theme.font_family;
+
+    // Helper to apply bg + text color to an element
+    function applyColors(el, bg, text) {
+      if (!el) return;
+      if (bg) el.style.backgroundColor = bg;
+      if (text) el.style.color = text;
+    }
 
     const page = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
-    
+
     if (page === 'index' || page === '') {
-      const home = await fetch('/content/home.json').then(r => r.json());
-      
+      var home = await fetch('/content/home.json').then(r => r.json());
+      var hc = theme.home || {};
+
       document.querySelector('.hero h1').textContent = home.hero_title;
       document.querySelector('.hero p').textContent = home.hero_description;
       if (home.hero_image) {
-        const heroSection = document.querySelector('.hero');
-        heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${home.hero_image})`;
+        var heroSection = document.querySelector('.hero');
+        heroSection.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(' + home.hero_image + ')';
       }
-      
-      const storySection = document.querySelectorAll('.content-text')[0];
+
+      // Apply Home page section colors
+      var sections = document.querySelectorAll('.section-wrapper');
+
+      // Our Story section (first section-wrapper)
+      applyColors(sections[0], hc.story_bg, hc.story_text);
+
+      // Chef Philosophy section (second section-wrapper)
+      applyColors(sections[1], hc.chef_bg, hc.chef_text);
+
+      // Menu section (third section-wrapper)
+      applyColors(sections[2], hc.menu_bg, hc.menu_text);
+
+      var storySection = document.querySelectorAll('.content-text')[0];
       storySection.querySelector('h2').textContent = home.story_title;
       storySection.querySelector('p').textContent = home.story_text;
       if (home.story_video) {
         document.querySelector('.video-placeholder source').src = home.story_video;
         document.querySelector('.video-placeholder video').load();
       }
-      
-      const chefSection = document.querySelectorAll('.content-text')[1];
+
+      var chefSection = document.querySelectorAll('.content-text')[1];
       chefSection.querySelector('h2').textContent = home.chef_title;
       chefSection.querySelector('p').textContent = home.chef_text;
       if (home.chef_image) {
         document.querySelector('.image-placeholder img').src = home.chef_image;
       }
     }
-    
+
     if (page === 'about') {
-      const about = await fetch('/content/about.json').then(r => r.json());
-      
+      var about = await fetch('/content/about.json').then(r => r.json());
+      var ac = theme.about || {};
+
+      // Apply About page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, ac.banner_bg, ac.banner_text);
+
       document.querySelector('.about-banner h1').textContent = about.page_title;
-      
-      const sections = document.querySelectorAll('.content-text');
-      const storyTitle = sections[0].querySelector('.section-title');
+
+      // Apply About page section colors
+      var sections = document.querySelectorAll('.section-wrapper');
+
+      // Our Story section
+      applyColors(sections[0], ac.story_bg, ac.story_text);
+
+      // Chef Philosophy section
+      applyColors(sections[1], ac.chef_bg, ac.chef_text);
+
+      var contentSections = document.querySelectorAll('.content-text');
+      var storyTitle = contentSections[0].querySelector('.section-title');
       if (storyTitle) storyTitle.textContent = about.story_title;
-      
-      const storyParas = sections[0].querySelectorAll('p');
+
+      var storyParas = contentSections[0].querySelectorAll('p');
       if (storyParas[0]) storyParas[0].textContent = about.story_text_1;
       if (storyParas[1]) storyParas[1].textContent = about.story_text_2;
-      
+
       if (about.story_video) {
-        const storyVideo = document.querySelector('.video-placeholder source');
+        var storyVideo = document.querySelector('.video-placeholder source');
         if (storyVideo) {
           storyVideo.src = about.story_video;
           storyVideo.parentElement.load();
         }
       }
-      
-      const storyParas2 = sections[1].querySelectorAll('p');
+
+      var storyParas2 = contentSections[1].querySelectorAll('p');
       if (storyParas2[0]) storyParas2[0].textContent = about.story_text_3;
       if (storyParas2[1]) storyParas2[1].textContent = about.story_text_4;
-      
-      const storyImg = document.querySelector('.image-placeholder img');
+
+      var storyImg = document.querySelector('.image-placeholder img');
       if (storyImg && about.story_image) storyImg.src = about.story_image;
-      
-      const chefTitle = sections[2].querySelector('.section-title');
+
+      var chefTitle = contentSections[2].querySelector('.section-title');
       if (chefTitle) chefTitle.textContent = about.chef_title;
-      
-      const chefParas = sections[2].querySelectorAll('p');
+
+      var chefParas = contentSections[2].querySelectorAll('p');
       if (chefParas[0]) chefParas[0].textContent = about.chef_text_1;
       if (chefParas[1]) chefParas[1].textContent = about.chef_text_2;
-      
+
       if (about.chef_video) {
-        const chefVideos = document.querySelectorAll('.video-placeholder source');
+        var chefVideos = document.querySelectorAll('.video-placeholder source');
         if (chefVideos[1]) {
           chefVideos[1].src = about.chef_video;
           chefVideos[1].parentElement.load();
         }
       }
-      
-      const chefParas2 = sections[3].querySelectorAll('p');
+
+      var chefParas2 = contentSections[3].querySelectorAll('p');
       if (chefParas2[0]) chefParas2[0].textContent = about.chef_text_3;
       if (chefParas2[1]) chefParas2[1].textContent = about.chef_text_4;
-      
-      const chefImg = document.querySelectorAll('.image-placeholder img')[1];
+
+      var chefImg = document.querySelectorAll('.image-placeholder img')[1];
       if (chefImg && about.chef_image) chefImg.src = about.chef_image;
     }
-    
+
     if (page === 'menu') {
-      const menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
-      const menuCats = await fetch('/content/menu-categories.json').then(r => r.json());
-      const categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
-      const categoryKeys = ['appetizers', 'desserts', 'entrees', 'beverages', 'cocktails'];
-      const grouped = {};
-      menuItems.forEach(item => {
+      var mc = theme.menu || {};
+
+      // Apply Menu page colors
+      var menuSection = document.querySelector('.section-wrapper');
+      applyColors(menuSection, mc.bg, mc.text);
+
+      var menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
+      var menuCats = await fetch('/content/menu-categories.json').then(r => r.json());
+      var categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
+      var categoryKeys = ['appetizers', 'desserts', 'entrees', 'beverages', 'cocktails'];
+      var grouped = {};
+      menuItems.forEach(function(item) {
         if (!grouped[item.category]) grouped[item.category] = [];
         grouped[item.category].push(item);
       });
-      Object.values(grouped).forEach(arr => arr.sort((a, b) => (a.order || 0) - (b.order || 0)));
+      Object.values(grouped).forEach(function(arr) { arr.sort(function(a, b) { return (a.order || 0) - (b.order || 0); }); });
 
-      const slides = document.querySelectorAll('.carousel-slide');
-      categoryOrder.forEach((cat, i) => {
-        const slide = slides[i];
+      var slides = document.querySelectorAll('.carousel-slide');
+      categoryOrder.forEach(function(cat, i) {
+        var slide = slides[i];
         if (!slide || !grouped[cat]) return;
-        const items = grouped[cat];
+        var items = grouped[cat];
 
-        const img = slide.querySelector('.image-display img');
+        var img = slide.querySelector('.image-display img');
         if (img && items[0] && items[0].image) {
           img.src = items[0].image;
           img.alt = items[0].name;
         }
 
-        const textItems = slide.querySelectorAll('.menu-text-item');
-        items.forEach((item, j) => {
+        var textItems = slide.querySelectorAll('.menu-text-item');
+        items.forEach(function(item, j) {
           if (!textItems[j]) return;
-          const h4 = textItems[j].querySelector('h4');
-          const p = textItems[j].querySelector('p');
+          var h4 = textItems[j].querySelector('h4');
+          var p = textItems[j].querySelector('p');
           if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
           if (p) p.textContent = item.description;
         });
       });
 
       // Build category descriptions lookup and set initial descriptions
-      const catDescriptions = {};
-      categoryOrder.forEach((cat, i) => {
-        const key = categoryKeys[i];
+      var catDescriptions = {};
+      categoryOrder.forEach(function(cat, i) {
+        var key = categoryKeys[i];
         catDescriptions[cat] = [
           menuCats[key + '_desc_1'] || '',
           menuCats[key + '_desc_2'] || '',
@@ -143,50 +196,84 @@
       window.categoryDescriptions = catDescriptions;
 
       // Set initial descriptions for first category
-      const descContainer = document.getElementById('category-descriptions');
+      var descContainer = document.getElementById('category-descriptions');
       if (descContainer) {
-        const descParagraphs = descContainer.querySelectorAll('.cat-desc');
-        const initialDescs = catDescriptions[categoryOrder[0]] || [];
-        descParagraphs.forEach((p, idx) => {
+        var descParagraphs = descContainer.querySelectorAll('.cat-desc');
+        var initialDescs = catDescriptions[categoryOrder[0]] || [];
+        descParagraphs.forEach(function(p, idx) {
           p.textContent = initialDescs[idx] || '';
         });
       }
     }
 
     if (page === 'events') {
-      const events = await fetch('/content/events.json').then(r => r.json());
-      
+      var events = await fetch('/content/events.json').then(r => r.json());
+      var ec = theme.events || {};
+
+      // Apply Events page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, ec.banner_bg, ec.banner_text);
+
+      // Apply Events page section colors
+      var sections = document.querySelectorAll('.section-wrapper');
+
+      // Private Dining section
+      applyColors(sections[0], ec.private_bg, ec.private_text);
+
+      // Event Hosting section
+      applyColors(sections[1], ec.hosting_bg, ec.hosting_text);
+
       document.querySelector('.about-banner h1').textContent = events.page_title;
-      
-      const sections = document.querySelectorAll('.content-text');
-      sections[0].querySelector('h2').textContent = events.private_title;
-      
-      const privateParas = sections[0].querySelectorAll('p');
+
+      var contentSections = document.querySelectorAll('.content-text');
+      contentSections[0].querySelector('h2').textContent = events.private_title;
+
+      var privateParas = contentSections[0].querySelectorAll('p');
       if (privateParas[0]) privateParas[0].textContent = events.private_text_1;
       if (privateParas[1]) privateParas[1].textContent = events.private_text_2;
-      
-      const privateImg = document.querySelector('.image-placeholder img');
+
+      var privateImg = document.querySelector('.image-placeholder img');
       if (privateImg && events.private_image) privateImg.src = events.private_image;
-      
-      sections[1].querySelector('h2').textContent = events.hosting_title;
-      
-      const hostingParas = sections[1].querySelectorAll('p');
+
+      contentSections[1].querySelector('h2').textContent = events.hosting_title;
+
+      var hostingParas = contentSections[1].querySelectorAll('p');
       if (hostingParas[0]) hostingParas[0].textContent = events.hosting_text_1;
       if (hostingParas[1]) hostingParas[1].textContent = events.hosting_text_2;
-      
+
       if (events.hosting_video) {
-        const hostingVideo = document.querySelector('.video-placeholder source');
+        var hostingVideo = document.querySelector('.video-placeholder source');
         if (hostingVideo) {
           hostingVideo.src = events.hosting_video;
           hostingVideo.parentElement.load();
         }
       }
     }
-    
+
+    if (page === 'book') {
+      var bc = theme.book || {};
+
+      // Apply Book page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, bc.banner_bg, bc.banner_text);
+
+      // Apply reservation section colors
+      var reservationSection = document.querySelector('.reservation-section');
+      if (reservationSection && bc.section_bg) {
+        reservationSection.style.backgroundColor = bc.section_bg;
+      }
+
+      // Apply form colors
+      var formContainer = document.querySelector('.form-container');
+      if (formContainer) {
+        applyColors(formContainer, bc.form_bg, bc.form_text);
+      }
+    }
+
   } catch (error) {
     console.log('Content loading skipped:', error.message);
   }
-  
+
   document.body.style.transition = 'opacity 0.3s';
   document.body.style.opacity = '1';
 })();
