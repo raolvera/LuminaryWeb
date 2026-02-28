@@ -1321,10 +1321,10 @@ footer {
     /* Form container mobile */
     .form-container {
         padding: 20px;
-        margin: 0 15px;
+        margin: 0 auto;
     }
     .reservation-section {
-        padding: 40px 0;
+        padding: 40px 15px;
     }
     /* Confirmation card mobile */
     .reservation-section .card {
@@ -1442,8 +1442,11 @@ footer {
     .contact-info, .helpful-links {
         text-align: left;
     }
-    .time-grid { 
-        grid-template-columns: repeat(2, 1fr); 
+    .time-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .form-container {
+        margin: 0 auto;
     }
 }
 
