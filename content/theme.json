@@ -9,9 +9,9 @@
   },
   "home": {
     "story_bg": "#FFFAEC",
-    "story_text": "#000000",
-    "chef_bg": "#e0e0e0",
-    "chef_text": "#000000",
+    "story_text": "#4c444e",
+    "chef_bg": "#4c444e",
+    "chef_text": "#fffaec",
     "menu_bg": "#000000",
     "menu_text": "#ffffff"
   },
