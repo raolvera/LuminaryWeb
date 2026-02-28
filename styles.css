@@ -1153,20 +1153,20 @@ footer {
     .zigzag.reverse { 
         flex-direction: column; 
     }
-    .placeholder-box, .content-media, .video-placeholder, .image-placeholder { 
-        min-height: 300px; 
-        height: 300px; 
-        width: 100% !important; 
-        max-width: 100% !important; 
-        margin: 0 !important; 
+    .placeholder-box, .content-media, .video-placeholder, .image-placeholder {
+        min-height: 300px;
+        height: 300px;
+        width: calc(100% - 32px) !important;
+        max-width: calc(100% - 32px) !important;
+        margin: 0 auto !important;
     }
-    .content-media { 
-        min-height: 300px; 
-        width: 100% !important;
+    .content-media {
+        min-height: 300px;
+        width: calc(100% - 32px) !important;
     }
-    .video-placeholder, .image-placeholder { 
-        margin-bottom: 20px;
-        width: 100% !important;
+    .video-placeholder, .image-placeholder {
+        margin: 0 auto 20px !important;
+        width: calc(100% - 32px) !important;
     }
     .video-placeholder video,
     .image-placeholder img {
@@ -1188,10 +1188,11 @@ footer {
         width: 100%; 
         max-width: 100%; 
     }
-    .image-display .image-placeholder { 
-        width: 100%; 
-        height: 250px; 
-        max-width: 100%; 
+    .image-display .image-placeholder {
+        width: 100% !important;
+        height: 250px;
+        max-width: 100% !important;
+        margin: 0 !important;
     }
     .menu-carousel { 
         text-align: center; 
