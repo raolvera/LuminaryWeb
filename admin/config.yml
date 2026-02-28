@@ -10,17 +10,9 @@ collections:
     label: "Site Settings"
     files:
       - name: "theme"
-        label: "Theme & Fonts"
+        label: "Theme & Colors"
         file: "content/theme.json"
         fields:
-          - {label: "Primary Color (Background)", name: "bg_color", widget: "color", default: "#000000"}
-          - {label: "Text Color", name: "text_color", widget: "color", default: "#ffffff"}
-          - {label: "Accent Color (Gold)", name: "accent_color", widget: "color", default: "#FFD700"}
-          - {label: "Border Color", name: "border_color", widget: "color", default: "#333333"}
-          - {label: "Banner Background Color", name: "banner_bg_color", widget: "color", default: "#333333"}
-          - {label: "Section Background Color", name: "section_bg_color", widget: "color", default: "#e0e0e0"}
-          - {label: "Card / Form Background Color", name: "card_bg_color", widget: "color", default: "#f4f4f4"}
-          - {label: "Footer Background Color", name: "footer_bg_color", widget: "color", default: "#000000"}
           - label: "Font Family"
             name: "font_family"
             widget: "select"
@@ -36,6 +28,72 @@ collections:
               - {label: "Open Sans", value: "'Open Sans', sans-serif"}
               - {label: "Lato", value: "'Lato', sans-serif"}
             default: "Arial, sans-serif"
+
+          - label: "Global Colors"
+            name: "global"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Header Background Color", name: "header_bg", widget: "color", default: "#000000"}
+              - {label: "Accent Color (Hover / Highlights)", name: "accent_color", widget: "color", default: "#FFD700"}
+              - {label: "Border Color", name: "border_color", widget: "color", default: "#333333"}
+              - {label: "Footer Background Color", name: "footer_bg", widget: "color", default: "#4c444e"}
+              - {label: "Footer Text Color", name: "footer_text", widget: "color", default: "#ffffff"}
+
+          - label: "Home Page Colors"
+            name: "home"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Our Story Section - Background Color", name: "story_bg", widget: "color", default: "#FFFAEC"}
+              - {label: "Our Story Section - Text Color", name: "story_text", widget: "color", default: "#000000"}
+              - {label: "Chef Philosophy Section - Background Color", name: "chef_bg", widget: "color", default: "#e0e0e0"}
+              - {label: "Chef Philosophy Section - Text Color", name: "chef_text", widget: "color", default: "#000000"}
+              - {label: "Menu Section - Background Color", name: "menu_bg", widget: "color", default: "#000000"}
+              - {label: "Menu Section - Text Color", name: "menu_text", widget: "color", default: "#ffffff"}
+
+          - label: "About Page (Our Story) Colors"
+            name: "about"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Banner Background Color", name: "banner_bg", widget: "color", default: "#333333"}
+              - {label: "Banner Text Color", name: "banner_text", widget: "color", default: "#ffffff"}
+              - {label: "Our Story Section - Background Color", name: "story_bg", widget: "color", default: "#f4f4f4"}
+              - {label: "Our Story Section - Text Color", name: "story_text", widget: "color", default: "#000000"}
+              - {label: "Chef Philosophy Section - Background Color", name: "chef_bg", widget: "color", default: "#e0e0e0"}
+              - {label: "Chef Philosophy Section - Text Color", name: "chef_text", widget: "color", default: "#000000"}
+
+          - label: "Menu Page Colors"
+            name: "menu"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Background Color", name: "bg", widget: "color", default: "#000000"}
+              - {label: "Text Color", name: "text", widget: "color", default: "#ffffff"}
+
+          - label: "Private Events Page Colors"
+            name: "events"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Banner Background Color", name: "banner_bg", widget: "color", default: "#333333"}
+              - {label: "Banner Text Color", name: "banner_text", widget: "color", default: "#ffffff"}
+              - {label: "Private Dining Section - Background Color", name: "private_bg", widget: "color", default: "#f4f4f4"}
+              - {label: "Private Dining Section - Text Color", name: "private_text", widget: "color", default: "#000000"}
+              - {label: "Event Hosting Section - Background Color", name: "hosting_bg", widget: "color", default: "#e0e0e0"}
+              - {label: "Event Hosting Section - Text Color", name: "hosting_text", widget: "color", default: "#000000"}
+
+          - label: "Book a Table Page Colors"
+            name: "book"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Banner Background Color", name: "banner_bg", widget: "color", default: "#333333"}
+              - {label: "Banner Text Color", name: "banner_text", widget: "color", default: "#ffffff"}
+              - {label: "Section Background Color", name: "section_bg", widget: "color", default: "#e0e0e0"}
+              - {label: "Form Background Color", name: "form_bg", widget: "color", default: "#fffaec"}
+              - {label: "Form Text Color", name: "form_text", widget: "color", default: "#000000"}
 
   - name: "pages"
     label: "Pages"

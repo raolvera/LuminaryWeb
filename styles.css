@@ -227,7 +227,7 @@ nav > a:hover {
   font-weight: bold;
 }
 .arrow-link {
-  color: #000000;
+  color: inherit;
   text-decoration: none;
   display: inline-block;
   margin-top: 20px;
@@ -237,42 +237,18 @@ nav > a:hover {
   color: var(--accent);
 }
 
-.bg-dark-grey .arrow-link {
-  color: #000000;
-}
-.bg-dark-grey .arrow-link:hover {
-  color: var(--accent);
-}
-
-.bg-light-grey .arrow-link {
-  color: #000000;
-}
-.bg-light-grey .arrow-link:hover {
-  color: var(--accent);
-}
-
-.bg-light-grey {
-  background-color: #FFFAEC;
-  color: #000000; 
-}
-
-.bg-dark-grey {
-  background-color: #000000;
-  color: #ffffff;
-}
-
 /* Center all content in the section */
 .menu-carousel {
   text-align: center;
   padding: 80px 0;
   background-color: var(--bg-black);
-  color: #ffffff;
+  color: inherit;
 }
 
 .carousel-header h2 {
   font-size: 2.5rem;
   margin-bottom: 10px;
-  color: #ffffff;
+  color: inherit;
 }
 .carousel-header h3 {
   font-size: 1.2rem;
@@ -596,18 +572,25 @@ footer {
 .about-banner h1 {
   font-size: 2.5rem;
   margin: 0;
-  color: var(--text-white);
+  color: inherit;
 }
 
-/* Background Shading for Sections */
+/* Background Shading for Sections - defaults, overridden by CMS colors */
 .bg-light-grey {
   background-color: #f4f4f4;
-  color: #000000; 
+  color: #000000;
 }
 
 .bg-dark-grey {
   background-color: #e0e0e0;
   color: #000000;
+}
+
+/* Ensure headings and text inherit section colors */
+.section-wrapper h2,
+.section-wrapper h3,
+.section-wrapper p {
+  color: inherit;
 }
 
 /* Container for About Rows */
