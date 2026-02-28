@@ -24,6 +24,24 @@
       footer.style.color = g.footer_text || '#ffffff';
     }
 
+    // Apply header logo colors
+    var headerLogo = document.querySelector('[data-logo="header"]');
+    if (headerLogo) {
+      var headerTextPaths = headerLogo.querySelectorAll('.logo-text');
+      var headerStarPaths = headerLogo.querySelectorAll('.logo-star');
+      headerTextPaths.forEach(function(p) { p.setAttribute('fill', g.header_logo_color || '#A7977E'); });
+      headerStarPaths.forEach(function(p) { p.setAttribute('fill', g.header_logo_star_color || '#EDE8E1'); });
+    }
+
+    // Apply footer logo colors
+    var footerLogo = document.querySelector('[data-logo="footer"]');
+    if (footerLogo) {
+      var footerTextPaths = footerLogo.querySelectorAll('.logo-text');
+      var footerStarPaths = footerLogo.querySelectorAll('.logo-star');
+      footerTextPaths.forEach(function(p) { p.setAttribute('fill', g.footer_logo_color || '#A7977E'); });
+      footerStarPaths.forEach(function(p) { p.setAttribute('fill', g.footer_logo_star_color || '#EDE8E1'); });
+    }
+
     // Apply font
     if (theme.font_family) document.body.style.fontFamily = theme.font_family;
 
