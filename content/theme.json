@@ -13,7 +13,7 @@
     "chef_bg": "#4c444e",
     "chef_text": "#fffaec",
     "menu_bg": "#000000",
-    "menu_text": "#ffffff"
+    "menu_text": "#fffaec"
   },
   "about": {
     "banner_bg": "#333333",
@@ -36,32 +36,32 @@
     "hosting_text": "#000000"
   },
   "book": {
-    "banner_bg": "#333333",
-    "banner_text": "#ffffff",
-    "section_bg": "#906057",
     "form_bg": "#fffaec",
-    "form_text": "#000000",
-    "button_bg": "#000000",
-    "button_text": "#ffffff",
-    "input_bg": "#ffffff",
-    "input_text": "#000000",
+    "banner_text": "#ffffff",
     "input_border": "#cccccc",
-    "picker_bg": "#ffffff",
-    "picker_text": "#000000",
+    "input_text": "#000000",
     "calendar_today_bg": "#999999",
-    "calendar_today_text": "#ffffff"
+    "form_text": "#000000",
+    "calendar_today_text": "#ffffff",
+    "button_bg": "#000000",
+    "picker_bg": "#ffffff",
+    "banner_bg": "#333333",
+    "input_bg": "#ffffff",
+    "button_text": "#ffffff",
+    "picker_text": "#000000",
+    "section_bg": "#906057"
   },
   "confirmation": {
-    "banner_bg": "#333333",
     "banner_text": "#ffffff",
-    "section_bg": "#906057",
-    "card_bg": "#f4f4f4",
-    "card_text": "#000000",
-    "icon_bg": "#000000",
-    "icon_text": "#ffffff",
     "home_btn_bg": "#ffffff",
-    "home_btn_text": "#000000",
     "menu_btn_bg": "#000000",
-    "menu_btn_text": "#ffffff"
+    "icon_bg": "#000000",
+    "menu_btn_text": "#ffffff",
+    "home_btn_text": "#000000",
+    "icon_text": "#ffffff",
+    "card_bg": "#f4f4f4",
+    "banner_bg": "#333333",
+    "card_text": "#000000",
+    "section_bg": "#906057"
   }
 }
