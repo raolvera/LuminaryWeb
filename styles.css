@@ -1447,6 +1447,16 @@ footer {
     }
 }
 
+/* Override: show SVG logo for 820px to 1023px */
+@media (min-width: 820px) and (max-width: 1023px) {
+    .logo {
+        display: block;
+    }
+    .logo-mobile {
+        display: none;
+    }
+}
+
 /* Large devices (desktops, 1025px to 1440px) */
 @media (min-width: 1025px) and (max-width: 1440px) {
     .container { 
