@@ -35,9 +35,13 @@ collections:
             collapsed: true
             fields:
               - {label: "Header Background Color", name: "header_bg", widget: "color", default: "#000000"}
+              - {label: "Header Logo Color", name: "header_logo_color", widget: "color", default: "#A7977E"}
+              - {label: "Header Logo Star Color", name: "header_logo_star_color", widget: "color", default: "#EDE8E1"}
               - {label: "Accent Color (Hover / Highlights)", name: "accent_color", widget: "color", default: "#FFD700"}
               - {label: "Border Color", name: "border_color", widget: "color", default: "#333333"}
               - {label: "Footer Background Color", name: "footer_bg", widget: "color", default: "#4c444e"}
+              - {label: "Footer Logo Color", name: "footer_logo_color", widget: "color", default: "#A7977E"}
+              - {label: "Footer Logo Star Color", name: "footer_logo_star_color", widget: "color", default: "#EDE8E1"}
               - {label: "Footer Text Color", name: "footer_text", widget: "color", default: "#ffffff"}
 
           - label: "Home Page Colors"
