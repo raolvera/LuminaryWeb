@@ -268,6 +268,65 @@
       if (formContainer) {
         applyColors(formContainer, bc.form_bg, bc.form_text);
       }
+
+      // Apply button colors
+      if (bc.button_bg) {
+        document.documentElement.style.setProperty('--book-btn-bg', bc.button_bg);
+      }
+      if (bc.button_text) {
+        document.documentElement.style.setProperty('--book-btn-text', bc.button_text);
+      }
+    }
+
+    if (page === 'confirmation') {
+      var cc = theme.confirmation || {};
+
+      // Apply Confirmation page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, cc.banner_bg, cc.banner_text);
+
+      // Apply reservation section colors
+      var reservationSection = document.querySelector('.reservation-section');
+      if (reservationSection && cc.section_bg) {
+        reservationSection.style.backgroundColor = cc.section_bg;
+      }
+
+      // Apply card colors
+      var card = document.querySelector('.reservation-section .card');
+      if (card) {
+        applyColors(card, cc.card_bg, cc.card_text);
+      }
+      var cardInner = document.querySelector('.card-inner');
+      if (cardInner) {
+        applyColors(cardInner, cc.card_bg, cc.card_text);
+      }
+
+      // Apply icon colors
+      if (cc.icon_bg) {
+        document.documentElement.style.setProperty('--confirm-icon-bg', cc.icon_bg);
+      }
+      if (cc.icon_text) {
+        document.documentElement.style.setProperty('--confirm-icon-text', cc.icon_text);
+      }
+
+      // Apply card text color variable
+      if (cc.card_text) {
+        document.documentElement.style.setProperty('--confirm-card-text', cc.card_text);
+      }
+
+      // Apply button colors
+      if (cc.home_btn_bg) {
+        document.documentElement.style.setProperty('--confirm-home-btn-bg', cc.home_btn_bg);
+      }
+      if (cc.home_btn_text) {
+        document.documentElement.style.setProperty('--confirm-home-btn-text', cc.home_btn_text);
+      }
+      if (cc.menu_btn_bg) {
+        document.documentElement.style.setProperty('--confirm-menu-btn-bg', cc.menu_btn_bg);
+      }
+      if (cc.menu_btn_text) {
+        document.documentElement.style.setProperty('--confirm-menu-btn-text', cc.menu_btn_text);
+      }
     }
 
   } catch (error) {

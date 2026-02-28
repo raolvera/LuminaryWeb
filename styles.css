@@ -770,19 +770,19 @@ footer {
     transition: 0.3s;
 }
 
-.btn-next { 
-    background: #000; 
-    border: 1px solid #000; 
-    color: #fff; 
-    width: auto; 
-    float: right; 
+.btn-next {
+    background: var(--book-btn-bg, #000);
+    border: 1px solid var(--book-btn-bg, #000);
+    color: var(--book-btn-text, #fff);
+    width: auto;
+    float: right;
     padding: 8px 24px;
     font-size: 13px;
     margin-top: -10px;
 }
-.btn-confirm { 
-    background: #000; 
-    color: #fff; 
+.btn-confirm {
+    background: var(--book-btn-bg, #000);
+    color: var(--book-btn-text, #fff);
 }
 
 .back-link {
@@ -847,8 +847,8 @@ footer {
 }
 
 .month-nav button {
-    background: #000;
-    color: #fff;
+    background: var(--book-btn-bg, #000);
+    color: var(--book-btn-text, #fff);
     border: none;
     padding: 5px 15px;
     cursor: pointer;
@@ -894,8 +894,8 @@ footer {
 }
 
 .day.selected {
-    background: #000;
-    color: #fff;
+    background: var(--book-btn-bg, #000);
+    color: var(--book-btn-text, #fff);
 }
 
 .day:not(.booked):not(.empty):hover {
@@ -905,8 +905,8 @@ footer {
 .select-btn {
     width: 100%;
     padding: 12px;
-    background: #000;
-    color: #fff;
+    background: var(--book-btn-bg, #000);
+    color: var(--book-btn-text, #fff);
     border: none;
     cursor: pointer;
     margin-top: 20px;
@@ -936,8 +936,8 @@ footer {
 }
 
 .time-slot:not(.booked):hover {
-    background: #000;
-    color: #fff;
+    background: var(--book-btn-bg, #000);
+    color: var(--book-btn-text, #fff);
 }
 
 .field input[readonly] {
@@ -970,13 +970,13 @@ footer {
 .card h2 {
     font-size: 18px;
     margin-bottom: 8px;
-    color: #000;
+    color: var(--confirm-card-text, #000);
 }
 
 .sub-header {
     font-size: 16px;
     margin-bottom: 25px;
-    color: #333;
+    color: var(--confirm-card-text, #333);
     font-weight: bold;
 }
 
@@ -991,7 +991,7 @@ footer {
     display: flex;
     margin-bottom: 12px;
     font-size: 14px;
-    color: #000;
+    color: var(--confirm-card-text, #000);
 }
 
 .detail-row:last-child {
@@ -1001,7 +1001,7 @@ footer {
 .sq-icon {
     width: 16px;
     height: 16px;
-    background: #000;
+    background: var(--confirm-icon-bg, #000);
     margin-right: 15px;
     margin-top: 2px;
     flex-shrink: 0;
@@ -1015,7 +1015,7 @@ footer {
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     font-size: 10px;
-    color: #fff;
+    color: var(--confirm-icon-text, #fff);
 }
 
 .btn {
@@ -1024,18 +1024,18 @@ footer {
     text-align: center;
     text-decoration: none;
     font-size: 14px;
-    border: 1px solid #000;
+    border: 1px solid var(--confirm-menu-btn-bg, #000);
     display: inline-block;
 }
 
 .btn-home {
-    background: white;
-    color: black;
+    background: var(--confirm-home-btn-bg, white);
+    color: var(--confirm-home-btn-text, black);
 }
 
 .btn-menu {
-    background: black;
-    color: white;
+    background: var(--confirm-menu-btn-bg, black);
+    color: var(--confirm-menu-btn-text, white);
 }
 
 .btn-container {
