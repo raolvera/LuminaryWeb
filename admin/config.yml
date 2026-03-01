@@ -122,8 +122,9 @@ collections:
               - {label: "Icon Text Color", name: "icon_text", widget: "color", default: "#ffffff"}
               - {label: "Home Button Background", name: "home_btn_bg", widget: "color", default: "#ffffff"}
               - {label: "Home Button Text", name: "home_btn_text", widget: "color", default: "#000000"}
-              - {label: "Menu Button Background", name: "menu_btn_bg", widget: "color", default: "#000000"}
-              - {label: "Menu Button Text", name: "menu_btn_text", widget: "color", default: "#ffffff"}
+              - {label: "Rebook Button Background", name: "rebook_btn_bg", widget: "color", default: "#000000"}
+              - {label: "Rebook Button Text", name: "rebook_btn_text", widget: "color", default: "#ffffff"}
+              - {label: "Favicon Color (Confirmation Only)", name: "favicon_color", widget: "color", default: "#B87333"}
 
   - name: "pages"
     label: "Pages"
