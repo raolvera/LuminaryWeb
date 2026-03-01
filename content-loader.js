@@ -89,7 +89,7 @@
       var banner = document.querySelector('.about-banner');
       if (banner && heroImageUrl) {
         banner.classList.add('has-hero');
-        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(' + heroImageUrl + ')';
+        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + heroImageUrl + '")';
       }
     }
 

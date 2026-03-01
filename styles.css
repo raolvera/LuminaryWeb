@@ -703,7 +703,6 @@ footer {
 }
 
 .about-banner.has-hero {
-  height: 85vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -711,7 +710,7 @@ footer {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 0;
+  padding: 80px 0;
 }
 
 .about-banner h1 {
