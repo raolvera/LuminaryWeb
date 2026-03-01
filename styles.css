@@ -620,12 +620,13 @@ footer {
 
 .events-split-inner p a {
   color: inherit;
-  text-decoration: underline;
-  transition: color 0.3s ease;
+  text-decoration: none;
+  transition: text-decoration 0.3s ease;
 }
 
 .events-split-inner p a:hover {
-  color: #4c444e;
+  color: inherit;
+  text-decoration: underline;
 }
 
 .events-split-inner .arrow-link {
