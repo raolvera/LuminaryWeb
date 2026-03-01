@@ -326,6 +326,10 @@ nav > a:hover {
   border-bottom: none;
 }
 
+.menu-text-item h4 span {
+  color: var(--menu-price-color, inherit);
+}
+
 .menu-text-item p {
   font-size: 0.9rem;
   color: #ccc;
@@ -704,13 +708,14 @@ footer {
 
 .about-banner.has-hero {
   width: 100%;
+  min-height: 25vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 80px 0;
+  padding: 50px 0;
 }
 
 .about-banner h1 {

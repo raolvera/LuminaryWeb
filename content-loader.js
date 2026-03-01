@@ -198,13 +198,51 @@
         applyHeroImage(menuPage.hero_image);
         var bannerTitle = document.querySelector('.about-banner h1');
         if (bannerTitle && menuPage.page_title) bannerTitle.textContent = menuPage.page_title;
+
+        // Apply banner colors (separate from section colors)
         var menuBanner = document.querySelector('.about-banner');
-        if (menuBanner) applyColors(menuBanner, mc.bg, mc.text);
+        if (menuBanner) applyColors(menuBanner, mc.banner_bg, mc.banner_text);
+
+        // Apply optional carousel heading from CMS
+        var carouselHeading = document.getElementById('carousel-heading');
+        if (carouselHeading && menuPage.carousel_heading) {
+          carouselHeading.textContent = menuPage.carousel_heading;
+          carouselHeading.style.display = '';
+        }
       } catch(e) {}
 
-      // Apply Menu page colors
+      // Apply Menu page section colors
       var menuSection = document.querySelector('.section-wrapper');
       applyColors(menuSection, mc.bg, mc.text);
+
+      // Apply category name color
+      if (mc.category_color) {
+        var catHeading = document.getElementById('carousel-category');
+        if (catHeading) catHeading.style.color = mc.category_color;
+      }
+
+      // Apply description text color
+      if (mc.desc_color) {
+        var descItems = document.querySelectorAll('.cat-desc');
+        descItems.forEach(function(el) { el.style.color = mc.desc_color; });
+      }
+
+      // Apply menu item price color
+      if (mc.price_color) {
+        document.documentElement.style.setProperty('--menu-price-color', mc.price_color);
+      }
+
+      // Apply navigation arrow color
+      if (mc.arrow_color) {
+        var arrows = document.querySelectorAll('.nav-arrow');
+        arrows.forEach(function(el) { el.style.color = mc.arrow_color; el.style.borderColor = mc.arrow_color; });
+      }
+
+      // Apply carousel dot color
+      if (mc.dot_color) {
+        var dots = document.querySelectorAll('.carousel-dots span');
+        dots.forEach(function(el) { el.style.color = mc.dot_color; });
+      }
 
       var menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
       var menuCats = await fetch('/content/menu-categories.json').then(r => r.json());
