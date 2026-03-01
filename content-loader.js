@@ -308,6 +308,14 @@
           var p = textItems[j].querySelector('p');
           if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
           if (p) p.textContent = item.description;
+
+          // Update carousel image when hovering over a menu item
+          if (img && item.image) {
+            textItems[j].addEventListener('mouseenter', function() {
+              img.src = item.image;
+              img.alt = item.name;
+            });
+          }
         });
       });
 

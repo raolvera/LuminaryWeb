@@ -320,6 +320,10 @@ nav > a:hover {
   text-align: left; 
 }
 
+.menu-text-item {
+  cursor: pointer;
+}
+
 .menu-text-item h4 {
   font-size: 1.1rem;
   margin-bottom: 8px;
