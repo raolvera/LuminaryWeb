@@ -1,6 +1,8 @@
 let currentSlide = 1;
 const totalSlides = 5;
 const slideTitles = ['Appetizers', 'Desserts', 'Signature Plates', 'Beverages', 'Cocktails'];
+let autoPlayInterval = null;
+const AUTO_PLAY_DELAY = 4000;
 
 function showSlide(n) {
   const slides = document.querySelectorAll('.carousel-slide');
@@ -35,12 +37,38 @@ function prevSlide() {
   showSlide(currentSlide);
 }
 
+function startAutoPlay() {
+  stopAutoPlay();
+  autoPlayInterval = setInterval(nextSlide, AUTO_PLAY_DELAY);
+}
+
+function stopAutoPlay() {
+  if (autoPlayInterval) {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const leftArrows = document.querySelectorAll('.nav-arrow.left');
   const rightArrows = document.querySelectorAll('.nav-arrow.right');
-  
-  leftArrows.forEach(arrow => arrow.addEventListener('click', prevSlide));
-  rightArrows.forEach(arrow => arrow.addEventListener('click', nextSlide));
-  
+  const allArrows = document.querySelectorAll('.nav-arrow');
+
+  leftArrows.forEach(arrow => arrow.addEventListener('click', function() {
+    prevSlide();
+    startAutoPlay();
+  }));
+  rightArrows.forEach(arrow => arrow.addEventListener('click', function() {
+    nextSlide();
+    startAutoPlay();
+  }));
+
+  // Pause auto-play when hovering over navigation arrows
+  allArrows.forEach(arrow => {
+    arrow.addEventListener('mouseenter', stopAutoPlay);
+    arrow.addEventListener('mouseleave', startAutoPlay);
+  });
+
   showSlide(currentSlide);
+  startAutoPlay();
 });
