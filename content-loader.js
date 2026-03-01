@@ -247,12 +247,6 @@
         if (catHeading) catHeading.style.color = mc.category_color;
       }
 
-      // Apply description text color
-      if (mc.desc_color) {
-        var descItems = document.querySelectorAll('.cat-desc');
-        descItems.forEach(function(el) { el.style.color = mc.desc_color; });
-      }
-
       // Apply menu item price color
       if (mc.price_color) {
         document.documentElement.style.setProperty('--menu-price-color', mc.price_color);
@@ -271,9 +265,7 @@
       }
 
       var menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
-      var menuCats = await fetch('/content/menu-categories.json').then(r => r.json());
       var categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
-      var categoryKeys = ['appetizers', 'desserts', 'entrees', 'beverages', 'cocktails'];
       var grouped = {};
       menuItems.forEach(function(item) {
         if (!grouped[item.category]) grouped[item.category] = [];
@@ -303,30 +295,6 @@
         });
       });
 
-      // Build category descriptions lookup and set initial descriptions
-      var catDescriptions = {};
-      categoryOrder.forEach(function(cat, i) {
-        var key = categoryKeys[i];
-        catDescriptions[cat] = [
-          menuCats[key + '_desc_1'] || '',
-          menuCats[key + '_desc_2'] || '',
-          menuCats[key + '_desc_3'] || '',
-          menuCats[key + '_desc_4'] || ''
-        ];
-      });
-
-      // Store on window for carousel.js to access
-      window.categoryDescriptions = catDescriptions;
-
-      // Set initial descriptions for first category
-      var descContainer = document.getElementById('category-descriptions');
-      if (descContainer) {
-        var descParagraphs = descContainer.querySelectorAll('.cat-desc');
-        var initialDescs = catDescriptions[categoryOrder[0]] || [];
-        descParagraphs.forEach(function(p, idx) {
-          p.textContent = initialDescs[idx] || '';
-        });
-      }
     }
 
     if (page === 'events') {
