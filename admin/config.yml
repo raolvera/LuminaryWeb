@@ -43,6 +43,8 @@ collections:
               - {label: "Footer Logo Color", name: "footer_logo_color", widget: "color", default: "#A7977E"}
               - {label: "Footer Logo Star Color", name: "footer_logo_star_color", widget: "color", default: "#EDE8E1"}
               - {label: "Footer Text Color", name: "footer_text", widget: "color", default: "#ffffff"}
+              - {label: "Button Background Color", name: "button_bg", widget: "color", default: "#000000", hint: "Default button background color site-wide. Can be overridden per page."}
+              - {label: "Button Text Color", name: "button_text", widget: "color", default: "#ffffff", hint: "Default button text color site-wide. Can be overridden per page."}
 
           - label: "Home Page Colors"
             name: "home"
@@ -106,6 +108,8 @@ collections:
               - {label: "Private Dining Section - Text Color", name: "private_text", widget: "color", default: "#000000"}
               - {label: "Event Hosting Section - Background Color", name: "hosting_bg", widget: "color", default: "#e0e0e0"}
               - {label: "Event Hosting Section - Text Color", name: "hosting_text", widget: "color", default: "#000000"}
+              - {label: "Button Background Color", name: "button_bg", widget: "color", default: "#000000"}
+              - {label: "Button Text Color", name: "button_text", widget: "color", default: "#ffffff"}
 
           - label: "Book a Table Page Colors"
             name: "book"
