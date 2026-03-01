@@ -337,6 +337,10 @@ nav > a:hover {
   color: #777;
 }
 
+.carousel-dots span.active {
+  color: #f5f0eb;
+}
+
 /* Footer Layout */
 footer {
   padding: 60px 0 80px 0;
@@ -728,6 +732,7 @@ footer {
 
 .content-text h2.section-title {
   text-align: left;
+  padding-left: 10px;
 }
 
 .about-row,
@@ -907,7 +912,16 @@ footer {
     border: none;
     cursor: pointer;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
+    display: inline-block;
+}
+
+.confirmation-back {
+    display: block;
+    width: 90%;
+    max-width: 550px;
+    margin: 0 auto 0;
+    padding-top: 20px;
 }
 
 /* Picker Modals */
@@ -1259,9 +1273,12 @@ footer {
         border: none;
         text-align: left;
     }
-    .zigzag, .content-row, .about-row { 
-        flex-direction: column; 
-        gap: 30px; 
+    .zigzag, .content-row, .about-row {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .content-row .content-media {
+        order: -1;
     }
     .zigzag.reverse { 
         flex-direction: column; 

@@ -184,6 +184,7 @@ function nextStep() {
   document.getElementById('step2').classList.remove('hidden');
   document.getElementById('stepIndicator').textContent = 'Step 2 of 2';
   document.getElementById('stepTitle').textContent = 'Contact Information';
+  document.getElementById('backButton').classList.remove('hidden');
 }
 
 function prevStep() {
@@ -191,4 +192,5 @@ function prevStep() {
   document.getElementById('step1').classList.remove('hidden');
   document.getElementById('stepIndicator').textContent = 'Step 1 of 2';
   document.getElementById('stepTitle').textContent = 'Booking Information';
+  document.getElementById('backButton').classList.add('hidden');
 }
