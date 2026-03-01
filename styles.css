@@ -99,12 +99,14 @@ body {
 /* Hero Section Styling */
 .hero {
   height: 85vh;
+  width: 100%;
   display: flex;
-  align-items: center; 
+  align-items: center;
   background-color: #0a0a0a;
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("images/hero.jpg");
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 
@@ -657,7 +659,8 @@ footer {
   overflow: hidden;
 }
 
-.events-split-image img {
+.events-split-image img,
+.events-split-image video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -780,7 +783,8 @@ footer {
 
 /* Media Specifics for About Page */
 .video-placeholder,
-.image-placeholder {
+.image-placeholder,
+.media-placeholder {
   background-color: #1a1a1a;
   border: 1px solid #999999;
   height: 300px;
@@ -804,7 +808,9 @@ footer {
 }
 
 .video-placeholder video,
-.image-placeholder img {
+.image-placeholder img,
+.media-placeholder video,
+.media-placeholder img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1293,7 +1299,7 @@ footer {
     .zigzag.reverse { 
         flex-direction: column; 
     }
-    .placeholder-box, .content-media, .video-placeholder, .image-placeholder {
+    .placeholder-box, .content-media, .video-placeholder, .image-placeholder, .media-placeholder {
         min-height: 300px;
         height: 300px;
         width: calc(100% - 32px) !important;
@@ -1304,12 +1310,14 @@ footer {
         min-height: 300px;
         width: calc(100% - 32px) !important;
     }
-    .video-placeholder, .image-placeholder {
+    .video-placeholder, .image-placeholder, .media-placeholder {
         margin: 0 auto 20px !important;
         width: calc(100% - 32px) !important;
     }
     .video-placeholder video,
-    .image-placeholder img {
+    .image-placeholder img,
+    .media-placeholder video,
+    .media-placeholder img {
         width: 100% !important;
         max-width: 100% !important;
     }
@@ -1530,9 +1538,9 @@ footer {
     .content-text, .about-text { 
         padding: 0 20px; 
     }
-    .placeholder-box, .content-media, .video-placeholder, .image-placeholder { 
-        width: calc(100% - 40px); 
-        margin: 0 20px; 
+    .placeholder-box, .content-media, .video-placeholder, .image-placeholder, .media-placeholder {
+        width: calc(100% - 40px);
+        margin: 0 20px;
     }
     .nav-links { 
         gap: 20px; 
