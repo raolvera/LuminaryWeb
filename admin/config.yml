@@ -73,6 +73,10 @@ collections:
             widget: "object"
             collapsed: true
             fields:
+              - {label: "Header Background Color", name: "header_bg", widget: "color", required: false, hint: "Leave empty to use the global header color."}
+              - {label: "Header Nav Text Color", name: "header_text", widget: "color", required: false, hint: "Color for navigation links and hamburger icon. Leave empty to use white."}
+              - {label: "Header Logo Color", name: "header_logo_color", widget: "color", required: false, hint: "Leave empty to use the global logo color."}
+              - {label: "Header Logo Star Color", name: "header_logo_star_color", widget: "color", required: false, hint: "Leave empty to use the global logo star color."}
               - {label: "Banner Background Color", name: "banner_bg", widget: "color", default: "#333333"}
               - {label: "Banner Text Color", name: "banner_text", widget: "color", default: "#ffffff"}
               - {label: "Section Background Color", name: "bg", widget: "color", default: "#000000"}
