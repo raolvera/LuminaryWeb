@@ -1,13 +1,13 @@
 {
-  "hero_title": "Celestial in spirit. Precise in execution.",
-  "hero_description": "Through thoughtful technique and carefully sourced ingredients, each dish is designed to reveal depth, contrast, and luminous discovery.",
-  "hero_image": "/images/hero.jpg",
+  "chef_video": "/videos/chef.mp4",
+  "chef_image": "/images/chef.jpg",
+  "chef_text": "Celestial in spirit. Precise in execution. Our culinary approach honors the natural beauty of each ingredient while elevating it through meticulous technique and creative vision. Through thoughtful preparation and carefully sourced ingredients, each dish reveals depth and contrast, balancing tradition with innovation. We believe that exceptional dining is not just about taste, but about creating an unforgettable journey that engages all the senses and leaves a lasting impression.",
   "story_title": "Our Story",
-  "story_text": "Born from a passion for culinary artistry and celestial wonder, Luminary opened its doors in 2020 with a vision to transform fine dining into an ethereal experience. Through thoughtful technique and carefully sourced ingredients, each dish is designed to reveal depth, contrast, and luminous discovery. Our commitment to excellence extends from our locally-sourced produce to our handcrafted presentations, creating moments that linger long after the last bite.",
   "story_video": "/videos/ourStory.mp4",
   "story_image": "/images/story.jpg",
-  "chef_title": "Chef Philosophy",
-  "chef_text": "Celestial in spirit. Precise in execution. Our culinary approach honors the natural beauty of each ingredient while elevating it through meticulous technique and creative vision. Through thoughtful preparation and carefully sourced ingredients, each dish reveals depth and contrast, balancing tradition with innovation. We believe that exceptional dining is not just about taste, but about creating an unforgettable journey that engages all the senses and leaves a lasting impression.",
-  "chef_video": "/videos/chef.mp4",
-  "chef_image": "/images/chef.jpg"
+  "hero_title": "Celestial in spirit. Precise in execution.",
+  "hero_image": "/images/git_450-550_luminary_photo_-_video_foodplating05_v2.jpg",
+  "story_text": "Born from a passion for culinary artistry and celestial wonder, Luminary opened its doors in 2020 with a vision to transform fine dining into an ethereal experience. Through thoughtful technique and carefully sourced ingredients, each dish is designed to reveal depth, contrast, and luminous discovery. Our commitment to excellence extends from our locally-sourced produce to our handcrafted presentations, creating moments that linger long after the last bite.",
+  "hero_description": "Through thoughtful technique and carefully sourced ingredients, each dish is designed to reveal depth, contrast, and luminous discovery.",
+  "chef_title": "Chef Philosophy"
 }
