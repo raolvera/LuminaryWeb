@@ -142,18 +142,6 @@
       if (chefParas[0]) chefParas[0].textContent = about.chef_text_1;
       if (chefParas[1]) chefParas[1].textContent = about.chef_text_2;
 
-      if (about.chef_video) {
-        var chefVideos = document.querySelectorAll('.video-placeholder source');
-        if (chefVideos[1]) {
-          chefVideos[1].src = about.chef_video;
-          chefVideos[1].parentElement.load();
-        }
-      }
-
-      var chefParas2 = contentSections[3].querySelectorAll('p');
-      if (chefParas2[0]) chefParas2[0].textContent = about.chef_text_3;
-      if (chefParas2[1]) chefParas2[1].textContent = about.chef_text_4;
-
       var chefImg = document.querySelectorAll('.image-placeholder img')[1];
       if (chefImg && about.chef_image) chefImg.src = about.chef_image;
     }

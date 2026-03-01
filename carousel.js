@@ -21,10 +21,14 @@ function showSlide(n) {
   if (n < 1) currentSlide = totalSlides;
 
   slides.forEach(slide => slide.classList.remove('active'));
-  dots.forEach(dot => dot.textContent = '○');
+  dots.forEach(dot => {
+    dot.textContent = '○';
+    dot.classList.remove('active');
+  });
 
   slides[currentSlide - 1].classList.add('active');
   dots[currentSlide - 1].textContent = '●';
+  dots[currentSlide - 1].classList.add('active');
 
   if (titleElement) {
     titleElement.textContent = slideTitles[currentSlide - 1];

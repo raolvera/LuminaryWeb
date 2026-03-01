@@ -68,6 +68,7 @@
         <div class="form-container">
             <form id="reservationForm" name="reservations" method="POST" data-netlify="true" action="/confirmation.html">
                 <input type="hidden" name="form-name" value="reservations" />
+                <button type="button" id="backButton" class="back-link hidden" onclick="prevStep()">&lt; Back</button>
                 <p id="stepIndicator" class="step-text">Step 1 of 2</p>
                 <h2 id="stepTitle">Booking Information</h2>
 
@@ -135,7 +136,6 @@
                 </div>
 
                 <div id="step2" class="hidden">
-                    <button type="button" class="back-link" onclick="prevStep()">&lt; Back</button>
                     <div class="form-grid">
                         <div class="field">
                             <label for="userName">Name *</label>
