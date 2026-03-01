@@ -1,15 +1,15 @@
 {
   "font_family": "Arial, sans-serif",
   "global": {
-    "header_bg": "#000000",
     "header_logo_color": "#A7977E",
-    "header_logo_star_color": "#EDE8E1",
+    "footer_logo_star_color": "#EDE8E1",
+    "footer_bg": "#150e2f",
     "accent_color": "#FFD700",
     "border_color": "#333333",
-    "footer_bg": "#000000",
+    "footer_text": "#ffffff",
     "footer_logo_color": "#A7977E",
-    "footer_logo_star_color": "#EDE8E1",
-    "footer_text": "#ffffff"
+    "header_bg": "#000000",
+    "header_logo_star_color": "#EDE8E1"
   },
   "home": {
     "story_bg": "#FFFAEC",
