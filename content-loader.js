@@ -84,6 +84,15 @@
       if (text) el.style.color = text;
     }
 
+    // Helper to apply hero image to a banner section
+    function applyHeroImage(heroImageUrl) {
+      var banner = document.querySelector('.about-banner');
+      if (banner && heroImageUrl) {
+        banner.classList.add('has-hero');
+        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(' + heroImageUrl + ')';
+      }
+    }
+
     const page = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
 
     if (page === 'index' || page === '') {
@@ -129,6 +138,9 @@
     if (page === 'about') {
       var about = await fetch('/content/about.json').then(r => r.json());
       var ac = theme.about || {};
+
+      // Apply About page hero image
+      applyHeroImage(about.hero_image);
 
       // Apply About page banner colors
       var banner = document.querySelector('.about-banner');
@@ -179,6 +191,16 @@
 
     if (page === 'menu') {
       var mc = theme.menu || {};
+
+      // Load menu page content (hero image + title)
+      try {
+        var menuPage = await fetch('/content/menu-page.json').then(r => r.json());
+        applyHeroImage(menuPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && menuPage.page_title) bannerTitle.textContent = menuPage.page_title;
+        var menuBanner = document.querySelector('.about-banner');
+        if (menuBanner) applyColors(menuBanner, mc.bg, mc.text);
+      } catch(e) {}
 
       // Apply Menu page colors
       var menuSection = document.querySelector('.section-wrapper');
@@ -247,6 +269,9 @@
       var events = await fetch('/content/events.json').then(r => r.json());
       var ec = theme.events || {};
 
+      // Apply Events page hero image
+      applyHeroImage(events.hero_image);
+
       // Apply Events page banner colors
       var banner = document.querySelector('.about-banner');
       applyColors(banner, ec.banner_bg, ec.banner_text);
@@ -294,6 +319,14 @@
 
     if (page === 'book') {
       var bc = theme.book || {};
+
+      // Load book page content (hero image + title)
+      try {
+        var bookPage = await fetch('/content/book-page.json').then(r => r.json());
+        applyHeroImage(bookPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && bookPage.page_title) bannerTitle.textContent = bookPage.page_title;
+      } catch(e) {}
 
       // Apply Book page banner colors
       var banner = document.querySelector('.about-banner');
@@ -347,6 +380,14 @@
 
     if (page === 'confirmation') {
       var cc = theme.confirmation || {};
+
+      // Load confirmation page content (hero image + title)
+      try {
+        var confirmPage = await fetch('/content/confirmation-page.json').then(r => r.json());
+        applyHeroImage(confirmPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && confirmPage.page_title) bannerTitle.textContent = confirmPage.page_title;
+      } catch(e) {}
 
       // Apply Confirmation page banner colors
       var banner = document.querySelector('.about-banner');

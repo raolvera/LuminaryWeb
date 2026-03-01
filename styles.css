@@ -702,10 +702,28 @@ footer {
   border-bottom: 1px solid var(--border-color);
 }
 
+.about-banner.has-hero {
+  height: 85vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+}
+
 .about-banner h1 {
   font-size: 2.5rem;
   margin: 0;
   color: inherit;
+}
+
+.about-banner.has-hero h1 {
+  font-size: 3.2rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 /* Background Shading for Sections - defaults, overridden by CMS colors */
@@ -1490,8 +1508,11 @@ footer {
         font-size: 11px;
         word-break: break-word;
     }
-    .about-banner h1 { 
-        font-size: 1.8rem; 
+    .about-banner h1 {
+        font-size: 1.8rem;
+    }
+    .about-banner.has-hero h1 {
+        font-size: 2rem;
     }
     .carousel-header h2 { 
         font-size: 1.8rem; 
