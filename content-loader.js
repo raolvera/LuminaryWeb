@@ -21,6 +21,7 @@
       var video = document.createElement('video');
       video.controls = true;
       video.setAttribute('playsinline', '');
+      video.setAttribute('preload', 'metadata');
       var source = document.createElement('source');
       source.src = src;
       source.type = 'video/' + src.split('.').pop().toLowerCase().split('?')[0];
@@ -30,6 +31,10 @@
       var img = document.createElement('img');
       img.src = src;
       img.alt = altText || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.width = 600;
+      img.height = 400;
       container.appendChild(img);
     }
   }

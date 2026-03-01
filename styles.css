@@ -281,12 +281,19 @@ nav > a:hover {
   height: 300px;
   background-image: none;
   background-color: #1a1a1a;
+  border: 1px solid #555;
+  position: relative;
+  overflow: hidden;
 }
 
 .image-display .image-placeholder img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* Carousel functionality */
@@ -821,7 +828,8 @@ footer {
   overflow: hidden;
 }
 
-.image-placeholder::before {
+.content-media .image-placeholder::before,
+.content-row .content-media.image-placeholder::before {
   content: '';
   position: absolute;
   top: 0;
