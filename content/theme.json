@@ -28,15 +28,8 @@
     "chef_text": "#000000"
   },
   "menu": {
-    "banner_bg": "#333333",
-    "banner_text": "#ffffff",
-    "bg": "#000000",
-    "text": "#ffffff",
-    "category_color": "#ffffff",
-    "desc_color": "#aaaaaa",
-    "price_color": "#FFD700",
-    "arrow_color": "#ffffff",
-    "dot_color": "#ffffff"
+    "bg": "#080810",
+    "text": "#fffaec"
   },
   "events": {
     "banner_bg": "#333333",
