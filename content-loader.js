@@ -192,6 +192,32 @@
     if (page === 'menu') {
       var mc = theme.menu || {};
 
+      // Apply menu page-specific header colors (override global)
+      if (mc.header_bg) {
+        var header = document.querySelector('header');
+        if (header) header.style.backgroundColor = mc.header_bg;
+      }
+      if (mc.header_text) {
+        var navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(function(a) { a.style.color = mc.header_text; });
+        var btnOutline = document.querySelector('.btn-outline');
+        if (btnOutline) btnOutline.style.borderColor = mc.header_text;
+        var hamburgerSpans = document.querySelectorAll('.hamburger span');
+        hamburgerSpans.forEach(function(s) { s.style.background = mc.header_text; });
+      }
+      if (mc.header_logo_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', mc.header_logo_color); });
+        }
+      }
+      if (mc.header_logo_star_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', mc.header_logo_star_color); });
+        }
+      }
+
       // Load menu page content (hero image + title)
       try {
         var menuPage = await fetch('/content/menu-page.json').then(r => r.json());
