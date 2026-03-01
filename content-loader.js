@@ -48,6 +48,21 @@
     // Apply header background
     var header = document.querySelector('header');
     if (header) header.style.backgroundColor = g.header_bg || '#000000';
+    document.documentElement.style.setProperty('--header-bg', g.header_bg || '#000000');
+
+    // Apply global button colors
+    if (g.button_bg) {
+      document.documentElement.style.setProperty('--events-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--book-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--confirm-home-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--confirm-rebook-btn-bg', g.button_bg);
+    }
+    if (g.button_text) {
+      document.documentElement.style.setProperty('--events-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--book-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--confirm-home-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--confirm-rebook-btn-text', g.button_text);
+    }
 
     // Apply footer colors
     var footer = document.querySelector('footer');
@@ -196,6 +211,7 @@
       if (mc.header_bg) {
         var header = document.querySelector('header');
         if (header) header.style.backgroundColor = mc.header_bg;
+        document.documentElement.style.setProperty('--header-bg', mc.header_bg);
       }
       if (mc.header_text) {
         var navLinks = document.querySelectorAll('.nav-links a');
@@ -305,6 +321,7 @@
       if (ec.header_bg) {
         var header = document.querySelector('header');
         if (header) header.style.backgroundColor = ec.header_bg;
+        document.documentElement.style.setProperty('--header-bg', ec.header_bg);
       }
       if (ec.header_text) {
         var navLinks = document.querySelectorAll('.nav-links a');
@@ -364,6 +381,10 @@
 
       // Event Hosting section
       applyColors(eventBlocks[1], ec.hosting_bg, ec.hosting_text);
+
+      // Apply Events page button colors (override global)
+      if (ec.button_bg) document.documentElement.style.setProperty('--events-btn-bg', ec.button_bg);
+      if (ec.button_text) document.documentElement.style.setProperty('--events-btn-text', ec.button_text);
 
       document.querySelector('.about-banner h1').textContent = events.page_title;
 

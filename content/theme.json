@@ -9,7 +9,9 @@
     "footer_text": "#ffffff",
     "footer_logo_color": "#A7977E",
     "header_bg": "#080810",
-    "header_logo_star_color": "#EDE8E1"
+    "header_logo_star_color": "#EDE8E1",
+    "button_bg": "#000000",
+    "button_text": "#ffffff"
   },
   "home": {
     "story_bg": "#FFFAEC",
@@ -43,7 +45,9 @@
     "private_bg": "#906057",
     "private_text": "#ede8e1",
     "hosting_bg": "#906057",
-    "hosting_text": "#ede8e1"
+    "hosting_text": "#ede8e1",
+    "button_bg": "#000000",
+    "button_text": "#ffffff"
   },
   "book": {
     "form_bg": "#fffaec",
@@ -69,7 +73,7 @@
     "home_btn_text": "#000000",
     "icon_text": "#ffffff",
     "rebook_btn_text": "#ffffff",
-    "card_bg": "#f4f4f4",
+    "card_bg": "#fffaec",
     "favicon_color": "#B87333",
     "banner_bg": "#333333",
     "card_text": "#000000",
