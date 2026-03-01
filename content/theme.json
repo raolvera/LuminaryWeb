@@ -58,14 +58,15 @@
   "confirmation": {
     "banner_text": "#ffffff",
     "home_btn_bg": "#ffffff",
-    "menu_btn_bg": "#000000",
+    "rebook_btn_bg": "#000000",
     "icon_bg": "#000000",
-    "menu_btn_text": "#ffffff",
+    "rebook_btn_text": "#ffffff",
     "home_btn_text": "#000000",
     "icon_text": "#ffffff",
     "card_bg": "#f4f4f4",
     "banner_bg": "#333333",
     "card_text": "#000000",
-    "section_bg": "#906057"
+    "section_bg": "#906057",
+    "favicon_color": "#B87333"
   }
 }

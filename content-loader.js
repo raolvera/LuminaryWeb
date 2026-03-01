@@ -364,11 +364,21 @@
       if (cc.home_btn_text) {
         document.documentElement.style.setProperty('--confirm-home-btn-text', cc.home_btn_text);
       }
-      if (cc.menu_btn_bg) {
-        document.documentElement.style.setProperty('--confirm-menu-btn-bg', cc.menu_btn_bg);
+      if (cc.rebook_btn_bg) {
+        document.documentElement.style.setProperty('--confirm-rebook-btn-bg', cc.rebook_btn_bg);
       }
-      if (cc.menu_btn_text) {
-        document.documentElement.style.setProperty('--confirm-menu-btn-text', cc.menu_btn_text);
+      if (cc.rebook_btn_text) {
+        document.documentElement.style.setProperty('--confirm-rebook-btn-text', cc.rebook_btn_text);
+      }
+
+      // Override favicon color for confirmation page
+      if (cc.favicon_color) {
+        var faviconSvg = '<svg width="46" height="47" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.8865 0C22.8865 0 24.1249 11.8655 29.0679 16.8187C33.9856 21.7464 45.773 23.0422 45.773 23.0422C45.773 23.0422 33.9856 24.3379 29.0679 29.2656C24.1249 34.2188 22.8865 46.0843 22.8865 46.0843C22.8865 46.0843 21.6481 34.2188 16.7051 29.2656C11.7874 24.3379 0 23.0422 0 23.0422C0 23.0422 11.7874 21.7464 16.7051 16.8187C21.6481 11.8655 22.8865 0 22.8865 0Z" fill="' + cc.favicon_color + '"/></svg>';
+        var faviconDataUrl = 'data:image/svg+xml,' + encodeURIComponent(faviconSvg);
+        var faviconLink = document.querySelector('link[rel="icon"]');
+        if (faviconLink) {
+          faviconLink.href = faviconDataUrl;
+        }
       }
     }
 

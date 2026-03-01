@@ -32,29 +32,21 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
 
     var formData = new FormData(form);
-    fetch('/', {
+    var params = new URLSearchParams();
+    params.set('date', formData.get('date'));
+    params.set('time', formData.get('time'));
+    params.set('party_size', formData.get('party_size'));
+    params.set('occasion', formData.get('occasion') || '');
+    params.set('name', formData.get('name'));
+    params.set('email', formData.get('email'));
+
+    fetch('/book.html', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(formData).toString()
-    }).then(function() {
-      // Build URL params for confirmation page
-      var params = new URLSearchParams();
-      params.set('date', formData.get('date'));
-      params.set('time', formData.get('time'));
-      params.set('party_size', formData.get('party_size'));
-      params.set('occasion', formData.get('occasion') || '');
-      params.set('name', formData.get('name'));
-      params.set('email', formData.get('email'));
+    }).then(function(response) {
       window.location.href = '/confirmation.html?' + params.toString();
     }).catch(function() {
-      // Even if fetch fails (e.g. local dev), still redirect with data
-      var params = new URLSearchParams();
-      params.set('date', formData.get('date'));
-      params.set('time', formData.get('time'));
-      params.set('party_size', formData.get('party_size'));
-      params.set('occasion', formData.get('occasion') || '');
-      params.set('name', formData.get('name'));
-      params.set('email', formData.get('email'));
       window.location.href = '/confirmation.html?' + params.toString();
     });
   });
