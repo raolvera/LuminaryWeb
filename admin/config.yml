@@ -138,12 +138,12 @@ collections:
           - {label: "Hero Image", name: "hero_image", widget: "image"}
           - {label: "Story Title", name: "story_title", widget: "string"}
           - {label: "Story Paragraph", name: "story_text", widget: "text"}
-          - {label: "Story Video", name: "story_video", widget: "file", required: false}
-          - {label: "Story Image", name: "story_image", widget: "image", required: false}
+          - {label: "Story Video", name: "story_video", widget: "file", required: false, hint: "Upload a video (.mp4). Leave empty to display the Story Image instead."}
+          - {label: "Story Image", name: "story_image", widget: "image", required: false, hint: "Displayed if no Story Video is provided above."}
           - {label: "Chef Philosophy Title", name: "chef_title", widget: "string"}
           - {label: "Chef Philosophy Paragraph", name: "chef_text", widget: "text"}
-          - {label: "Chef Video", name: "chef_video", widget: "file", required: false}
-          - {label: "Chef Image", name: "chef_image", widget: "image"}
+          - {label: "Chef Video", name: "chef_video", widget: "file", required: false, hint: "Upload a video (.mp4) to replace the Chef Image with a video player."}
+          - {label: "Chef Image", name: "chef_image", widget: "image", hint: "Displayed if no Chef Video is provided above."}
 
       - name: "about"
         label: "About Page"
@@ -154,15 +154,15 @@ collections:
           - {label: "Story Title", name: "story_title", widget: "string"}
           - {label: "Story Paragraph 1", name: "story_text_1", widget: "text"}
           - {label: "Story Paragraph 2", name: "story_text_2", widget: "text"}
-          - {label: "Story Video", name: "story_video", widget: "file", required: false}
-          - {label: "Story Image", name: "story_image", widget: "image"}
+          - {label: "Story Video", name: "story_video", widget: "file", required: false, hint: "Upload a video (.mp4). Leave empty to display the Story Image instead."}
+          - {label: "Story Image", name: "story_image", widget: "image", hint: "Also used as fallback if no Story Video is provided."}
           - {label: "Story Paragraph 3", name: "story_text_3", widget: "text"}
           - {label: "Story Paragraph 4", name: "story_text_4", widget: "text"}
           - {label: "Chef Philosophy Title", name: "chef_title", widget: "string"}
           - {label: "Chef Philosophy Paragraph 1", name: "chef_text_1", widget: "text"}
           - {label: "Chef Philosophy Paragraph 2", name: "chef_text_2", widget: "text"}
-          - {label: "Chef Video", name: "chef_video", widget: "file", required: false}
-          - {label: "Chef Image", name: "chef_image", widget: "image"}
+          - {label: "Chef Video", name: "chef_video", widget: "file", required: false, hint: "Upload a video (.mp4) to replace the Chef Image with a video player."}
+          - {label: "Chef Image", name: "chef_image", widget: "image", hint: "Displayed if no Chef Video is provided above."}
           - {label: "Chef Philosophy Paragraph 3", name: "chef_text_3", widget: "text"}
           - {label: "Chef Philosophy Paragraph 4", name: "chef_text_4", widget: "text"}
 
@@ -176,11 +176,9 @@ collections:
           - {label: "Private Dining Paragraph 1", name: "private_text_1", widget: "text"}
           - {label: "Private Dining Paragraph 2", name: "private_text_2", widget: "text"}
           - {label: "Private Dining Image", name: "private_image", widget: "image"}
-          - {label: "Private Dining Video", name: "private_video", widget: "file", required: false}
           - {label: "Event Hosting Title", name: "hosting_title", widget: "string"}
           - {label: "Event Hosting Paragraph 1", name: "hosting_text_1", widget: "text"}
           - {label: "Event Hosting Paragraph 2", name: "hosting_text_2", widget: "text"}
-          - {label: "Event Hosting Video", name: "hosting_video", widget: "file", required: false}
           - {label: "Event Hosting Image", name: "hosting_image", widget: "image", required: false}
 
       - name: "menu-categories"

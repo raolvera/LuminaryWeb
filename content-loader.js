@@ -2,6 +2,38 @@
 (async function() {
   document.body.style.opacity = '0';
 
+  // Helper: detect if a URL points to a video file
+  function isVideoFile(url) {
+    if (!url) return false;
+    var ext = url.split('.').pop().toLowerCase().split('?')[0];
+    return ['mp4', 'webm', 'mov', 'ogg', 'avi'].indexOf(ext) !== -1;
+  }
+
+  // Helper: render video or image into a container based on file type
+  // primarySrc is checked first (typically the video field), fallbackSrc second (typically the image field)
+  function renderMedia(container, primarySrc, fallbackSrc, altText) {
+    if (!container) return;
+    container.innerHTML = '';
+    var src = primarySrc || fallbackSrc;
+    if (!src) return;
+
+    if (isVideoFile(src)) {
+      var video = document.createElement('video');
+      video.controls = true;
+      video.setAttribute('playsinline', '');
+      var source = document.createElement('source');
+      source.src = src;
+      source.type = 'video/' + src.split('.').pop().toLowerCase().split('?')[0];
+      video.appendChild(source);
+      container.appendChild(video);
+    } else {
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = altText || '';
+      container.appendChild(img);
+    }
+  }
+
   try {
     const theme = await fetch('/content/theme.json').then(r => r.json());
 
@@ -80,17 +112,18 @@
       var storySection = document.querySelectorAll('.content-text')[0];
       storySection.querySelector('h2').textContent = home.story_title;
       storySection.querySelector('p').textContent = home.story_text;
-      if (home.story_video) {
-        document.querySelector('.video-placeholder source').src = home.story_video;
-        document.querySelector('.video-placeholder video').load();
-      }
+
+      // Story media: video takes priority, falls back to image
+      var storyMedia = document.getElementById('home-story-media');
+      renderMedia(storyMedia, home.story_video, home.story_image, 'Our Story');
 
       var chefSection = document.querySelectorAll('.content-text')[1];
       chefSection.querySelector('h2').textContent = home.chef_title;
       chefSection.querySelector('p').textContent = home.chef_text;
-      if (home.chef_image) {
-        document.querySelector('.image-placeholder img').src = home.chef_image;
-      }
+
+      // Chef media: video takes priority, falls back to image
+      var chefMedia = document.getElementById('home-chef-media');
+      renderMedia(chefMedia, home.chef_video, home.chef_image, 'Chef Philosophy');
     }
 
     if (page === 'about') {
@@ -120,20 +153,17 @@
       if (storyParas[0]) storyParas[0].textContent = about.story_text_1;
       if (storyParas[1]) storyParas[1].textContent = about.story_text_2;
 
-      if (about.story_video) {
-        var storyVideo = document.querySelector('.video-placeholder source');
-        if (storyVideo) {
-          storyVideo.src = about.story_video;
-          storyVideo.parentElement.load();
-        }
-      }
+      // Story media: video takes priority, falls back to image
+      var storyMedia = document.getElementById('about-story-media');
+      renderMedia(storyMedia, about.story_video, about.story_image, 'Our Story');
 
       var storyParas2 = contentSections[1].querySelectorAll('p');
       if (storyParas2[0]) storyParas2[0].textContent = about.story_text_3;
       if (storyParas2[1]) storyParas2[1].textContent = about.story_text_4;
 
-      var storyImg = document.querySelector('.image-placeholder img');
-      if (storyImg && about.story_image) storyImg.src = about.story_image;
+      // Story image slot
+      var storyImageSlot = document.getElementById('about-story-image');
+      renderMedia(storyImageSlot, null, about.story_image, 'Luminary restaurant interior');
 
       var chefTitle = contentSections[2].querySelector('.section-title');
       if (chefTitle) chefTitle.textContent = about.chef_title;
@@ -142,8 +172,9 @@
       if (chefParas[0]) chefParas[0].textContent = about.chef_text_1;
       if (chefParas[1]) chefParas[1].textContent = about.chef_text_2;
 
-      var chefImg = document.querySelectorAll('.image-placeholder img')[1];
-      if (chefImg && about.chef_image) chefImg.src = about.chef_image;
+      // Chef media: video takes priority, falls back to image
+      var chefMedia = document.getElementById('about-chef-media');
+      renderMedia(chefMedia, about.chef_video, about.chef_image, 'Chef at work');
     }
 
     if (page === 'menu') {
@@ -231,27 +262,32 @@
 
       document.querySelector('.about-banner h1').textContent = events.page_title;
 
-      var contentSections = document.querySelectorAll('.content-text');
-      contentSections[0].querySelector('h2').textContent = events.private_title;
+      var eventSections = document.querySelectorAll('.events-split-inner');
+      if (eventSections[0]) {
+        var privateTitle = eventSections[0].querySelector('h2');
+        if (privateTitle) privateTitle.textContent = events.private_title;
 
-      var privateParas = contentSections[0].querySelectorAll('p');
-      if (privateParas[0]) privateParas[0].textContent = events.private_text_1;
-      if (privateParas[1]) privateParas[1].textContent = events.private_text_2;
+        var privateParas = eventSections[0].querySelectorAll('p');
+        if (privateParas[0]) privateParas[0].textContent = events.private_text_1;
+        if (privateParas[1]) privateParas[1].textContent = events.private_text_2;
+      }
 
-      var privateImg = document.querySelector('.image-placeholder img');
-      if (privateImg && events.private_image) privateImg.src = events.private_image;
+      if (eventSections[1]) {
+        var hostingTitle = eventSections[1].querySelector('h2');
+        if (hostingTitle) hostingTitle.textContent = events.hosting_title;
 
-      contentSections[1].querySelector('h2').textContent = events.hosting_title;
+        var hostingParas = eventSections[1].querySelectorAll('p');
+        if (hostingParas[0]) hostingParas[0].textContent = events.hosting_text_1;
+        if (hostingParas[1]) hostingParas[1].textContent = events.hosting_text_2;
+      }
 
-      var hostingParas = contentSections[1].querySelectorAll('p');
-      if (hostingParas[0]) hostingParas[0].textContent = events.hosting_text_1;
-      if (hostingParas[1]) hostingParas[1].textContent = events.hosting_text_2;
-
-      if (events.hosting_video) {
-        var hostingVideo = document.querySelector('.video-placeholder source');
-        if (hostingVideo) {
-          hostingVideo.src = events.hosting_video;
-          hostingVideo.parentElement.load();
+      // Events split image
+      var eventsMedia = document.getElementById('events-media');
+      if (eventsMedia) {
+        var img = eventsMedia.querySelector('img');
+        if (img && events.private_image) {
+          img.src = events.private_image;
+          img.alt = 'Private dining at Luminary';
         }
       }
     }
