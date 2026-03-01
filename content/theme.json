@@ -21,15 +21,21 @@
   },
   "about": {
     "banner_bg": "#333333",
-    "banner_text": "#ffffff",
-    "story_bg": "#f4f4f4",
-    "story_text": "#000000",
-    "chef_bg": "#e0e0e0",
-    "chef_text": "#000000"
+    "banner_text": "#ede8e1",
+    "story_bg": "#ede8e1",
+    "story_text": "#4c444e",
+    "chef_bg": "#4c444e",
+    "chef_text": "#ede8e1"
   },
   "menu": {
     "bg": "#080810",
-    "text": "#fffaec"
+    "text": "#fffaec",
+    "dot_color": "#fffaec",
+    "arrow_color": "#fffaec",
+    "price_color": "#fffaec",
+    "category_color": "#fffaec",
+    "banner_text": "#fffaec",
+    "banner_bg": "#5d5d5d"
   },
   "events": {
     "banner_bg": "#333333",
