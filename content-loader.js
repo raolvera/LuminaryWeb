@@ -148,6 +148,45 @@
       // Chef media: video takes priority, falls back to image
       var chefMedia = document.getElementById('home-chef-media');
       renderMedia(chefMedia, home.chef_video, home.chef_image, 'Chef Philosophy');
+
+      // Load menu items into carousel on index page (same as menu page)
+      var menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
+      var categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
+      var grouped = {};
+      menuItems.forEach(function(item) {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
+      Object.values(grouped).forEach(function(arr) { arr.sort(function(a, b) { return (a.order || 0) - (b.order || 0); }); });
+
+      var slides = document.querySelectorAll('.carousel-slide');
+      categoryOrder.forEach(function(cat, i) {
+        var slide = slides[i];
+        if (!slide || !grouped[cat]) return;
+        var items = grouped[cat];
+
+        var img = slide.querySelector('.image-display img');
+        if (img && items[0] && items[0].image) {
+          img.src = items[0].image;
+          img.alt = items[0].name;
+        }
+
+        var textItems = slide.querySelectorAll('.menu-text-item');
+        items.forEach(function(item, j) {
+          if (!textItems[j]) return;
+          var h4 = textItems[j].querySelector('h4');
+          var p = textItems[j].querySelector('p');
+          if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
+          if (p) p.textContent = item.description;
+
+          if (img && item.image) {
+            textItems[j].addEventListener('mouseenter', function() {
+              img.src = item.image;
+              img.alt = item.name;
+            });
+          }
+        });
+      });
     }
 
     if (page === 'about') {
