@@ -181,6 +181,27 @@ collections:
           - {label: "Event Hosting Paragraph 2", name: "hosting_text_2", widget: "text"}
           - {label: "Event Hosting Image", name: "hosting_image", widget: "image", required: false}
 
+      - name: "menu-page"
+        label: "Menu Page"
+        file: "content/menu-page.json"
+        fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image", required: false}
+          - {label: "Page Title", name: "page_title", widget: "string"}
+
+      - name: "book-page"
+        label: "Book a Table Page"
+        file: "content/book-page.json"
+        fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image", required: false}
+          - {label: "Page Title", name: "page_title", widget: "string"}
+
+      - name: "confirmation-page"
+        label: "Confirmation Page"
+        file: "content/confirmation-page.json"
+        fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image", required: false}
+          - {label: "Page Title", name: "page_title", widget: "string"}
+
       - name: "menu-categories"
         label: "Menu Category Descriptions"
         file: "content/menu-categories.json"
@@ -222,16 +243,3 @@ collections:
       - {label: "Menu Description", name: "description", widget: "text"}
       - {label: "Menu Item Image", name: "image", widget: "image"}
       - {label: "Order", name: "order", widget: "number", default: 0, value_type: "int"}
-
-  - name: "hero"
-    label: "Hero Images"
-    files:
-      - name: "heroes"
-        label: "Page Hero Images"
-        file: "content/heroes.json"
-        fields:
-          - {label: "Home Hero Image", name: "home_hero", widget: "image"}
-          - {label: "About Hero Image", name: "about_hero", widget: "image"}
-          - {label: "Menu Hero Image", name: "menu_hero", widget: "image"}
-          - {label: "Events Hero Image", name: "events_hero", widget: "image"}
-          - {label: "Book Hero Image", name: "book_hero", widget: "image"}
