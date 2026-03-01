@@ -73,8 +73,15 @@ collections:
             widget: "object"
             collapsed: true
             fields:
-              - {label: "Background Color", name: "bg", widget: "color", default: "#000000"}
-              - {label: "Text Color", name: "text", widget: "color", default: "#ffffff"}
+              - {label: "Banner Background Color", name: "banner_bg", widget: "color", default: "#333333"}
+              - {label: "Banner Text Color", name: "banner_text", widget: "color", default: "#ffffff"}
+              - {label: "Section Background Color", name: "bg", widget: "color", default: "#000000"}
+              - {label: "Section Text Color", name: "text", widget: "color", default: "#ffffff"}
+              - {label: "Category Name Color", name: "category_color", widget: "color", default: "#ffffff"}
+              - {label: "Description Text Color", name: "desc_color", widget: "color", default: "#aaaaaa"}
+              - {label: "Menu Item Price Color", name: "price_color", widget: "color", default: "#FFD700"}
+              - {label: "Navigation Arrow Color", name: "arrow_color", widget: "color", default: "#ffffff"}
+              - {label: "Carousel Dot Color", name: "dot_color", widget: "color", default: "#ffffff"}
 
           - label: "Private Events Page Colors"
             name: "events"
@@ -187,6 +194,7 @@ collections:
         fields:
           - {label: "Hero Image", name: "hero_image", widget: "image", required: false}
           - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Menu Section Heading", name: "carousel_heading", widget: "string", required: false, hint: "Optional heading displayed above the menu categories. Leave empty to hide."}
 
       - name: "book-page"
         label: "Book a Table Page"
