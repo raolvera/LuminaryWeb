@@ -301,6 +301,54 @@
       var events = await fetch('/content/events.json').then(r => r.json());
       var ec = theme.events || {};
 
+      // Apply events page-specific header colors (override global)
+      if (ec.header_bg) {
+        var header = document.querySelector('header');
+        if (header) header.style.backgroundColor = ec.header_bg;
+      }
+      if (ec.header_text) {
+        var navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(function(a) { a.style.color = ec.header_text; });
+        var btnOutline = document.querySelector('.btn-outline');
+        if (btnOutline) btnOutline.style.borderColor = ec.header_text;
+        var hamburgerSpans = document.querySelectorAll('.hamburger span');
+        hamburgerSpans.forEach(function(s) { s.style.background = ec.header_text; });
+      }
+      if (ec.header_logo_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', ec.header_logo_color); });
+        }
+      }
+      if (ec.header_logo_star_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', ec.header_logo_star_color); });
+        }
+      }
+
+      // Apply events page-specific footer colors (override global)
+      if (ec.footer_bg) {
+        var footer = document.querySelector('footer');
+        if (footer) footer.style.backgroundColor = ec.footer_bg;
+      }
+      if (ec.footer_text) {
+        var footer = document.querySelector('footer');
+        if (footer) footer.style.color = ec.footer_text;
+      }
+      if (ec.footer_logo_color) {
+        var footerLogo = document.querySelector('[data-logo="footer"]');
+        if (footerLogo) {
+          footerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', ec.footer_logo_color); });
+        }
+      }
+      if (ec.footer_logo_star_color) {
+        var footerLogo = document.querySelector('[data-logo="footer"]');
+        if (footerLogo) {
+          footerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', ec.footer_logo_star_color); });
+        }
+      }
+
       // Apply Events page hero image
       applyHeroImage(events.hero_image);
 
@@ -309,13 +357,13 @@
       applyColors(banner, ec.banner_bg, ec.banner_text);
 
       // Apply Events page section colors
-      var sections = document.querySelectorAll('.section-wrapper');
+      var eventBlocks = document.querySelectorAll('.events-split-block');
 
       // Private Dining section
-      applyColors(sections[0], ec.private_bg, ec.private_text);
+      applyColors(eventBlocks[0], ec.private_bg, ec.private_text);
 
       // Event Hosting section
-      applyColors(sections[1], ec.hosting_bg, ec.hosting_text);
+      applyColors(eventBlocks[1], ec.hosting_bg, ec.hosting_text);
 
       document.querySelector('.about-banner h1').textContent = events.page_title;
 
