@@ -35,10 +35,16 @@ collections:
             collapsed: true
             fields:
               - {label: "Header Background Color", name: "header_bg", widget: "color", default: "#000000"}
+              - {label: "Header Logo Color", name: "header_logo_color", widget: "color", default: "#A7977E"}
+              - {label: "Header Logo Star Color", name: "header_logo_star_color", widget: "color", default: "#EDE8E1"}
               - {label: "Accent Color (Hover / Highlights)", name: "accent_color", widget: "color", default: "#FFD700"}
               - {label: "Border Color", name: "border_color", widget: "color", default: "#333333"}
               - {label: "Footer Background Color", name: "footer_bg", widget: "color", default: "#4c444e"}
+              - {label: "Footer Logo Color", name: "footer_logo_color", widget: "color", default: "#A7977E"}
+              - {label: "Footer Logo Star Color", name: "footer_logo_star_color", widget: "color", default: "#EDE8E1"}
               - {label: "Footer Text Color", name: "footer_text", widget: "color", default: "#ffffff"}
+              - {label: "Button Background Color", name: "button_bg", widget: "color", default: "#000000", hint: "Default button background color site-wide. Can be overridden per page."}
+              - {label: "Button Text Color", name: "button_text", widget: "color", default: "#ffffff", hint: "Default button text color site-wide. Can be overridden per page."}
 
           - label: "Home Page Colors"
             name: "home"
@@ -69,20 +75,41 @@ collections:
             widget: "object"
             collapsed: true
             fields:
-              - {label: "Background Color", name: "bg", widget: "color", default: "#000000"}
-              - {label: "Text Color", name: "text", widget: "color", default: "#ffffff"}
+              - {label: "Header Background Color", name: "header_bg", widget: "color", required: false, hint: "Leave empty to use the global header color."}
+              - {label: "Header Nav Text Color", name: "header_text", widget: "color", required: false, hint: "Color for navigation links and hamburger icon. Leave empty to use white."}
+              - {label: "Header Logo Color", name: "header_logo_color", widget: "color", required: false, hint: "Leave empty to use the global logo color."}
+              - {label: "Header Logo Star Color", name: "header_logo_star_color", widget: "color", required: false, hint: "Leave empty to use the global logo star color."}
+              - {label: "Banner Background Color", name: "banner_bg", widget: "color", default: "#333333"}
+              - {label: "Banner Text Color", name: "banner_text", widget: "color", default: "#ffffff"}
+              - {label: "Section Background Color", name: "bg", widget: "color", default: "#000000"}
+              - {label: "Section Text Color", name: "text", widget: "color", default: "#ffffff"}
+              - {label: "Category Name Color", name: "category_color", widget: "color", default: "#ffffff"}
+
+              - {label: "Menu Item Price Color", name: "price_color", widget: "color", default: "#FFD700"}
+              - {label: "Navigation Arrow Color", name: "arrow_color", widget: "color", default: "#ffffff"}
+              - {label: "Carousel Dot Color", name: "dot_color", widget: "color", default: "#ffffff"}
 
           - label: "Private Events Page Colors"
             name: "events"
             widget: "object"
             collapsed: true
             fields:
+              - {label: "Header Background Color", name: "header_bg", widget: "color", required: false, hint: "Leave empty to use the global header color."}
+              - {label: "Header Nav Text Color", name: "header_text", widget: "color", required: false, hint: "Color for navigation links and hamburger icon. Leave empty to use white."}
+              - {label: "Header Logo Color", name: "header_logo_color", widget: "color", required: false, hint: "Leave empty to use the global logo color."}
+              - {label: "Header Logo Star Color", name: "header_logo_star_color", widget: "color", required: false, hint: "Leave empty to use the global logo star color."}
+              - {label: "Footer Background Color", name: "footer_bg", widget: "color", required: false, hint: "Leave empty to use the global footer color."}
+              - {label: "Footer Text Color", name: "footer_text", widget: "color", required: false, hint: "Leave empty to use the global footer text color."}
+              - {label: "Footer Logo Color", name: "footer_logo_color", widget: "color", required: false, hint: "Leave empty to use the global footer logo color."}
+              - {label: "Footer Logo Star Color", name: "footer_logo_star_color", widget: "color", required: false, hint: "Leave empty to use the global footer logo star color."}
               - {label: "Banner Background Color", name: "banner_bg", widget: "color", default: "#333333"}
               - {label: "Banner Text Color", name: "banner_text", widget: "color", default: "#ffffff"}
               - {label: "Private Dining Section - Background Color", name: "private_bg", widget: "color", default: "#f4f4f4"}
               - {label: "Private Dining Section - Text Color", name: "private_text", widget: "color", default: "#000000"}
               - {label: "Event Hosting Section - Background Color", name: "hosting_bg", widget: "color", default: "#e0e0e0"}
               - {label: "Event Hosting Section - Text Color", name: "hosting_text", widget: "color", default: "#000000"}
+              - {label: "Button Background Color", name: "button_bg", widget: "color", default: "#000000"}
+              - {label: "Button Text Color", name: "button_text", widget: "color", default: "#ffffff"}
 
           - label: "Book a Table Page Colors"
             name: "book"
@@ -118,8 +145,9 @@ collections:
               - {label: "Icon Text Color", name: "icon_text", widget: "color", default: "#ffffff"}
               - {label: "Home Button Background", name: "home_btn_bg", widget: "color", default: "#ffffff"}
               - {label: "Home Button Text", name: "home_btn_text", widget: "color", default: "#000000"}
-              - {label: "Menu Button Background", name: "menu_btn_bg", widget: "color", default: "#000000"}
-              - {label: "Menu Button Text", name: "menu_btn_text", widget: "color", default: "#ffffff"}
+              - {label: "Rebook Button Background", name: "rebook_btn_bg", widget: "color", default: "#000000"}
+              - {label: "Rebook Button Text", name: "rebook_btn_text", widget: "color", default: "#ffffff"}
+              - {label: "Favicon Color (Confirmation Only)", name: "favicon_color", widget: "color", default: "#B87333"}
 
   - name: "pages"
     label: "Pages"
@@ -133,12 +161,12 @@ collections:
           - {label: "Hero Image", name: "hero_image", widget: "image"}
           - {label: "Story Title", name: "story_title", widget: "string"}
           - {label: "Story Paragraph", name: "story_text", widget: "text"}
-          - {label: "Story Video", name: "story_video", widget: "file", required: false}
-          - {label: "Story Image", name: "story_image", widget: "image", required: false}
+          - {label: "Story Video", name: "story_video", widget: "file", required: false, hint: "Upload a video (.mp4). Leave empty to display the Story Image instead."}
+          - {label: "Story Image", name: "story_image", widget: "image", required: false, hint: "Displayed if no Story Video is provided above."}
           - {label: "Chef Philosophy Title", name: "chef_title", widget: "string"}
           - {label: "Chef Philosophy Paragraph", name: "chef_text", widget: "text"}
-          - {label: "Chef Video", name: "chef_video", widget: "file", required: false}
-          - {label: "Chef Image", name: "chef_image", widget: "image"}
+          - {label: "Chef Video", name: "chef_video", widget: "file", required: false, hint: "Upload a video (.mp4) to replace the Chef Image with a video player."}
+          - {label: "Chef Image", name: "chef_image", widget: "image", hint: "Displayed if no Chef Video is provided above."}
 
       - name: "about"
         label: "About Page"
@@ -149,15 +177,15 @@ collections:
           - {label: "Story Title", name: "story_title", widget: "string"}
           - {label: "Story Paragraph 1", name: "story_text_1", widget: "text"}
           - {label: "Story Paragraph 2", name: "story_text_2", widget: "text"}
-          - {label: "Story Video", name: "story_video", widget: "file", required: false}
-          - {label: "Story Image", name: "story_image", widget: "image"}
+          - {label: "Story Video", name: "story_video", widget: "file", required: false, hint: "Upload a video (.mp4). Leave empty to display the Story Image instead."}
+          - {label: "Story Image", name: "story_image", widget: "image", hint: "Also used as fallback if no Story Video is provided."}
           - {label: "Story Paragraph 3", name: "story_text_3", widget: "text"}
           - {label: "Story Paragraph 4", name: "story_text_4", widget: "text"}
           - {label: "Chef Philosophy Title", name: "chef_title", widget: "string"}
           - {label: "Chef Philosophy Paragraph 1", name: "chef_text_1", widget: "text"}
           - {label: "Chef Philosophy Paragraph 2", name: "chef_text_2", widget: "text"}
-          - {label: "Chef Video", name: "chef_video", widget: "file", required: false}
-          - {label: "Chef Image", name: "chef_image", widget: "image"}
+          - {label: "Chef Video", name: "chef_video", widget: "file", required: false, hint: "Upload a video (.mp4) to replace the Chef Image with a video player."}
+          - {label: "Chef Image", name: "chef_image", widget: "image", hint: "Displayed if no Chef Video is provided above."}
           - {label: "Chef Philosophy Paragraph 3", name: "chef_text_3", widget: "text"}
           - {label: "Chef Philosophy Paragraph 4", name: "chef_text_4", widget: "text"}
 
@@ -171,37 +199,32 @@ collections:
           - {label: "Private Dining Paragraph 1", name: "private_text_1", widget: "text"}
           - {label: "Private Dining Paragraph 2", name: "private_text_2", widget: "text"}
           - {label: "Private Dining Image", name: "private_image", widget: "image"}
-          - {label: "Private Dining Video", name: "private_video", widget: "file", required: false}
           - {label: "Event Hosting Title", name: "hosting_title", widget: "string"}
           - {label: "Event Hosting Paragraph 1", name: "hosting_text_1", widget: "text"}
           - {label: "Event Hosting Paragraph 2", name: "hosting_text_2", widget: "text"}
-          - {label: "Event Hosting Video", name: "hosting_video", widget: "file", required: false}
           - {label: "Event Hosting Image", name: "hosting_image", widget: "image", required: false}
 
-      - name: "menu-categories"
-        label: "Menu Category Descriptions"
-        file: "content/menu-categories.json"
+      - name: "menu-page"
+        label: "Menu Page"
+        file: "content/menu-page.json"
         fields:
-          - {label: "Appetizers Description 1", name: "appetizers_desc_1", widget: "text"}
-          - {label: "Appetizers Description 2", name: "appetizers_desc_2", widget: "text"}
-          - {label: "Appetizers Description 3", name: "appetizers_desc_3", widget: "text"}
-          - {label: "Appetizers Description 4", name: "appetizers_desc_4", widget: "text"}
-          - {label: "Desserts Description 1", name: "desserts_desc_1", widget: "text"}
-          - {label: "Desserts Description 2", name: "desserts_desc_2", widget: "text"}
-          - {label: "Desserts Description 3", name: "desserts_desc_3", widget: "text"}
-          - {label: "Desserts Description 4", name: "desserts_desc_4", widget: "text"}
-          - {label: "Entrees Description 1", name: "entrees_desc_1", widget: "text"}
-          - {label: "Entrees Description 2", name: "entrees_desc_2", widget: "text"}
-          - {label: "Entrees Description 3", name: "entrees_desc_3", widget: "text"}
-          - {label: "Entrees Description 4", name: "entrees_desc_4", widget: "text"}
-          - {label: "Beverages Description 1", name: "beverages_desc_1", widget: "text"}
-          - {label: "Beverages Description 2", name: "beverages_desc_2", widget: "text"}
-          - {label: "Beverages Description 3", name: "beverages_desc_3", widget: "text"}
-          - {label: "Beverages Description 4", name: "beverages_desc_4", widget: "text"}
-          - {label: "Cocktails Description 1", name: "cocktails_desc_1", widget: "text"}
-          - {label: "Cocktails Description 2", name: "cocktails_desc_2", widget: "text"}
-          - {label: "Cocktails Description 3", name: "cocktails_desc_3", widget: "text"}
-          - {label: "Cocktails Description 4", name: "cocktails_desc_4", widget: "text"}
+          - {label: "Hero Image", name: "hero_image", widget: "image", required: false}
+          - {label: "Page Title", name: "page_title", widget: "string"}
+          - {label: "Menu Section Heading", name: "carousel_heading", widget: "string", required: false, hint: "Optional heading displayed above the menu categories. Leave empty to hide."}
+
+      - name: "book-page"
+        label: "Book a Table Page"
+        file: "content/book-page.json"
+        fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image", required: false}
+          - {label: "Page Title", name: "page_title", widget: "string"}
+
+      - name: "confirmation-page"
+        label: "Confirmation Page"
+        file: "content/confirmation-page.json"
+        fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image", required: false}
+          - {label: "Page Title", name: "page_title", widget: "string"}
 
   - name: "menu"
     label: "Menu Items"
@@ -219,16 +242,3 @@ collections:
       - {label: "Menu Description", name: "description", widget: "text"}
       - {label: "Menu Item Image", name: "image", widget: "image"}
       - {label: "Order", name: "order", widget: "number", default: 0, value_type: "int"}
-
-  - name: "hero"
-    label: "Hero Images"
-    files:
-      - name: "heroes"
-        label: "Page Hero Images"
-        file: "content/heroes.json"
-        fields:
-          - {label: "Home Hero Image", name: "home_hero", widget: "image"}
-          - {label: "About Hero Image", name: "about_hero", widget: "image"}
-          - {label: "Menu Hero Image", name: "menu_hero", widget: "image"}
-          - {label: "Events Hero Image", name: "events_hero", widget: "image"}
-          - {label: "Book Hero Image", name: "book_hero", widget: "image"}

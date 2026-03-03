@@ -2,6 +2,43 @@
 (async function() {
   document.body.style.opacity = '0';
 
+  // Helper: detect if a URL points to a video file
+  function isVideoFile(url) {
+    if (!url) return false;
+    var ext = url.split('.').pop().toLowerCase().split('?')[0];
+    return ['mp4', 'webm', 'mov', 'ogg', 'avi'].indexOf(ext) !== -1;
+  }
+
+  // Helper: render video or image into a container based on file type
+  // primarySrc is checked first (typically the video field), fallbackSrc second (typically the image field)
+  function renderMedia(container, primarySrc, fallbackSrc, altText) {
+    if (!container) return;
+    container.innerHTML = '';
+    var src = primarySrc || fallbackSrc;
+    if (!src) return;
+
+    if (isVideoFile(src)) {
+      var video = document.createElement('video');
+      video.controls = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('preload', 'metadata');
+      var source = document.createElement('source');
+      source.src = src;
+      source.type = 'video/' + src.split('.').pop().toLowerCase().split('?')[0];
+      video.appendChild(source);
+      container.appendChild(video);
+    } else {
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = altText || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.width = 600;
+      img.height = 400;
+      container.appendChild(img);
+    }
+  }
+
   try {
     const theme = await fetch('/content/theme.json').then(r => r.json());
 
@@ -16,12 +53,45 @@
     // Apply header background
     var header = document.querySelector('header');
     if (header) header.style.backgroundColor = g.header_bg || '#000000';
+    document.documentElement.style.setProperty('--header-bg', g.header_bg || '#000000');
+
+    // Apply global button colors
+    if (g.button_bg) {
+      document.documentElement.style.setProperty('--events-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--book-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--confirm-home-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--confirm-rebook-btn-bg', g.button_bg);
+    }
+    if (g.button_text) {
+      document.documentElement.style.setProperty('--events-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--book-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--confirm-home-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--confirm-rebook-btn-text', g.button_text);
+    }
 
     // Apply footer colors
     var footer = document.querySelector('footer');
     if (footer) {
       footer.style.backgroundColor = g.footer_bg || '#000000';
       footer.style.color = g.footer_text || '#ffffff';
+    }
+
+    // Apply header logo colors
+    var headerLogo = document.querySelector('[data-logo="header"]');
+    if (headerLogo) {
+      var headerTextPaths = headerLogo.querySelectorAll('.logo-text');
+      var headerStarPaths = headerLogo.querySelectorAll('.logo-star');
+      headerTextPaths.forEach(function(p) { p.setAttribute('fill', g.header_logo_color || '#A7977E'); });
+      headerStarPaths.forEach(function(p) { p.setAttribute('fill', g.header_logo_star_color || '#EDE8E1'); });
+    }
+
+    // Apply footer logo colors
+    var footerLogo = document.querySelector('[data-logo="footer"]');
+    if (footerLogo) {
+      var footerTextPaths = footerLogo.querySelectorAll('.logo-text');
+      var footerStarPaths = footerLogo.querySelectorAll('.logo-star');
+      footerTextPaths.forEach(function(p) { p.setAttribute('fill', g.footer_logo_color || '#A7977E'); });
+      footerStarPaths.forEach(function(p) { p.setAttribute('fill', g.footer_logo_star_color || '#EDE8E1'); });
     }
 
     // Apply font
@@ -32,6 +102,15 @@
       if (!el) return;
       if (bg) el.style.backgroundColor = bg;
       if (text) el.style.color = text;
+    }
+
+    // Helper to apply hero image to a banner section
+    function applyHeroImage(heroImageUrl) {
+      var banner = document.querySelector('.about-banner');
+      if (banner && heroImageUrl) {
+        banner.classList.add('has-hero');
+        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + heroImageUrl + '")';
+      }
     }
 
     const page = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
@@ -62,95 +141,22 @@
       var storySection = document.querySelectorAll('.content-text')[0];
       storySection.querySelector('h2').textContent = home.story_title;
       storySection.querySelector('p').textContent = home.story_text;
-      if (home.story_video) {
-        document.querySelector('.video-placeholder source').src = home.story_video;
-        document.querySelector('.video-placeholder video').load();
-      }
+
+      // Story media: video takes priority, falls back to image
+      var storyMedia = document.getElementById('home-story-media');
+      renderMedia(storyMedia, home.story_video, home.story_image, 'Our Story');
 
       var chefSection = document.querySelectorAll('.content-text')[1];
       chefSection.querySelector('h2').textContent = home.chef_title;
       chefSection.querySelector('p').textContent = home.chef_text;
-      if (home.chef_image) {
-        document.querySelector('.image-placeholder img').src = home.chef_image;
-      }
-    }
 
-    if (page === 'about') {
-      var about = await fetch('/content/about.json').then(r => r.json());
-      var ac = theme.about || {};
+      // Chef media: video takes priority, falls back to image
+      var chefMedia = document.getElementById('home-chef-media');
+      renderMedia(chefMedia, home.chef_video, home.chef_image, 'Chef Philosophy');
 
-      // Apply About page banner colors
-      var banner = document.querySelector('.about-banner');
-      applyColors(banner, ac.banner_bg, ac.banner_text);
-
-      document.querySelector('.about-banner h1').textContent = about.page_title;
-
-      // Apply About page section colors
-      var sections = document.querySelectorAll('.section-wrapper');
-
-      // Our Story section
-      applyColors(sections[0], ac.story_bg, ac.story_text);
-
-      // Chef Philosophy section
-      applyColors(sections[1], ac.chef_bg, ac.chef_text);
-
-      var contentSections = document.querySelectorAll('.content-text');
-      var storyTitle = contentSections[0].querySelector('.section-title');
-      if (storyTitle) storyTitle.textContent = about.story_title;
-
-      var storyParas = contentSections[0].querySelectorAll('p');
-      if (storyParas[0]) storyParas[0].textContent = about.story_text_1;
-      if (storyParas[1]) storyParas[1].textContent = about.story_text_2;
-
-      if (about.story_video) {
-        var storyVideo = document.querySelector('.video-placeholder source');
-        if (storyVideo) {
-          storyVideo.src = about.story_video;
-          storyVideo.parentElement.load();
-        }
-      }
-
-      var storyParas2 = contentSections[1].querySelectorAll('p');
-      if (storyParas2[0]) storyParas2[0].textContent = about.story_text_3;
-      if (storyParas2[1]) storyParas2[1].textContent = about.story_text_4;
-
-      var storyImg = document.querySelector('.image-placeholder img');
-      if (storyImg && about.story_image) storyImg.src = about.story_image;
-
-      var chefTitle = contentSections[2].querySelector('.section-title');
-      if (chefTitle) chefTitle.textContent = about.chef_title;
-
-      var chefParas = contentSections[2].querySelectorAll('p');
-      if (chefParas[0]) chefParas[0].textContent = about.chef_text_1;
-      if (chefParas[1]) chefParas[1].textContent = about.chef_text_2;
-
-      if (about.chef_video) {
-        var chefVideos = document.querySelectorAll('.video-placeholder source');
-        if (chefVideos[1]) {
-          chefVideos[1].src = about.chef_video;
-          chefVideos[1].parentElement.load();
-        }
-      }
-
-      var chefParas2 = contentSections[3].querySelectorAll('p');
-      if (chefParas2[0]) chefParas2[0].textContent = about.chef_text_3;
-      if (chefParas2[1]) chefParas2[1].textContent = about.chef_text_4;
-
-      var chefImg = document.querySelectorAll('.image-placeholder img')[1];
-      if (chefImg && about.chef_image) chefImg.src = about.chef_image;
-    }
-
-    if (page === 'menu') {
-      var mc = theme.menu || {};
-
-      // Apply Menu page colors
-      var menuSection = document.querySelector('.section-wrapper');
-      applyColors(menuSection, mc.bg, mc.text);
-
+      // Load menu items into carousel on index page (same as menu page)
       var menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
-      var menuCats = await fetch('/content/menu-categories.json').then(r => r.json());
       var categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
-      var categoryKeys = ['appetizers', 'desserts', 'entrees', 'beverages', 'cocktails'];
       var grouped = {};
       menuItems.forEach(function(item) {
         if (!grouped[item.category]) grouped[item.category] = [];
@@ -177,81 +183,303 @@
           var p = textItems[j].querySelector('p');
           if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
           if (p) p.textContent = item.description;
+
+          if (img && item.image) {
+            textItems[j].addEventListener('mouseenter', function() {
+              img.src = item.image;
+              img.alt = item.name;
+            });
+          }
         });
       });
+    }
 
-      // Build category descriptions lookup and set initial descriptions
-      var catDescriptions = {};
-      categoryOrder.forEach(function(cat, i) {
-        var key = categoryKeys[i];
-        catDescriptions[cat] = [
-          menuCats[key + '_desc_1'] || '',
-          menuCats[key + '_desc_2'] || '',
-          menuCats[key + '_desc_3'] || '',
-          menuCats[key + '_desc_4'] || ''
-        ];
-      });
+    if (page === 'about') {
+      var about = await fetch('/content/about.json').then(r => r.json());
+      var ac = theme.about || {};
 
-      // Store on window for carousel.js to access
-      window.categoryDescriptions = catDescriptions;
+      // Apply About page hero image
+      applyHeroImage(about.hero_image);
 
-      // Set initial descriptions for first category
-      var descContainer = document.getElementById('category-descriptions');
-      if (descContainer) {
-        var descParagraphs = descContainer.querySelectorAll('.cat-desc');
-        var initialDescs = catDescriptions[categoryOrder[0]] || [];
-        descParagraphs.forEach(function(p, idx) {
-          p.textContent = initialDescs[idx] || '';
-        });
+      // Apply About page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, ac.banner_bg, ac.banner_text);
+
+      document.querySelector('.about-banner h1').textContent = about.page_title;
+
+      // Apply About page section colors
+      var sections = document.querySelectorAll('.section-wrapper');
+
+      // Our Story section
+      applyColors(sections[0], ac.story_bg, ac.story_text);
+
+      // Chef Philosophy section
+      applyColors(sections[1], ac.chef_bg, ac.chef_text);
+
+      var contentSections = document.querySelectorAll('.content-text');
+      var storyTitle = contentSections[0].querySelector('.section-title');
+      if (storyTitle) storyTitle.textContent = about.story_title;
+
+      var storyParas = contentSections[0].querySelectorAll('p');
+      if (storyParas[0]) storyParas[0].textContent = about.story_text_1;
+      if (storyParas[1]) storyParas[1].textContent = about.story_text_2;
+
+      // Story media: video takes priority, falls back to image
+      var storyMedia = document.getElementById('about-story-media');
+      renderMedia(storyMedia, about.story_video, about.story_image, 'Our Story');
+
+      var storyParas2 = contentSections[1].querySelectorAll('p');
+      if (storyParas2[0]) storyParas2[0].textContent = about.story_text_3;
+      if (storyParas2[1]) storyParas2[1].textContent = about.story_text_4;
+
+      // Story image slot
+      var storyImageSlot = document.getElementById('about-story-image');
+      renderMedia(storyImageSlot, null, about.story_image, 'Luminary restaurant interior');
+
+      var chefTitle = contentSections[2].querySelector('.section-title');
+      if (chefTitle) chefTitle.textContent = about.chef_title;
+
+      var chefParas = contentSections[2].querySelectorAll('p');
+      if (chefParas[0]) chefParas[0].textContent = about.chef_text_1;
+      if (chefParas[1]) chefParas[1].textContent = about.chef_text_2;
+
+      // Chef media: video takes priority, falls back to image
+      var chefMedia = document.getElementById('about-chef-media');
+      renderMedia(chefMedia, about.chef_video, about.chef_image, 'Chef at work');
+    }
+
+    if (page === 'menu') {
+      var mc = theme.menu || {};
+
+      // Apply menu page-specific header colors (override global)
+      if (mc.header_bg) {
+        var header = document.querySelector('header');
+        if (header) header.style.backgroundColor = mc.header_bg;
+        document.documentElement.style.setProperty('--header-bg', mc.header_bg);
       }
+      if (mc.header_text) {
+        var navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(function(a) { a.style.color = mc.header_text; });
+        var btnOutline = document.querySelector('.btn-outline');
+        if (btnOutline) btnOutline.style.borderColor = mc.header_text;
+        var hamburgerSpans = document.querySelectorAll('.hamburger span');
+        hamburgerSpans.forEach(function(s) { s.style.background = mc.header_text; });
+      }
+      if (mc.header_logo_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', mc.header_logo_color); });
+        }
+      }
+      if (mc.header_logo_star_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', mc.header_logo_star_color); });
+        }
+      }
+
+      // Load menu page content (hero image + title)
+      try {
+        var menuPage = await fetch('/content/menu-page.json').then(r => r.json());
+        applyHeroImage(menuPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && menuPage.page_title) bannerTitle.textContent = menuPage.page_title;
+
+        // Apply banner colors (separate from section colors)
+        var menuBanner = document.querySelector('.about-banner');
+        if (menuBanner) applyColors(menuBanner, mc.banner_bg, mc.banner_text);
+
+        // Apply optional carousel heading from CMS
+        var carouselHeading = document.getElementById('carousel-heading');
+        if (carouselHeading && menuPage.carousel_heading) {
+          carouselHeading.textContent = menuPage.carousel_heading;
+          carouselHeading.style.display = '';
+        }
+      } catch(e) {}
+
+      // Apply Menu page section colors
+      var menuSection = document.querySelector('.section-wrapper');
+      applyColors(menuSection, mc.bg, mc.text);
+
+      // Apply category name color
+      if (mc.category_color) {
+        var catHeading = document.getElementById('carousel-category');
+        if (catHeading) catHeading.style.color = mc.category_color;
+      }
+
+      // Apply menu item price color
+      if (mc.price_color) {
+        document.documentElement.style.setProperty('--menu-price-color', mc.price_color);
+      }
+
+      // Apply navigation arrow color
+      if (mc.arrow_color) {
+        var arrows = document.querySelectorAll('.nav-arrow');
+        arrows.forEach(function(el) { el.style.color = mc.arrow_color; el.style.borderColor = mc.arrow_color; });
+      }
+
+      // Apply carousel dot color
+      if (mc.dot_color) {
+        var dots = document.querySelectorAll('.carousel-dots span');
+        dots.forEach(function(el) { el.style.color = mc.dot_color; });
+      }
+
+      var menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
+      var categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
+      var grouped = {};
+      menuItems.forEach(function(item) {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
+      Object.values(grouped).forEach(function(arr) { arr.sort(function(a, b) { return (a.order || 0) - (b.order || 0); }); });
+
+      var slides = document.querySelectorAll('.carousel-slide');
+      categoryOrder.forEach(function(cat, i) {
+        var slide = slides[i];
+        if (!slide || !grouped[cat]) return;
+        var items = grouped[cat];
+
+        var img = slide.querySelector('.image-display img');
+        if (img && items[0] && items[0].image) {
+          img.src = items[0].image;
+          img.alt = items[0].name;
+        }
+
+        var textItems = slide.querySelectorAll('.menu-text-item');
+        items.forEach(function(item, j) {
+          if (!textItems[j]) return;
+          var h4 = textItems[j].querySelector('h4');
+          var p = textItems[j].querySelector('p');
+          if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
+          if (p) p.textContent = item.description;
+
+          // Update carousel image when hovering over a menu item
+          if (img && item.image) {
+            textItems[j].addEventListener('mouseenter', function() {
+              img.src = item.image;
+              img.alt = item.name;
+            });
+          }
+        });
+      });
+
     }
 
     if (page === 'events') {
       var events = await fetch('/content/events.json').then(r => r.json());
       var ec = theme.events || {};
 
+      // Apply events page-specific header colors (override global)
+      if (ec.header_bg) {
+        var header = document.querySelector('header');
+        if (header) header.style.backgroundColor = ec.header_bg;
+        document.documentElement.style.setProperty('--header-bg', ec.header_bg);
+      }
+      if (ec.header_text) {
+        var navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(function(a) { a.style.color = ec.header_text; });
+        var btnOutline = document.querySelector('.btn-outline');
+        if (btnOutline) btnOutline.style.borderColor = ec.header_text;
+        var hamburgerSpans = document.querySelectorAll('.hamburger span');
+        hamburgerSpans.forEach(function(s) { s.style.background = ec.header_text; });
+      }
+      if (ec.header_logo_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', ec.header_logo_color); });
+        }
+      }
+      if (ec.header_logo_star_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', ec.header_logo_star_color); });
+        }
+      }
+
+      // Apply events page-specific footer colors (override global)
+      if (ec.footer_bg) {
+        var footer = document.querySelector('footer');
+        if (footer) footer.style.backgroundColor = ec.footer_bg;
+      }
+      if (ec.footer_text) {
+        var footer = document.querySelector('footer');
+        if (footer) footer.style.color = ec.footer_text;
+      }
+      if (ec.footer_logo_color) {
+        var footerLogo = document.querySelector('[data-logo="footer"]');
+        if (footerLogo) {
+          footerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', ec.footer_logo_color); });
+        }
+      }
+      if (ec.footer_logo_star_color) {
+        var footerLogo = document.querySelector('[data-logo="footer"]');
+        if (footerLogo) {
+          footerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', ec.footer_logo_star_color); });
+        }
+      }
+
+      // Apply Events page hero image
+      applyHeroImage(events.hero_image);
+
       // Apply Events page banner colors
       var banner = document.querySelector('.about-banner');
       applyColors(banner, ec.banner_bg, ec.banner_text);
 
       // Apply Events page section colors
-      var sections = document.querySelectorAll('.section-wrapper');
+      var eventBlocks = document.querySelectorAll('.events-split-block');
 
       // Private Dining section
-      applyColors(sections[0], ec.private_bg, ec.private_text);
+      applyColors(eventBlocks[0], ec.private_bg, ec.private_text);
 
       // Event Hosting section
-      applyColors(sections[1], ec.hosting_bg, ec.hosting_text);
+      applyColors(eventBlocks[1], ec.hosting_bg, ec.hosting_text);
+
+      // Apply Events page button colors (override global)
+      if (ec.button_bg) document.documentElement.style.setProperty('--events-btn-bg', ec.button_bg);
+      if (ec.button_text) document.documentElement.style.setProperty('--events-btn-text', ec.button_text);
 
       document.querySelector('.about-banner h1').textContent = events.page_title;
 
-      var contentSections = document.querySelectorAll('.content-text');
-      contentSections[0].querySelector('h2').textContent = events.private_title;
+      var eventSections = document.querySelectorAll('.events-split-inner');
+      if (eventSections[0]) {
+        var privateTitle = eventSections[0].querySelector('h2');
+        if (privateTitle) privateTitle.textContent = events.private_title;
 
-      var privateParas = contentSections[0].querySelectorAll('p');
-      if (privateParas[0]) privateParas[0].textContent = events.private_text_1;
-      if (privateParas[1]) privateParas[1].textContent = events.private_text_2;
+        var privateParas = eventSections[0].querySelectorAll('p');
+        if (privateParas[0]) privateParas[0].textContent = events.private_text_1;
+        if (privateParas[1]) privateParas[1].textContent = events.private_text_2;
+      }
 
-      var privateImg = document.querySelector('.image-placeholder img');
-      if (privateImg && events.private_image) privateImg.src = events.private_image;
+      if (eventSections[1]) {
+        var hostingTitle = eventSections[1].querySelector('h2');
+        if (hostingTitle) hostingTitle.textContent = events.hosting_title;
 
-      contentSections[1].querySelector('h2').textContent = events.hosting_title;
+        var hostingParas = eventSections[1].querySelectorAll('p');
+        if (hostingParas[0]) hostingParas[0].textContent = events.hosting_text_1;
+        if (hostingParas[1]) hostingParas[1].textContent = events.hosting_text_2;
+      }
 
-      var hostingParas = contentSections[1].querySelectorAll('p');
-      if (hostingParas[0]) hostingParas[0].textContent = events.hosting_text_1;
-      if (hostingParas[1]) hostingParas[1].textContent = events.hosting_text_2;
-
-      if (events.hosting_video) {
-        var hostingVideo = document.querySelector('.video-placeholder source');
-        if (hostingVideo) {
-          hostingVideo.src = events.hosting_video;
-          hostingVideo.parentElement.load();
+      // Events split image
+      var eventsMedia = document.getElementById('events-media');
+      if (eventsMedia) {
+        var img = eventsMedia.querySelector('img');
+        if (img && events.private_image) {
+          img.src = events.private_image;
+          img.alt = 'Private dining at Luminary';
         }
       }
     }
 
     if (page === 'book') {
       var bc = theme.book || {};
+
+      // Load book page content (hero image + title)
+      try {
+        var bookPage = await fetch('/content/book-page.json').then(r => r.json());
+        applyHeroImage(bookPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && bookPage.page_title) bannerTitle.textContent = bookPage.page_title;
+      } catch(e) {}
 
       // Apply Book page banner colors
       var banner = document.querySelector('.about-banner');
@@ -306,6 +534,14 @@
     if (page === 'confirmation') {
       var cc = theme.confirmation || {};
 
+      // Load confirmation page content (hero image + title)
+      try {
+        var confirmPage = await fetch('/content/confirmation-page.json').then(r => r.json());
+        applyHeroImage(confirmPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && confirmPage.page_title) bannerTitle.textContent = confirmPage.page_title;
+      } catch(e) {}
+
       // Apply Confirmation page banner colors
       var banner = document.querySelector('.about-banner');
       applyColors(banner, cc.banner_bg, cc.banner_text);
@@ -346,11 +582,21 @@
       if (cc.home_btn_text) {
         document.documentElement.style.setProperty('--confirm-home-btn-text', cc.home_btn_text);
       }
-      if (cc.menu_btn_bg) {
-        document.documentElement.style.setProperty('--confirm-menu-btn-bg', cc.menu_btn_bg);
+      if (cc.rebook_btn_bg) {
+        document.documentElement.style.setProperty('--confirm-rebook-btn-bg', cc.rebook_btn_bg);
       }
-      if (cc.menu_btn_text) {
-        document.documentElement.style.setProperty('--confirm-menu-btn-text', cc.menu_btn_text);
+      if (cc.rebook_btn_text) {
+        document.documentElement.style.setProperty('--confirm-rebook-btn-text', cc.rebook_btn_text);
+      }
+
+      // Override favicon color for confirmation page
+      if (cc.favicon_color) {
+        var faviconSvg = '<svg width="46" height="47" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.8865 0C22.8865 0 24.1249 11.8655 29.0679 16.8187C33.9856 21.7464 45.773 23.0422 45.773 23.0422C45.773 23.0422 33.9856 24.3379 29.0679 29.2656C24.1249 34.2188 22.8865 46.0843 22.8865 46.0843C22.8865 46.0843 21.6481 34.2188 16.7051 29.2656C11.7874 24.3379 0 23.0422 0 23.0422C0 23.0422 11.7874 21.7464 16.7051 16.8187C21.6481 11.8655 22.8865 0 22.8865 0Z" fill="' + cc.favicon_color + '"/></svg>';
+        var faviconDataUrl = 'data:image/svg+xml,' + encodeURIComponent(faviconSvg);
+        var faviconLink = document.querySelector('link[rel="icon"]');
+        if (faviconLink) {
+          faviconLink.href = faviconDataUrl;
+        }
       }
     }
 
