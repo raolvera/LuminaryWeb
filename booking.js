@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('timeInput').addEventListener('click', openTimePicker);
   renderCalendar();
 
-  // Handle form submission via fetch so we can redirect with data
+  // Handle form submission via fetch so we can redirect with data after Netlify accepts it.
   var form = document.getElementById('reservationForm');
   form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -40,14 +40,17 @@ document.addEventListener('DOMContentLoaded', function() {
     params.set('name', formData.get('name'));
     params.set('email', formData.get('email'));
 
-    fetch('/book.html', {
+    fetch('/__forms.html', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(formData).toString()
     }).then(function(response) {
+      if (!response.ok) {
+        throw new Error('Reservation submission failed');
+      }
       window.location.href = '/confirmation.html?' + params.toString();
     }).catch(function() {
-      window.location.href = '/confirmation.html?' + params.toString();
+      alert('We could not submit your reservation. Please try again.');
     });
   });
 });

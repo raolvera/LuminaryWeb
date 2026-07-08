@@ -13,29 +13,21 @@
     return url && !isVideoFile(url) && (url.indexOf('/images/') === 0 || url.indexOf('images/') === 0);
   }
 
-  function imageCdnUrl(url, width, height, fit) {
+  function imageUrl(url) {
     if (!isLocalImage(url)) return url;
-    var normalizedUrl = url.charAt(0) === '/' ? url : '/' + url;
-    var params = new URLSearchParams({
-      url: normalizedUrl,
-      w: String(width),
-      q: '75'
-    });
-    if (height) params.set('h', String(height));
-    if (fit) params.set('fit', fit);
-    return '/.netlify/images?' + params.toString();
+    return url.charAt(0) === '/' ? url : '/' + url;
   }
 
   function applyOptimizedImage(img, src, width, height) {
     if (!img || !src) return;
-    img.src = imageCdnUrl(src, width, height, height ? 'cover' : undefined);
+    img.src = imageUrl(src);
+    img.removeAttribute('srcset');
+    img.removeAttribute('sizes');
     if (isLocalImage(src)) {
-      img.srcset = [
-        imageCdnUrl(src, Math.ceil(width / 2), height ? Math.ceil(height / 2) : undefined, height ? 'cover' : undefined) + ' ' + Math.ceil(width / 2) + 'w',
-        imageCdnUrl(src, width, height, height ? 'cover' : undefined) + ' ' + width + 'w',
-        imageCdnUrl(src, width * 2, height ? height * 2 : undefined, height ? 'cover' : undefined) + ' ' + (width * 2) + 'w'
-      ].join(', ');
-      img.sizes = '(max-width: 700px) 92vw, ' + width + 'px';
+      img.onerror = function() {
+        img.removeAttribute('srcset');
+        img.src = imageUrl(src);
+      };
     }
   }
 
@@ -139,7 +131,7 @@
       var banner = document.querySelector('.about-banner');
       if (banner && heroImageUrl) {
         banner.classList.add('has-hero');
-        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + imageCdnUrl(heroImageUrl, 1600) + '")';
+        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + imageUrl(heroImageUrl) + '")';
       }
     }
 
@@ -153,7 +145,7 @@
       document.querySelector('.hero p').textContent = home.hero_description;
       if (home.hero_image) {
         var heroSection = document.querySelector('.hero');
-        heroSection.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + imageCdnUrl(home.hero_image, 1800) + '")';
+        heroSection.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + imageUrl(home.hero_image) + '")';
       }
 
       // Apply Home page section colors
