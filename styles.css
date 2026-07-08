@@ -103,7 +103,7 @@ body {
   display: flex;
   align-items: center;
   background-color: #0a0a0a;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/.netlify/images?url=%2Fimages%2Fgit_450-550_luminary_photo_-_video_atmosphere03_v2.jpg&w=1800&q=75");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/images/git_450-550_luminary_photo_-_video_atmosphere03_v2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
