@@ -9,6 +9,36 @@
     return ['mp4', 'webm', 'mov', 'ogg', 'avi'].indexOf(ext) !== -1;
   }
 
+  function isLocalImage(url) {
+    return url && !isVideoFile(url) && (url.indexOf('/images/') === 0 || url.indexOf('images/') === 0);
+  }
+
+  function imageCdnUrl(url, width, height, fit) {
+    if (!isLocalImage(url)) return url;
+    var normalizedUrl = url.charAt(0) === '/' ? url : '/' + url;
+    var params = new URLSearchParams({
+      url: normalizedUrl,
+      w: String(width),
+      q: '75'
+    });
+    if (height) params.set('h', String(height));
+    if (fit) params.set('fit', fit);
+    return '/.netlify/images?' + params.toString();
+  }
+
+  function applyOptimizedImage(img, src, width, height) {
+    if (!img || !src) return;
+    img.src = imageCdnUrl(src, width, height, height ? 'cover' : undefined);
+    if (isLocalImage(src)) {
+      img.srcset = [
+        imageCdnUrl(src, Math.ceil(width / 2), height ? Math.ceil(height / 2) : undefined, height ? 'cover' : undefined) + ' ' + Math.ceil(width / 2) + 'w',
+        imageCdnUrl(src, width, height, height ? 'cover' : undefined) + ' ' + width + 'w',
+        imageCdnUrl(src, width * 2, height ? height * 2 : undefined, height ? 'cover' : undefined) + ' ' + (width * 2) + 'w'
+      ].join(', ');
+      img.sizes = '(max-width: 700px) 92vw, ' + width + 'px';
+    }
+  }
+
   // Helper: render video or image into a container based on file type
   // primarySrc is checked first (typically the video field), fallbackSrc second (typically the image field)
   function renderMedia(container, primarySrc, fallbackSrc, altText) {
@@ -29,7 +59,7 @@
       container.appendChild(video);
     } else {
       var img = document.createElement('img');
-      img.src = src;
+      applyOptimizedImage(img, src, 800, 533);
       img.alt = altText || '';
       img.loading = 'lazy';
       img.decoding = 'async';
@@ -109,7 +139,7 @@
       var banner = document.querySelector('.about-banner');
       if (banner && heroImageUrl) {
         banner.classList.add('has-hero');
-        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + heroImageUrl + '")';
+        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + imageCdnUrl(heroImageUrl, 1600) + '")';
       }
     }
 
@@ -123,7 +153,7 @@
       document.querySelector('.hero p').textContent = home.hero_description;
       if (home.hero_image) {
         var heroSection = document.querySelector('.hero');
-        heroSection.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(' + home.hero_image + ')';
+        heroSection.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + imageCdnUrl(home.hero_image, 1800) + '")';
       }
 
       // Apply Home page section colors
@@ -172,7 +202,7 @@
 
         var img = slide.querySelector('.image-display img');
         if (img && items[0] && items[0].image) {
-          img.src = items[0].image;
+          applyOptimizedImage(img, items[0].image, 600, 300);
           img.alt = items[0].name;
         }
 
@@ -186,7 +216,7 @@
 
           if (img && item.image) {
             textItems[j].addEventListener('mouseenter', function() {
-              img.src = item.image;
+              applyOptimizedImage(img, item.image, 600, 300);
               img.alt = item.name;
             });
           }
@@ -341,7 +371,7 @@
 
         var img = slide.querySelector('.image-display img');
         if (img && items[0] && items[0].image) {
-          img.src = items[0].image;
+          applyOptimizedImage(img, items[0].image, 600, 300);
           img.alt = items[0].name;
         }
 
@@ -356,7 +386,7 @@
           // Update carousel image when hovering over a menu item
           if (img && item.image) {
             textItems[j].addEventListener('mouseenter', function() {
-              img.src = item.image;
+              applyOptimizedImage(img, item.image, 600, 300);
               img.alt = item.name;
             });
           }
@@ -464,8 +494,10 @@
       if (eventsMedia) {
         var img = eventsMedia.querySelector('img');
         if (img && events.private_image) {
-          img.src = events.private_image;
+          applyOptimizedImage(img, events.private_image, 900, 1200);
           img.alt = 'Private dining at Luminary';
+          img.loading = 'lazy';
+          img.decoding = 'async';
         }
       }
     }
