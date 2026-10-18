@@ -1,0 +1,8 @@
+{
+  "category": "Beverages",
+  "name": "Nebula Cold Brew",
+  "price": 8,
+  "description": "Smooth single-origin cold brew with vanilla bean and a touch of oat milk.",
+  "image": "/images/solarCitrus.jpg",
+  "order": 4
+}
