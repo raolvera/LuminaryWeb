@@ -1,0 +1,16 @@
+/* Accessibility: Skip to Main Content Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #FFD700;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10000;
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  top: 0;
+}
