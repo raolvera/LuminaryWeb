@@ -1,0 +1,22 @@
+# Luminary Restaurant
+
+> Luminary is an approachable fine-dining restaurant in Tempe, Arizona, offering a celestial-inspired tasting experience. Celestial in spirit, precise in execution: each dish is crafted with careful technique and sourced ingredients to reveal depth, contrast, and luminous discovery.
+
+## Pages
+
+- [Home](https://luminaryrestaurant.netlify.app/): Overview of Luminary, featured menu highlights, and reservations.
+- [About](https://luminaryrestaurant.netlify.app/about): The story of Luminary and its chef philosophy.
+- [Menu](https://luminaryrestaurant.netlify.app/menu): Appetizers, entrees, desserts, beverages, and cocktails.
+- [Private Events](https://luminaryrestaurant.netlify.app/events): Private dining rooms and event hosting.
+- [Reserve a Table](https://luminaryrestaurant.netlify.app/book): Book a reservation online.
+
+## Contact
+
+- Address: 0420 Solstice Way, Tempe, AZ 85281
+- Phone: (480) 888-5862
+- General inquiries: hello@luminary.com
+- Events inquiries: events@luminary.com
+
+## Resources
+
+- [Sitemap](https://luminaryrestaurant.netlify.app/sitemap.xml)

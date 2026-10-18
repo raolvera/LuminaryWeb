@@ -1,0 +1,162 @@
+[
+  {
+    "category": "Appetizers",
+    "name": "Starlight Tartare",
+    "price": 11,
+    "description": "Finely diced seasonal tuna with yuzu, avocado, and a touch of edible gold.",
+    "image": "/images/starlightTart.jpg",
+    "order": 1
+  },
+  {
+    "category": "Beverages",
+    "name": "Solar Citrus Elixir",
+    "price": 11,
+    "description": "Fresh-squeezed blood orange, yuzu, and sparkling mineral water with a lemon twist.",
+    "image": "/images/solarCitrus.jpg",
+    "order": 1
+  },
+  {
+    "category": "Cocktails",
+    "name": "Solar Flare Spritz",
+    "price": 13,
+    "description": "Blood orange aperitif, prosecco, and a splash of sparkling water with a citrus twist.",
+    "image": "/images/midnightOrbit.jpg",
+    "order": 1
+  },
+  {
+    "category": "Desserts",
+    "name": "Stardust Chocolate Sphere",
+    "price": 11,
+    "description": "Dark chocolate sphere filled with passionfruit mousse and a cosmic reveal.",
+    "image": "/images/stardustChoco.jpg",
+    "order": 1
+  },
+  {
+    "category": "Entrees",
+    "name": "Galactic Sea Bass",
+    "price": 18,
+    "description": "Pan-seared sea bass with a star anise glaze, served atop smoked leek purée.",
+    "image": "/images/seaBass.jpg",
+    "order": 1
+  },
+  {
+    "category": "Appetizers",
+    "name": "Nebula Carpaccio",
+    "price": 10,
+    "description": "Paper-thin slices of beetroot and radish, finished with truffle vinaigrette.",
+    "image": "/images/starlightTart.jpg",
+    "order": 2
+  },
+  {
+    "category": "Beverages",
+    "name": "Moonflower Iced Tea",
+    "price": 8,
+    "description": "Delicate jasmine tea with white peach and a hint of elderflower, lightly chilled.",
+    "image": "/images/solarCitrus.jpg",
+    "order": 2
+  },
+  {
+    "category": "Cocktails",
+    "name": "Nebula Negroni",
+    "price": 12,
+    "description": "Gin, sweet vermouth, and house-infused hibiscus Campari, served with an ice sphere.",
+    "image": "/images/midnightOrbit.jpg",
+    "order": 2
+  },
+  {
+    "category": "Desserts",
+    "name": "Aurora Meringue Cloud",
+    "price": 9,
+    "description": "Light, airy meringue with lavender cream, freeze-dried berries, and golden syrup.",
+    "image": "/images/stardustChoco.jpg",
+    "order": 2
+  },
+  {
+    "category": "Entrees",
+    "name": "Nebula Lamb Loin",
+    "price": 19,
+    "description": "Herb-crusted lamb loin with rich black garlic jus, served with moonlit potato gratin.",
+    "image": "/images/seaBass.jpg",
+    "order": 2
+  },
+  {
+    "category": "Appetizers",
+    "name": "Lunar Croquettes",
+    "price": 12,
+    "description": "Crispy potato and fontina bites served with smoked saffron aioli.",
+    "image": "/images/starlightTart.jpg",
+    "order": 3
+  },
+  {
+    "category": "Beverages",
+    "name": "Stardew Botanical Tonic",
+    "price": 10,
+    "description": "House-infused rosemary, cucumber, and lime with artisanal tonic water.",
+    "image": "/images/solarCitrus.jpg",
+    "order": 3
+  },
+  {
+    "category": "Cocktails",
+    "name": "Midnight Orbit Martini",
+    "price": 10,
+    "description": "Vodka, elderflower liqueur, fresh lemon, and a shimmer of edible silver dust.",
+    "image": "/images/midnightOrbit.jpg",
+    "order": 3
+  },
+  {
+    "category": "Desserts",
+    "name": "Comet Lemon Tart",
+    "price": 10,
+    "description": "Tangy lemon curd on a crisp almond crust, topped with candied citrus peel and star sugar.",
+    "image": "/images/stardustChoco.jpg",
+    "order": 3
+  },
+  {
+    "category": "Entrees",
+    "name": "Cosmic Mushroom Risotto",
+    "price": 17,
+    "description": "Creamy arborio rice with wild forest mushrooms, parmesan dust, and truffle oil.",
+    "image": "/images/seaBass.jpg",
+    "order": 3
+  },
+  {
+    "category": "Appetizers",
+    "name": "Celestial Garden Plate",
+    "price": 10,
+    "description": "Roasted seasonal vegetables with comet herb oil and a sprinkle of toasted seeds.",
+    "image": "/images/starlightTart.jpg",
+    "order": 4
+  },
+  {
+    "category": "Beverages",
+    "name": "Nebula Cold Brew",
+    "price": 8,
+    "description": "Smooth single-origin cold brew with vanilla bean and a touch of oat milk.",
+    "image": "/images/solarCitrus.jpg",
+    "order": 4
+  },
+  {
+    "category": "Cocktails",
+    "name": "Eclipse Old Fashioned",
+    "price": 9,
+    "description": "Small-batch bourbon, smoked star anise syrup, orange bitters, and a flamed citrus peel.",
+    "image": "/images/midnightOrbit.jpg",
+    "order": 4
+  },
+  {
+    "category": "Desserts",
+    "name": "Moonlit Panna Cotta",
+    "price": 10,
+    "description": "Silky vanilla panna cotta with blackberry nebula compote and a sprinkle of silver dust.",
+    "image": "/images/stardustChoco.jpg",
+    "order": 4
+  },
+  {
+    "category": "Entrees",
+    "name": "Solar Flare Duck Breast",
+    "price": 20,
+    "description": "Crispy-skinned duck with blood orange gastrique, served with celestial spiced lentils.",
+    "image": "/images/seaBass.jpg",
+    "order": 4
+  }
+]

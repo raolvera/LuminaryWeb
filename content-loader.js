@@ -1,0 +1,652 @@
+// Content Loader - Loads CMS content from JSON files
+(async function() {
+  document.body.style.opacity = '0';
+
+  // Helper: detect if a URL points to a video file
+  function isVideoFile(url) {
+    if (!url) return false;
+    var ext = url.split('.').pop().toLowerCase().split('?')[0];
+    return ['mp4', 'webm', 'mov', 'ogg', 'avi'].indexOf(ext) !== -1;
+  }
+
+  function isLocalImage(url) {
+    return url && !isVideoFile(url) && (url.indexOf('/images/') === 0 || url.indexOf('images/') === 0);
+  }
+
+  function imageUrl(url) {
+    if (!isLocalImage(url)) return url;
+    return url.charAt(0) === '/' ? url : '/' + url;
+  }
+
+  // Build a Netlify Image CDN URL that resizes + compresses local images on the fly.
+  // Falls back to the raw path when the CDN isn't available (e.g. local dev).
+  function optimizedUrl(url, width, quality) {
+    var raw = imageUrl(url);
+    if (!isLocalImage(url)) return raw;
+    var w = width || 1200;
+    var q = quality || 75;
+    return '/.netlify/images?url=' + encodeURIComponent(raw) + '&w=' + w + '&q=' + q + '&fm=webp';
+  }
+
+  function applyOptimizedImage(img, src, width, height) {
+    if (!img || !src) return;
+    img.src = optimizedUrl(src, width || 800, 75);
+    img.removeAttribute('srcset');
+    img.removeAttribute('sizes');
+    if (isLocalImage(src)) {
+      img.onerror = function() {
+        // if the image CDN fails, fall back to the raw file and stop retrying
+        img.onerror = null;
+        img.removeAttribute('srcset');
+        img.src = imageUrl(src);
+      };
+    }
+  }
+
+  // Helper: render video or image into a container based on file type
+  // primarySrc is checked first (typically the video field), fallbackSrc second (typically the image field)
+  function renderMedia(container, primarySrc, fallbackSrc, altText) {
+    if (!container) return;
+    container.innerHTML = '';
+    var src = primarySrc || fallbackSrc;
+    if (!src) return;
+
+    if (isVideoFile(src)) {
+      var video = document.createElement('video');
+      video.controls = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('preload', 'metadata');
+      var source = document.createElement('source');
+      source.src = src;
+      source.type = 'video/' + src.split('.').pop().toLowerCase().split('?')[0];
+      video.appendChild(source);
+      container.appendChild(video);
+    } else {
+      var img = document.createElement('img');
+      applyOptimizedImage(img, src, 800, 533);
+      img.alt = altText || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.width = 600;
+      img.height = 400;
+      container.appendChild(img);
+    }
+  }
+
+  try {
+    const theme = await fetch('/content/theme.json').then(r => r.json());
+
+    // Apply global colors
+    var g = theme.global || {};
+    document.documentElement.style.setProperty('--bg-black', g.header_bg || '#000000');
+    document.documentElement.style.setProperty('--accent', g.accent_color || '#FFD700');
+    document.documentElement.style.setProperty('--border-color', g.border_color || '#333333');
+    document.documentElement.style.setProperty('--footer-bg', g.footer_bg || '#000000');
+    document.documentElement.style.setProperty('--text-white', g.footer_text || '#ffffff');
+
+    // Apply header background
+    var header = document.querySelector('header');
+    if (header) header.style.backgroundColor = g.header_bg || '#000000';
+    document.documentElement.style.setProperty('--header-bg', g.header_bg || '#000000');
+
+    // Apply global button colors
+    if (g.button_bg) {
+      document.documentElement.style.setProperty('--events-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--book-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--confirm-home-btn-bg', g.button_bg);
+      document.documentElement.style.setProperty('--confirm-rebook-btn-bg', g.button_bg);
+    }
+    if (g.button_text) {
+      document.documentElement.style.setProperty('--events-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--book-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--confirm-home-btn-text', g.button_text);
+      document.documentElement.style.setProperty('--confirm-rebook-btn-text', g.button_text);
+    }
+
+    // Apply footer colors
+    var footer = document.querySelector('footer');
+    if (footer) {
+      footer.style.backgroundColor = g.footer_bg || '#000000';
+      footer.style.color = g.footer_text || '#ffffff';
+    }
+
+    // Apply header logo colors
+    var headerLogo = document.querySelector('[data-logo="header"]');
+    if (headerLogo) {
+      var headerTextPaths = headerLogo.querySelectorAll('.logo-text');
+      var headerStarPaths = headerLogo.querySelectorAll('.logo-star');
+      headerTextPaths.forEach(function(p) { p.setAttribute('fill', g.header_logo_color || '#A7977E'); });
+      headerStarPaths.forEach(function(p) { p.setAttribute('fill', g.header_logo_star_color || '#EDE8E1'); });
+    }
+
+    // Apply footer logo colors
+    var footerLogo = document.querySelector('[data-logo="footer"]');
+    if (footerLogo) {
+      var footerTextPaths = footerLogo.querySelectorAll('.logo-text');
+      var footerStarPaths = footerLogo.querySelectorAll('.logo-star');
+      footerTextPaths.forEach(function(p) { p.setAttribute('fill', g.footer_logo_color || '#A7977E'); });
+      footerStarPaths.forEach(function(p) { p.setAttribute('fill', g.footer_logo_star_color || '#EDE8E1'); });
+    }
+
+    // Apply font
+    if (theme.font_family) document.body.style.fontFamily = theme.font_family;
+
+    // Helper to apply bg + text color to an element
+    function applyColors(el, bg, text) {
+      if (!el) return;
+      // don't paint a solid background over a banner that has a hero image
+      if (bg && el.dataset && el.dataset.hasHero === 'true') bg = null;
+      if (bg) el.style.backgroundColor = bg;
+      if (text) el.style.color = text;
+    }
+
+    // Helper to apply hero image to a banner section
+    function applyHeroImage(heroImageUrl) {
+      var banner = document.querySelector('.about-banner');
+      if (banner && heroImageUrl) {
+        banner.classList.add('has-hero');
+        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + optimizedUrl(heroImageUrl, 1600, 72) + '")';
+        banner.style.backgroundSize = 'cover';
+        banner.style.backgroundPosition = 'center';
+        banner.style.backgroundRepeat = 'no-repeat';
+        // mark so later color application doesn't overwrite the hero image with a solid color
+        banner.dataset.hasHero = 'true';
+      }
+    }
+
+    const page = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+
+    if (page === 'index' || page === '') {
+      var home = await fetch('/content/home.json').then(r => r.json());
+      var hc = theme.home || {};
+
+      document.querySelector('.hero h1').textContent = home.hero_title;
+      document.querySelector('.hero p').textContent = home.hero_description;
+      if (home.hero_image) {
+        var heroSection = document.querySelector('.hero');
+        heroSection.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + optimizedUrl(home.hero_image, 1600, 72) + '")';
+      }
+
+      // Apply Home page section colors
+      var sections = document.querySelectorAll('.section-wrapper');
+
+      // Our Story section (first section-wrapper)
+      applyColors(sections[0], hc.story_bg, hc.story_text);
+
+      // Chef Philosophy section (second section-wrapper)
+      applyColors(sections[1], hc.chef_bg, hc.chef_text);
+
+      // Menu section (third section-wrapper)
+      applyColors(sections[2], hc.menu_bg, hc.menu_text);
+
+      var storySection = document.querySelectorAll('.content-text')[0];
+      storySection.querySelector('h2').textContent = home.story_title;
+      storySection.querySelector('p').textContent = home.story_text;
+
+      // Story media: video takes priority, falls back to image
+      var storyMedia = document.getElementById('home-story-media');
+      renderMedia(storyMedia, home.story_video, home.story_image, 'Our Story');
+
+      var chefSection = document.querySelectorAll('.content-text')[1];
+      chefSection.querySelector('h2').textContent = home.chef_title;
+      chefSection.querySelector('p').textContent = home.chef_text;
+
+      // Chef media: video takes priority, falls back to image
+      var chefMedia = document.getElementById('home-chef-media');
+      renderMedia(chefMedia, home.chef_video, home.chef_image, 'Chef Philosophy');
+
+      // Load menu items into carousel on index page (same as menu page)
+      var menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
+      var categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
+      var grouped = {};
+      menuItems.forEach(function(item) {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
+      Object.values(grouped).forEach(function(arr) { arr.sort(function(a, b) { return (a.order || 0) - (b.order || 0); }); });
+
+      var slides = document.querySelectorAll('.carousel-slide');
+      categoryOrder.forEach(function(cat, i) {
+        var slide = slides[i];
+        if (!slide || !grouped[cat]) return;
+        var items = grouped[cat];
+
+        var img = slide.querySelector('.image-display img');
+        if (img && items[0] && items[0].image) {
+          applyOptimizedImage(img, items[0].image, 600, 300);
+          img.alt = items[0].name;
+        }
+
+        var textItems = slide.querySelectorAll('.menu-text-item');
+        items.forEach(function(item, j) {
+          if (!textItems[j]) return;
+          var h4 = textItems[j].querySelector('h4');
+          var p = textItems[j].querySelector('p');
+          if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
+          if (p) p.textContent = item.description;
+
+          if (img && item.image) {
+            textItems[j].addEventListener('mouseenter', function() {
+              applyOptimizedImage(img, item.image, 600, 300);
+              img.alt = item.name;
+            });
+          }
+        });
+      });
+    }
+
+    if (page === 'about') {
+      var about = await fetch('/content/about.json').then(r => r.json());
+      var ac = theme.about || {};
+
+      // Apply About page hero image
+      applyHeroImage(about.hero_image);
+
+      // Apply About page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, ac.banner_bg, ac.banner_text);
+
+      document.querySelector('.about-banner h1').textContent = about.page_title;
+
+      // Apply About page section colors
+      var sections = document.querySelectorAll('.section-wrapper');
+
+      // Our Story section
+      applyColors(sections[0], ac.story_bg, ac.story_text);
+
+      // Chef Philosophy section
+      applyColors(sections[1], ac.chef_bg, ac.chef_text);
+
+      var contentSections = document.querySelectorAll('.content-text');
+      var storyTitle = contentSections[0].querySelector('.section-title');
+      if (storyTitle) storyTitle.textContent = about.story_title;
+
+      var storyParas = contentSections[0].querySelectorAll('p');
+      if (storyParas[0]) storyParas[0].textContent = about.story_text_1;
+      if (storyParas[1]) storyParas[1].textContent = about.story_text_2;
+
+      // Story media: video takes priority, falls back to image
+      var storyMedia = document.getElementById('about-story-media');
+      renderMedia(storyMedia, about.story_video, about.story_image, 'Our Story');
+
+      var storyParas2 = contentSections[1].querySelectorAll('p');
+      if (storyParas2[0]) storyParas2[0].textContent = about.story_text_3;
+      if (storyParas2[1]) storyParas2[1].textContent = about.story_text_4;
+
+      // Story image slot
+      var storyImageSlot = document.getElementById('about-story-image');
+      renderMedia(storyImageSlot, null, about.story_image, 'Luminary restaurant interior');
+
+      var chefTitle = contentSections[2].querySelector('.section-title');
+      if (chefTitle) chefTitle.textContent = about.chef_title;
+
+      var chefParas = contentSections[2].querySelectorAll('p');
+      if (chefParas[0]) chefParas[0].textContent = about.chef_text_1;
+      if (chefParas[1]) chefParas[1].textContent = about.chef_text_2;
+
+      // Chef media: video takes priority, falls back to image
+      var chefMedia = document.getElementById('about-chef-media');
+      renderMedia(chefMedia, about.chef_video, about.chef_image, 'Chef at work');
+    }
+
+    if (page === 'menu') {
+      var mc = theme.menu || {};
+
+      // Apply menu page-specific header colors (override global)
+      if (mc.header_bg) {
+        var header = document.querySelector('header');
+        if (header) header.style.backgroundColor = mc.header_bg;
+        document.documentElement.style.setProperty('--header-bg', mc.header_bg);
+      }
+      if (mc.header_text) {
+        var navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(function(a) { a.style.color = mc.header_text; });
+        var btnOutline = document.querySelector('.btn-outline');
+        if (btnOutline) btnOutline.style.borderColor = mc.header_text;
+        var hamburgerSpans = document.querySelectorAll('.hamburger span');
+        hamburgerSpans.forEach(function(s) { s.style.background = mc.header_text; });
+      }
+      if (mc.header_logo_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', mc.header_logo_color); });
+        }
+      }
+      if (mc.header_logo_star_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', mc.header_logo_star_color); });
+        }
+      }
+
+      // Load menu page content (hero image + title)
+      try {
+        var menuPage = await fetch('/content/menu-page.json').then(r => r.json());
+        applyHeroImage(menuPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && menuPage.page_title) bannerTitle.textContent = menuPage.page_title;
+
+        // Apply banner colors (separate from section colors)
+        var menuBanner = document.querySelector('.about-banner');
+        if (menuBanner) applyColors(menuBanner, mc.banner_bg, mc.banner_text);
+
+        // Apply optional carousel heading from CMS
+        var carouselHeading = document.getElementById('carousel-heading');
+        if (carouselHeading && menuPage.carousel_heading) {
+          carouselHeading.textContent = menuPage.carousel_heading;
+          carouselHeading.style.display = '';
+        }
+      } catch(e) {}
+
+      // Apply Menu page section colors
+      var menuSection = document.querySelector('.section-wrapper');
+      applyColors(menuSection, mc.bg, mc.text);
+
+      // Apply category name color
+      if (mc.category_color) {
+        var catHeading = document.getElementById('carousel-category');
+        if (catHeading) catHeading.style.color = mc.category_color;
+      }
+
+      // Apply menu item price color
+      if (mc.price_color) {
+        document.documentElement.style.setProperty('--menu-price-color', mc.price_color);
+      }
+
+      // Apply navigation arrow color
+      if (mc.arrow_color) {
+        var arrows = document.querySelectorAll('.nav-arrow');
+        arrows.forEach(function(el) { el.style.color = mc.arrow_color; el.style.borderColor = mc.arrow_color; });
+      }
+
+      // Apply carousel dot color
+      if (mc.dot_color) {
+        var dots = document.querySelectorAll('.carousel-dots span');
+        dots.forEach(function(el) { el.style.color = mc.dot_color; });
+      }
+
+      var menuItems = await fetch('/content/menu-combined.json').then(r => r.json());
+      var categoryOrder = ['Appetizers', 'Desserts', 'Entrees', 'Beverages', 'Cocktails'];
+      var grouped = {};
+      menuItems.forEach(function(item) {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
+      Object.values(grouped).forEach(function(arr) { arr.sort(function(a, b) { return (a.order || 0) - (b.order || 0); }); });
+
+      var slides = document.querySelectorAll('.carousel-slide');
+      categoryOrder.forEach(function(cat, i) {
+        var slide = slides[i];
+        if (!slide || !grouped[cat]) return;
+        var items = grouped[cat];
+
+        var img = slide.querySelector('.image-display img');
+        if (img && items[0] && items[0].image) {
+          applyOptimizedImage(img, items[0].image, 600, 300);
+          img.alt = items[0].name;
+        }
+
+        var textItems = slide.querySelectorAll('.menu-text-item');
+        items.forEach(function(item, j) {
+          if (!textItems[j]) return;
+          var h4 = textItems[j].querySelector('h4');
+          var p = textItems[j].querySelector('p');
+          if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
+          if (p) p.textContent = item.description;
+
+          // Update carousel image when hovering over a menu item
+          if (img && item.image) {
+            textItems[j].addEventListener('mouseenter', function() {
+              applyOptimizedImage(img, item.image, 600, 300);
+              img.alt = item.name;
+            });
+          }
+        });
+      });
+
+    }
+
+    if (page === 'events') {
+      var events = await fetch('/content/events.json').then(r => r.json());
+      var ec = theme.events || {};
+
+      // Apply events page-specific header colors (override global)
+      if (ec.header_bg) {
+        var header = document.querySelector('header');
+        if (header) header.style.backgroundColor = ec.header_bg;
+        document.documentElement.style.setProperty('--header-bg', ec.header_bg);
+      }
+      if (ec.header_text) {
+        var navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(function(a) { a.style.color = ec.header_text; });
+        var btnOutline = document.querySelector('.btn-outline');
+        if (btnOutline) btnOutline.style.borderColor = ec.header_text;
+        var hamburgerSpans = document.querySelectorAll('.hamburger span');
+        hamburgerSpans.forEach(function(s) { s.style.background = ec.header_text; });
+      }
+      if (ec.header_logo_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', ec.header_logo_color); });
+        }
+      }
+      if (ec.header_logo_star_color) {
+        var headerLogo = document.querySelector('[data-logo="header"]');
+        if (headerLogo) {
+          headerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', ec.header_logo_star_color); });
+        }
+      }
+
+      // Apply events page-specific footer colors (override global)
+      if (ec.footer_bg) {
+        var footer = document.querySelector('footer');
+        if (footer) footer.style.backgroundColor = ec.footer_bg;
+      }
+      if (ec.footer_text) {
+        var footer = document.querySelector('footer');
+        if (footer) footer.style.color = ec.footer_text;
+      }
+      if (ec.footer_logo_color) {
+        var footerLogo = document.querySelector('[data-logo="footer"]');
+        if (footerLogo) {
+          footerLogo.querySelectorAll('.logo-text').forEach(function(p) { p.setAttribute('fill', ec.footer_logo_color); });
+        }
+      }
+      if (ec.footer_logo_star_color) {
+        var footerLogo = document.querySelector('[data-logo="footer"]');
+        if (footerLogo) {
+          footerLogo.querySelectorAll('.logo-star').forEach(function(p) { p.setAttribute('fill', ec.footer_logo_star_color); });
+        }
+      }
+
+      // Apply Events page hero image
+      applyHeroImage(events.hero_image);
+
+      // Apply Events page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, ec.banner_bg, ec.banner_text);
+
+      // Apply Events page section colors
+      var eventBlocks = document.querySelectorAll('.events-split-block');
+
+      // Private Dining section
+      applyColors(eventBlocks[0], ec.private_bg, ec.private_text);
+
+      // Event Hosting section
+      applyColors(eventBlocks[1], ec.hosting_bg, ec.hosting_text);
+
+      // Apply Events page button colors (override global)
+      if (ec.button_bg) document.documentElement.style.setProperty('--events-btn-bg', ec.button_bg);
+      if (ec.button_text) document.documentElement.style.setProperty('--events-btn-text', ec.button_text);
+
+      document.querySelector('.about-banner h1').textContent = events.page_title;
+
+      var eventSections = document.querySelectorAll('.events-split-inner');
+      if (eventSections[0]) {
+        var privateTitle = eventSections[0].querySelector('h2');
+        if (privateTitle) privateTitle.textContent = events.private_title;
+
+        var privateParas = eventSections[0].querySelectorAll('p');
+        if (privateParas[0]) privateParas[0].textContent = events.private_text_1;
+        if (privateParas[1]) privateParas[1].textContent = events.private_text_2;
+      }
+
+      if (eventSections[1]) {
+        var hostingTitle = eventSections[1].querySelector('h2');
+        if (hostingTitle) hostingTitle.textContent = events.hosting_title;
+
+        var hostingParas = eventSections[1].querySelectorAll('p');
+        if (hostingParas[0]) hostingParas[0].textContent = events.hosting_text_1;
+        if (hostingParas[1]) hostingParas[1].textContent = events.hosting_text_2;
+      }
+
+      // Events split image
+      var eventsMedia = document.getElementById('events-media');
+      if (eventsMedia) {
+        var img = eventsMedia.querySelector('img');
+        if (img && events.private_image) {
+          applyOptimizedImage(img, events.private_image, 900, 1200);
+          img.alt = 'Private dining at Luminary';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+        }
+      }
+    }
+
+    if (page === 'book') {
+      var bc = theme.book || {};
+
+      // Load book page content (hero image + title)
+      try {
+        var bookPage = await fetch('/content/book-page.json').then(r => r.json());
+        applyHeroImage(bookPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && bookPage.page_title) bannerTitle.textContent = bookPage.page_title;
+      } catch(e) {}
+
+      // Apply Book page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, bc.banner_bg, bc.banner_text);
+
+      // Apply reservation section colors
+      var reservationSection = document.querySelector('.reservation-section');
+      if (reservationSection && bc.section_bg) {
+        reservationSection.style.backgroundColor = bc.section_bg;
+      }
+
+      // Apply form colors
+      var formContainer = document.querySelector('.form-container');
+      if (formContainer) {
+        applyColors(formContainer, bc.form_bg, bc.form_text);
+      }
+
+      // Apply button colors
+      if (bc.button_bg) {
+        document.documentElement.style.setProperty('--book-btn-bg', bc.button_bg);
+      }
+      if (bc.button_text) {
+        document.documentElement.style.setProperty('--book-btn-text', bc.button_text);
+      }
+
+      // Apply input / dropdown colors
+      if (bc.input_bg) {
+        document.documentElement.style.setProperty('--book-input-bg', bc.input_bg);
+      }
+      if (bc.input_text) {
+        document.documentElement.style.setProperty('--book-input-text', bc.input_text);
+      }
+      if (bc.input_border) {
+        document.documentElement.style.setProperty('--book-input-border', bc.input_border);
+      }
+
+      // Apply calendar / picker modal colors
+      if (bc.picker_bg) {
+        document.documentElement.style.setProperty('--book-picker-bg', bc.picker_bg);
+      }
+      if (bc.picker_text) {
+        document.documentElement.style.setProperty('--book-picker-text', bc.picker_text);
+      }
+      if (bc.calendar_today_bg) {
+        document.documentElement.style.setProperty('--book-today-bg', bc.calendar_today_bg);
+      }
+      if (bc.calendar_today_text) {
+        document.documentElement.style.setProperty('--book-today-text', bc.calendar_today_text);
+      }
+    }
+
+    if (page === 'confirmation') {
+      var cc = theme.confirmation || {};
+
+      // Load confirmation page content (hero image + title)
+      try {
+        var confirmPage = await fetch('/content/confirmation-page.json').then(r => r.json());
+        applyHeroImage(confirmPage.hero_image);
+        var bannerTitle = document.querySelector('.about-banner h1');
+        if (bannerTitle && confirmPage.page_title) bannerTitle.textContent = confirmPage.page_title;
+      } catch(e) {}
+
+      // Apply Confirmation page banner colors
+      var banner = document.querySelector('.about-banner');
+      applyColors(banner, cc.banner_bg, cc.banner_text);
+
+      // Apply reservation section colors
+      var reservationSection = document.querySelector('.reservation-section');
+      if (reservationSection && cc.section_bg) {
+        reservationSection.style.backgroundColor = cc.section_bg;
+      }
+
+      // Apply card colors
+      var card = document.querySelector('.reservation-section .card');
+      if (card) {
+        applyColors(card, cc.card_bg, cc.card_text);
+      }
+      var cardInner = document.querySelector('.card-inner');
+      if (cardInner) {
+        applyColors(cardInner, cc.card_bg, cc.card_text);
+      }
+
+      // Apply icon colors
+      if (cc.icon_bg) {
+        document.documentElement.style.setProperty('--confirm-icon-bg', cc.icon_bg);
+      }
+      if (cc.icon_text) {
+        document.documentElement.style.setProperty('--confirm-icon-text', cc.icon_text);
+      }
+
+      // Apply card text color variable
+      if (cc.card_text) {
+        document.documentElement.style.setProperty('--confirm-card-text', cc.card_text);
+      }
+
+      // Apply button colors
+      if (cc.home_btn_bg) {
+        document.documentElement.style.setProperty('--confirm-home-btn-bg', cc.home_btn_bg);
+      }
+      if (cc.home_btn_text) {
+        document.documentElement.style.setProperty('--confirm-home-btn-text', cc.home_btn_text);
+      }
+      if (cc.rebook_btn_bg) {
+        document.documentElement.style.setProperty('--confirm-rebook-btn-bg', cc.rebook_btn_bg);
+      }
+      if (cc.rebook_btn_text) {
+        document.documentElement.style.setProperty('--confirm-rebook-btn-text', cc.rebook_btn_text);
+      }
+
+      // Override favicon color for confirmation page
+      if (cc.favicon_color) {
+        var faviconSvg = '<svg width="46" height="47" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.8865 0C22.8865 0 24.1249 11.8655 29.0679 16.8187C33.9856 21.7464 45.773 23.0422 45.773 23.0422C45.773 23.0422 33.9856 24.3379 29.0679 29.2656C24.1249 34.2188 22.8865 46.0843 22.8865 46.0843C22.8865 46.0843 21.6481 34.2188 16.7051 29.2656C11.7874 24.3379 0 23.0422 0 23.0422C0 23.0422 11.7874 21.7464 16.7051 16.8187C21.6481 11.8655 22.8865 0 22.8865 0Z" fill="' + cc.favicon_color + '"/></svg>';
+        var faviconDataUrl = 'data:image/svg+xml,' + encodeURIComponent(faviconSvg);
+        var faviconLink = document.querySelector('link[rel="icon"]');
+        if (faviconLink) {
+          faviconLink.href = faviconDataUrl;
+        }
+      }
+    }
+
+  } catch (error) {
+    console.log('Content loading skipped:', error.message);
+  }
+
+  document.body.style.transition = 'opacity 0.3s';
+  document.body.style.opacity = '1';
+})();
