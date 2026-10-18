@@ -331,6 +331,10 @@ nav > a:hover {
    one, so there is never an empty frame between images (most visible on
    mobile, where photos load slower). */
 .carousel-slide .image-placeholder {
+  /* no gray box behind the photo: while it paints, the outgoing slide
+     shows through instead of the placeholder */
+  background-color: transparent !important;
+  background-image: none !important;
   opacity: 0;
   transition: opacity 0s linear 0.5s;
 }
