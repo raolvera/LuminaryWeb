@@ -297,13 +297,28 @@ nav > a:hover {
   left: 0;
 }
 
-/* Carousel functionality */
+/* Carousel functionality
+   All slides share one grid cell so the carousel is always as tall as its
+   tallest slide. Switching categories never changes the section height,
+   which keeps the page from jumping (most noticeable on mobile). Only the
+   active slide is visible. */
+.menu-carousel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.carousel-header { grid-row: 1; grid-column: 1; }
+.carousel-slide  { grid-row: 2; grid-column: 1; }
+.carousel-dots   { grid-row: 3; grid-column: 1; }
+
 .carousel-slide {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .carousel-slide.active {
-  display: block;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 /* Gentle fade on the active slide's image for a smooth swap (no layout stacking) */

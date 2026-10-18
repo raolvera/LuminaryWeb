@@ -13,9 +13,10 @@ function showSlide(n) {
   slides.forEach(function(slide, i) {
     const isActive = (i === currentSlide - 1);
     slide.classList.toggle('active', isActive);
-    // set inline display directly so no stylesheet or cached CSS can leave
-    // more than one slide visible (prevents the "two carousels" issue)
-    slide.style.display = isActive ? 'block' : 'none';
+    // slides are stacked in one grid cell (see styles.css); set visibility
+    // inline too so only one slide can ever show at a time
+    slide.style.visibility = isActive ? 'visible' : 'hidden';
+    slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
   });
 
   dots.forEach(function(dot, i) {
