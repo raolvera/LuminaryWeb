@@ -4,6 +4,11 @@ const path = require('path');
 const menuDir = path.join(__dirname, 'content', 'menu');
 const outputFile = path.join(__dirname, 'content', 'menu-combined.json');
 
+if (!fs.existsSync(menuDir)) {
+  console.log(`No menu directory at ${menuDir}, skipping menu build`);
+  process.exit(0);
+}
+
 const files = fs.readdirSync(menuDir).filter(f => f.endsWith('.json'));
 const items = files.map(f => JSON.parse(fs.readFileSync(path.join(menuDir, f), 'utf8')));
 

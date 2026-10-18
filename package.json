@@ -10,7 +10,14 @@
   "devDependencies": {
     "@playwright/test": "^1.40.0"
   },
-  "keywords": ["restaurant", "website", "testing"],
+  "keywords": [
+    "restaurant",
+    "website",
+    "testing"
+  ],
   "author": "Luminary Team",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.12.0"
+  }
 }

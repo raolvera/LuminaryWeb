@@ -192,11 +192,7 @@
         if (!slide || !grouped[cat]) return;
         var items = grouped[cat];
 
-        var img = slide.querySelector('.image-display img');
-        if (img && items[0] && items[0].image) {
-          applyOptimizedImage(img, items[0].image, 600, 300);
-          img.alt = items[0].name;
-        }
+        // Carousel images stay as the curated repo photos set in the HTML
 
         var textItems = slide.querySelectorAll('.menu-text-item');
         items.forEach(function(item, j) {
@@ -205,13 +201,6 @@
           var p = textItems[j].querySelector('p');
           if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
           if (p) p.textContent = item.description;
-
-          if (img && item.image) {
-            textItems[j].addEventListener('mouseenter', function() {
-              applyOptimizedImage(img, item.image, 600, 300);
-              img.alt = item.name;
-            });
-          }
         });
       });
     }
@@ -361,11 +350,7 @@
         if (!slide || !grouped[cat]) return;
         var items = grouped[cat];
 
-        var img = slide.querySelector('.image-display img');
-        if (img && items[0] && items[0].image) {
-          applyOptimizedImage(img, items[0].image, 600, 300);
-          img.alt = items[0].name;
-        }
+        // Carousel images stay as the curated repo photos set in the HTML
 
         var textItems = slide.querySelectorAll('.menu-text-item');
         items.forEach(function(item, j) {
@@ -374,14 +359,6 @@
           var p = textItems[j].querySelector('p');
           if (h4) h4.innerHTML = item.name + ' <span>/ ' + item.price + '</span>';
           if (p) p.textContent = item.description;
-
-          // Update carousel image when hovering over a menu item
-          if (img && item.image) {
-            textItems[j].addEventListener('mouseenter', function() {
-              applyOptimizedImage(img, item.image, 600, 300);
-              img.alt = item.name;
-            });
-          }
         });
       });
 
