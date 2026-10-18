@@ -314,21 +314,48 @@ nav > a:hover {
 .carousel-slide {
   visibility: hidden;
   pointer-events: none;
+  position: relative;
+  z-index: 0;
+  /* stay visible underneath while the next slide fades in on top */
+  transition: visibility 0s linear 0.5s;
 }
 
 .carousel-slide.active {
   visibility: visible;
   pointer-events: auto;
+  z-index: 1;
+  transition: none;
 }
 
-/* Gentle fade on the active slide's image for a smooth swap (no layout stacking) */
-.carousel-slide.active .image-placeholder img {
-  animation: carouselImgFade 0.35s ease-in-out;
+/* Crossfade between slides: the incoming photo fades in over the outgoing
+   one, so there is never an empty frame between images (most visible on
+   mobile, where photos load slower). */
+.carousel-slide .image-placeholder {
+  opacity: 0;
+  transition: opacity 0s linear 0.5s;
 }
 
-@keyframes carouselImgFade {
-  from { opacity: 0.35; }
-  to { opacity: 1; }
+.carousel-slide.active .image-placeholder {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-slide .menu-grid-content {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.carousel-slide.active .menu-grid-content {
+  opacity: 1;
+  transition: opacity 0.4s ease-in 0.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-slide,
+  .carousel-slide .image-placeholder,
+  .carousel-slide .menu-grid-content {
+    transition: none !important;
+  }
 }
 
 .nav-arrow {

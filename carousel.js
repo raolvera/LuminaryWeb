@@ -12,10 +12,8 @@ function showSlide(n) {
 
   slides.forEach(function(slide, i) {
     const isActive = (i === currentSlide - 1);
+    // slides are stacked in one grid cell; styles.css crossfades between them
     slide.classList.toggle('active', isActive);
-    // slides are stacked in one grid cell (see styles.css); set visibility
-    // inline too so only one slide can ever show at a time
-    slide.style.visibility = isActive ? 'visible' : 'hidden';
     slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
   });
 
@@ -70,4 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   showSlide(currentSlide);
+});
+
+// Load every carousel photo up front so the next slide's image is ready
+// before it fades in (lazy-loaded hidden slides showed a blank frame)
+window.addEventListener('load', function() {
+  document.querySelectorAll('.carousel-slide img').forEach(function(img) {
+    img.loading = 'eager';
+  });
 });
