@@ -103,7 +103,7 @@ body {
   display: flex;
   align-items: center;
   background-color: #0a0a0a;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/images/git_450-550_luminary_photo_-_video_atmosphere03_v2.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/.netlify/images?url=%2Fimages%2Fgit_450-550_luminary_photo_-_video_atmosphere03_v2.jpg&w=1600&q=72&fm=webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -297,18 +297,23 @@ nav > a:hover {
   left: 0;
 }
 
-/* Carousel functionality - stacked slides for cross-fade */
+/* Carousel functionality */
 .carousel-slide {
-  /* all slides overlap in the same spot so they can cross-fade */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  display: none;
 }
 
 .carousel-slide.active {
-  /* the visible slide stays in normal flow and defines the height */
-  position: relative;
+  display: block;
+}
+
+/* Gentle fade on the active slide's image for a smooth swap (no layout stacking) */
+.carousel-slide.active .image-placeholder img {
+  animation: carouselImgFade 0.35s ease-in-out;
+}
+
+@keyframes carouselImgFade {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
 }
 
 .nav-arrow {
@@ -331,6 +336,10 @@ nav > a:hover {
   max-width: 600px;
   margin: 0 auto;
   text-align: left; 
+  /* reserve consistent space so switching categories doesn't resize the
+     section and make the page jump */
+  min-height: 160px;
+  align-content: start;
 }
 
 .menu-text-item {
@@ -1388,6 +1397,8 @@ footer {
         grid-template-columns: 1fr; 
         gap: 20px; 
         text-align: left; 
+        /* reserve space so switching categories doesn't shift the page */
+        min-height: 320px;
     }
     .menu-text-item {
         max-width: 280px;

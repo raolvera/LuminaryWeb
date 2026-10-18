@@ -12,7 +12,7 @@
 }
 
 /* Smooth transitions for all interactive elements */
-a, button, .nav-arrow, .btn-outline, .carousel-slide {
+a, button, .nav-arrow, .btn-outline {
   transition: all 0.3s ease;
 }
 
@@ -21,20 +21,6 @@ a, button, .nav-arrow, .btn-outline, .carousel-slide {
 .btn-outline:hover,
 .footer-col a:hover {
   transform: translateY(-2px);
-}
-
-/* Carousel slide transitions - cross-fade without black gap */
-.carousel-slide {
-  opacity: 0;
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.carousel-slide.active {
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 1;
 }
 
 /* Button press effect */

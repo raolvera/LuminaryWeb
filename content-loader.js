@@ -18,13 +18,25 @@
     return url.charAt(0) === '/' ? url : '/' + url;
   }
 
+  // Build a Netlify Image CDN URL that resizes + compresses local images on the fly.
+  // Falls back to the raw path when the CDN isn't available (e.g. local dev).
+  function optimizedUrl(url, width, quality) {
+    var raw = imageUrl(url);
+    if (!isLocalImage(url)) return raw;
+    var w = width || 1200;
+    var q = quality || 75;
+    return '/.netlify/images?url=' + encodeURIComponent(raw) + '&w=' + w + '&q=' + q + '&fm=webp';
+  }
+
   function applyOptimizedImage(img, src, width, height) {
     if (!img || !src) return;
-    img.src = imageUrl(src);
+    img.src = optimizedUrl(src, width || 800, 75);
     img.removeAttribute('srcset');
     img.removeAttribute('sizes');
     if (isLocalImage(src)) {
       img.onerror = function() {
+        // if the image CDN fails, fall back to the raw file and stop retrying
+        img.onerror = null;
         img.removeAttribute('srcset');
         img.src = imageUrl(src);
       };
@@ -133,7 +145,7 @@
       var banner = document.querySelector('.about-banner');
       if (banner && heroImageUrl) {
         banner.classList.add('has-hero');
-        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + imageUrl(heroImageUrl) + '")';
+        banner.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + optimizedUrl(heroImageUrl, 1600, 72) + '")';
         banner.style.backgroundSize = 'cover';
         banner.style.backgroundPosition = 'center';
         banner.style.backgroundRepeat = 'no-repeat';
@@ -152,7 +164,7 @@
       document.querySelector('.hero p').textContent = home.hero_description;
       if (home.hero_image) {
         var heroSection = document.querySelector('.hero');
-        heroSection.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + imageUrl(home.hero_image) + '")';
+        heroSection.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("' + optimizedUrl(home.hero_image, 1600, 72) + '")';
       }
 
       // Apply Home page section colors
