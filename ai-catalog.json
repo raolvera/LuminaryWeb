@@ -1,0 +1,28 @@
+{
+  "specVersion": "1.0",
+  "name": "Luminary Restaurant",
+  "description": "Fine-dining restaurant in Tempe, Arizona. Celestial-inspired cuisine with online menu, private events, and reservations.",
+  "url": "https://luminaryrestaurant.netlify.app",
+  "provider": {
+    "name": "Luminary Restaurant",
+    "url": "https://luminaryrestaurant.netlify.app"
+  },
+  "catalog": [
+    {
+      "type": "docs",
+      "id": "urn:air:luminaryrestaurant.netlify.app:docs:llms-txt",
+      "name": "Luminary llms.txt index",
+      "description": "Markdown index of Luminary Restaurant's pages and contact details for large language models.",
+      "mediaType": "text/markdown",
+      "url": "https://luminaryrestaurant.netlify.app/llms.txt"
+    },
+    {
+      "type": "sitemap",
+      "id": "urn:air:luminaryrestaurant.netlify.app:docs:sitemap",
+      "name": "Luminary sitemap",
+      "description": "XML sitemap listing all public pages of the Luminary Restaurant website.",
+      "mediaType": "application/xml",
+      "url": "https://luminaryrestaurant.netlify.app/sitemap.xml"
+    }
+  ]
+}
